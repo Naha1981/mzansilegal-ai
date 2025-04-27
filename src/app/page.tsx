@@ -1,12 +1,13 @@
 import { LegaleseAI } from '@/components/legalese-ai';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Terminal } from "lucide-react";
-import { ClientOnly } from '@/components/client-only'; // Import ClientOnly
+import { ClientOnly } from '@/components/client-only';
 
 export default function Home() {
   return (
-    <main className="container mx-auto p-4 md:p-8 lg:p-12 min-h-screen flex flex-col items-center">
-      <h1 className="text-4xl font-bold mb-4 text-primary">
+    // Adjusted padding and ensures full height for gradient effect
+    <main className="container mx-auto px-4 py-8 md:px-8 md:py-12 lg:px-12 lg:py-16 min-h-screen flex flex-col items-center">
+      <h1 className="text-4xl md:text-5xl font-bold mb-4 text-primary text-center">
         MzansiLegal AI
       </h1>
       <p className="text-lg text-muted-foreground mb-8 text-center max-w-2xl">
@@ -15,7 +16,7 @@ export default function Home() {
 
       {/* Wrap the Alert in ClientOnly to prevent hydration issues */}
       <ClientOnly>
-        <Alert className="max-w-3xl mb-8 border-destructive/50 text-destructive [&>svg]:text-destructive">
+        <Alert className="max-w-3xl mb-8 border-destructive/50 text-destructive [&>svg]:text-destructive bg-destructive/10">
           {/* Use ClientOnly for the icon too */}
           <ClientOnly><Terminal className="h-4 w-4" /></ClientOnly>
           <AlertTitle>Disclaimer</AlertTitle>

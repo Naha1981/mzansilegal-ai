@@ -1,6 +1,5 @@
 import type {Metadata} from 'next';
 import { GeistSans } from 'geist/font/sans';
-// Removed GeistMono import as it's not found
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 
@@ -15,8 +14,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      {/* Removed GeistMono from className as it's not imported */}
+    // Apply dark theme globally
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body className={`${GeistSans.variable} font-sans antialiased`}>
         {children}
         <Toaster />

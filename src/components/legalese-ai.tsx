@@ -11,8 +11,8 @@ import { Loader2, FileText, BookOpenCheck, Search, AlertCircle } from "lucide-re
 import { analyzeQuery } from "@/app/actions";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { cn } from "@/lib/utils"; // Import cn for conditional class names
-import { ClientOnly } from '@/components/client-only'; // Import ClientOnly
+import { cn } from "@/lib/utils";
+import { ClientOnly } from '@/components/client-only';
 
 type AnalysisType = 'Legal Research' | 'Case Study Analysis' | 'Contract Analysis';
 
@@ -27,14 +27,13 @@ export function LegaleseAI() {
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
-  const [selectedAnalysisType, setSelectedAnalysisType] = useState<AnalysisType>('Legal Research'); // Default to Legal Research
+  const [selectedAnalysisType, setSelectedAnalysisType] = useState<AnalysisType>('Legal Research');
 
   const handleTypeSelection = (type: AnalysisType) => {
     setSelectedAnalysisType(type);
-    // Optionally clear query or result when type changes
-    // setQuery("");
-    // setResult(null);
-    // setError(null);
+    setQuery(""); // Clear query when type changes for better UX
+    setResult(null);
+    setError(null);
   };
 
   const handleSubmit = () => {
@@ -72,12 +71,14 @@ export function LegaleseAI() {
   const getIconForAnalysisType = (type: AnalysisType | null = selectedAnalysisType) => {
     const analysis = analysisTypes.find(t => t.type === type);
     const Icon = analysis?.icon;
-    return Icon ? <Icon className="h-6 w-6 text-primary" /> : null;
+    // Wrap icon in ClientOnly
+    return Icon ? <ClientOnly><Icon className="h-6 w-6 text-primary" /></ClientOnly> : null;
   };
 
   return (
     <div className="w-full max-w-3xl space-y-6">
-      <Card>
+      {/* Apply shadow and slightly adjust background for better contrast */}
+      <Card className="shadow-lg bg-card/95 backdrop-blur-sm">
         <CardHeader>
           <CardTitle>Select Analysis Type & Enter Details</CardTitle>
           <CardDescription>
@@ -95,8 +96,8 @@ export function LegaleseAI() {
                   onClick={() => handleTypeSelection(type)}
                   disabled={isPending}
                   className={cn(
-                    "flex-grow sm:flex-grow-0", // Allow wrap on small screens
-                     selectedAnalysisType === type && "ring-2 ring-primary ring-offset-2"
+                    "flex-grow sm:flex-grow-0 transition-all duration-200 hover:scale-105", // Allow wrap on small screens and add subtle hover effect
+                     selectedAnalysisType === type && "ring-2 ring-primary ring-offset-2 bg-primary/20 text-primary-foreground" // Enhanced selected style
                   )}
                 >
                   <Icon className="mr-2 h-4 w-4" />
@@ -116,13 +117,13 @@ export function LegaleseAI() {
             }
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="min-h-[150px] text-base resize-y"
+            className="min-h-[150px] text-base resize-y bg-background/80 backdrop-blur-sm focus:ring-primary" // Input styling
             disabled={isPending}
           />
           <Button
             onClick={handleSubmit}
             disabled={isPending || !query.trim() || !selectedAnalysisType}
-            className="w-full"
+            className="w-full font-semibold text-lg py-3 transition-all duration-200 hover:bg-primary/90 hover:shadow-md" // Enhanced button style
            >
             {isPending ? (
               <>
@@ -136,31 +137,31 @@ export function LegaleseAI() {
       </Card>
 
       {error && (
-        <Alert variant="destructive">
-           <AlertCircle className="h-4 w-4" />
+         <Alert variant="destructive" className="shadow-lg bg-destructive/20 backdrop-blur-sm">
+           <ClientOnly><AlertCircle className="h-4 w-4" /></ClientOnly>
           <AlertTitle>Error</AlertTitle>
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}
 
       {isPending && (
-        <Card>
+        <Card className="shadow-lg bg-card/95 backdrop-blur-sm">
           <CardContent className="p-6 flex flex-col items-center justify-center space-y-4">
-            <Loader2 className="h-12 w-12 animate-spin text-primary" />
+            <ClientOnly><Loader2 className="h-12 w-12 animate-spin text-primary" /></ClientOnly>
             <p className="text-muted-foreground">Processing your request for {selectedAnalysisType}...</p>
           </CardContent>
         </Card>
       )}
 
       {result && !isPending && (
-        <Card>
+         <Card className="shadow-lg bg-card/95 backdrop-blur-sm">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-             <CardTitle className="text-xl font-semibold">AI Analysis Result ({selectedAnalysisType})</CardTitle>
-             {/* Wrap the icon here as well to be safe */}
-             <ClientOnly>{getIconForAnalysisType()}</ClientOnly>
+             <CardTitle className="text-xl font-semibold text-primary">{selectedAnalysisType} Result</CardTitle>
+             {getIconForAnalysisType()}
           </CardHeader>
           <CardContent>
-            <div className="prose prose-blue dark:prose-invert max-w-none text-foreground">
+             {/* Enhanced prose styles for readability */}
+            <div className="prose prose-lg dark:prose-invert max-w-none text-foreground prose-headings:text-primary prose-a:text-accent hover:prose-a:text-accent/80 prose-strong:text-primary-foreground prose-strong:bg-primary/50 prose-strong:px-1 prose-strong:rounded">
                <ReactMarkdown remarkPlugins={[remarkGfm]}>{result}</ReactMarkdown>
             </div>
           </CardContent>
@@ -169,4 +170,3 @@ export function LegaleseAI() {
     </div>
   );
 }
-
