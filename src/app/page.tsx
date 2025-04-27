@@ -32,13 +32,13 @@ export default function LandingPage() {
           <a href="#pricing" className="font-medium text-[#ccc] hover:text-[#00d4ff] transition-colors duration-300">Pricing</a>
           <a href="#features" className="font-medium text-[#ccc] hover:text-[#00d4ff] transition-colors duration-300">Features</a>
           {/* Link to the actual app page */}
-          <Link href="/app" className="font-medium text-[#00d4ff] hover:text-white transition-colors duration-300 border border-[#00d4ff] px-3 py-1 rounded-md text-sm">
+          <Link href="/app/app" className="font-medium text-[#00d4ff] hover:text-white transition-colors duration-300 border border-[#00d4ff] px-3 py-1 rounded-md text-sm">
             Go to App
           </Link>
         </nav>
          {/* Simple Link for Mobile */}
          <nav className="sm:hidden">
-           <Link href="/app" className="font-medium text-[#00d4ff] hover:text-white transition-colors duration-300 border border-[#00d4ff] px-3 py-1 rounded-md text-sm">
+           <Link href="/app/app" className="font-medium text-[#00d4ff] hover:text-white transition-colors duration-300 border border-[#00d4ff] px-3 py-1 rounded-md text-sm">
              Launch App
            </Link>
          </nav>
@@ -57,7 +57,7 @@ export default function LandingPage() {
           Your trusted AI partner for Legal Research, Case Studies, and Contract Analysis. Fast, accurate, and built for the South African legal system.
         </p>
         {/* Link to the actual app page */}
-        <Link href="/app" className="inline-block bg-[#00d4ff] text-[#0b0b1f] py-3 px-8 rounded-lg font-bold text-base sm:text-lg transition-all duration-300 hover:bg-[#00aacd] hover:scale-105">
+        <Link href="/app/app" className="inline-block bg-[#00d4ff] text-[#0b0b1f] py-3 px-8 rounded-lg font-bold text-base sm:text-lg transition-all duration-300 hover:bg-[#00aacd] hover:scale-105">
           Get Started
         </Link>
       </motion.section>
@@ -81,14 +81,16 @@ export default function LandingPage() {
              className="bg-[#27275a] rounded-2xl p-8 w-full sm:w-auto max-w-sm sm:max-w-xs shadow-xl transition-transform duration-300" // Responsive width
            >
             <h3 className="text-2xl font-semibold mb-3 text-[#f5f5f5]">Starter</h3>
-            <p className="text-4xl font-bold text-[#00d4ff] my-5">R500<span className="text-lg font-normal text-[#ccc]"> / month</span></p>
+            <p className="text-4xl font-bold text-[#00d4ff] my-5">R0<span className="text-lg font-normal text-[#ccc]"> / month</span></p>
             <ul className="list-none p-0 mb-6 text-base text-[#ccc] space-y-2 text-left pl-4"> {/* Align text left */}
-              <li>✓ Legal Research Access</li>
-              <li>✓ Basic Case Study Insights</li>
-              <li>✓ Email Support</li>
+              <li>AI Legal Assistant (basic)</li>
+              <li>Legal Research (South Africa only, 20 queries/month)</li>
+              <li>Daily Legal News (5 articles/day)</li>
+              <li>Disclaimer notice</li>
+              <li>Full UI Access</li>
             </ul>
             {/* Link to the actual app page */}
-            <Link href="/app" className="inline-block bg-[#00d4ff] text-[#0b0b1f] py-3 px-6 rounded-lg font-bold text-sm transition-all duration-300 hover:bg-[#00aacd] hover:scale-105">
+            <Link href="/app/app" className="inline-block bg-[#00d4ff] text-[#0b0b1f] py-3 px-6 rounded-lg font-bold text-sm transition-all duration-300 hover:bg-[#00aacd] hover:scale-105">
               Choose Starter
             </Link>
           </motion.div>
@@ -99,14 +101,17 @@ export default function LandingPage() {
              className="bg-[#27275a] rounded-2xl p-8 w-full sm:w-auto max-w-sm sm:max-w-xs shadow-xl transition-transform duration-300 border-2 border-[#00d4ff]" // Highlighted card
            >
             <h3 className="text-2xl font-semibold mb-3 text-[#f5f5f5]">Professional</h3>
-            <p className="text-4xl font-bold text-[#00d4ff] my-5">R1000<span className="text-lg font-normal text-[#ccc]"> / month</span></p>
+            <p className="text-4xl font-bold text-[#00d4ff] my-5">R500<span className="text-lg font-normal text-[#ccc]"> / month</span></p>
             <ul className="list-none p-0 mb-6 text-base text-[#ccc] space-y-2 text-left pl-4">
-              <li>✓ Everything in Starter</li>
-              <li>✓ Advanced Case Study Analysis</li>
-              <li>✓ Contract Draft Assistance</li>
-              <li>✓ Priority Email Support</li>
+              <li>AI Legal Assistant (advanced prompts, faster processing)</li>
+              <li>Legal Research (South Africa + selected international jurisdictions)</li>
+              <li>Case Study Analysis (basic: 5 cases/month)</li>
+              <li>Contract Analysis (5 contracts/month)</li>
+              <li>Daily Legal News (10+ articles/day)</li>
+              <li>Disclaimer</li>
+              <li>Full UI Access</li>
             </ul>
-            <Link href="/app" className="inline-block bg-[#00d4ff] text-[#0b0b1f] py-3 px-6 rounded-lg font-bold text-sm transition-all duration-300 hover:bg-[#00aacd] hover:scale-105">
+            <Link href="/app/app" className="inline-block bg-[#00d4ff] text-[#0b0b1f] py-3 px-6 rounded-lg font-bold text-sm transition-all duration-300 hover:bg-[#00aacd] hover:scale-105">
               Choose Professional
             </Link>
           </motion.div>
@@ -117,18 +122,80 @@ export default function LandingPage() {
              className="bg-[#27275a] rounded-2xl p-8 w-full sm:w-auto max-w-sm sm:max-w-xs shadow-xl transition-transform duration-300"
            >
             <h3 className="text-2xl font-semibold mb-3 text-[#f5f5f5]">Elite</h3>
-            <p className="text-4xl font-bold text-[#00d4ff] my-5">R1500<span className="text-lg font-normal text-[#ccc]"> / month</span></p>
+            <p className="text-4xl font-bold text-[#00d4ff] my-5">R1000<span className="text-lg font-normal text-[#ccc]"> / month</span></p>
             <ul className="list-none p-0 mb-6 text-base text-[#ccc] space-y-2 text-left pl-4">
-              <li>✓ Everything in Professional</li>
-              <li>✓ Custom Legal Research Reports</li>
-              <li>✓ Dedicated AI Legal Advisor</li>
-              <li>✓ 24/7 Premium Support</li>
+              <li>AI Legal Assistant (unlimited use, priority speed)</li>
+              <li>Legal Research (full access to South African + international law databases)</li>
+              <li>Case Study Analysis (unlimited cases, outcome prediction scoring)</li>
+              <li>Contract Analysis (unlimited uploads, advanced clause suggestions)</li>
+              <li>Daily Legal News (priority feed, customizable alerts)</li>
+              <li>Customizable Disclaimer</li>
+              <li>Premium UI themes (dark mode + custom branding options)</li>
+              <li>Dedicated onboarding + premium support</li>
+              <li>API access (on request)</li>
             </ul>
-            <Link href="/app" className="inline-block bg-[#00d4ff] text-[#0b0b1f] py-3 px-6 rounded-lg font-bold text-sm transition-all duration-300 hover:bg-[#00aacd] hover:scale-105">
+            <Link href="/app/app" className="inline-block bg-[#00d4ff] text-[#0b0b1f] py-3 px-6 rounded-lg font-bold text-sm transition-all duration-300 hover:bg-[#00aacd] hover:scale-105">
               Choose Elite
             </Link>
           </motion.div>
 
+        </div>
+        {/* Summary Table */}
+        <div className="overflow-x-auto mt-12">
+          <table className="w-full text-left">
+            <thead>
+              <tr className="text-[#00d4ff]">
+                <th className="py-2 px-4">Feature</th>
+                <th className="py-2 px-4">Starter (R0)</th>
+                <th className="py-2 px-4">Professional (R500)</th>
+                <th className="py-2 px-4">Enterprise (R1000)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="py-2 px-4">AI Legal Assistance</td>
+                <td className="py-2 px-4">Limited</td>
+                <td className="py-2 px-4">Full</td>
+                <td className="py-2 px-4">Unlimited</td>
+              </tr>
+              <tr>
+                <td className="py-2 px-4">Legal Research</td>
+                <td className="py-2 px-4">SA Only</td>
+                <td className="py-2 px-4">SA + Intl</td>
+                <td className="py-2 px-4">Full Access</td>
+              </tr>
+              <tr>
+                <td className="py-2 px-4">Case Study Analysis</td>
+                <td className="py-2 px-4">❌</td>
+                <td className="py-2 px-4">Basic (5/month)</td>
+                <td className="py-2 px-4">Unlimited</td>
+              </tr>
+              <tr>
+                <td className="py-2 px-4">Contract Analysis</td>
+                <td className="py-2 px-4">❌</td>
+                <td className="py-2 px-4">5 docs/month</td>
+                <td className="py-2 px-4">Unlimited</td>
+              </tr>
+              <tr>
+                <td className="py-2 px-4">Daily Legal News</td>
+                <td className="py-2 px-4">5 articles/day</td>
+                <td className="py-2 px-4">10+ articles/day</td>
+                <td className="py-2 px-4">Custom alerts</td>
+              </tr>
+              <tr>
+                <td className="py-2 px-4">Disclaimer</td>
+                <td className="py-2 px-4">Standard</td>
+                <td className="py-2 px-4">Standard</td>
+                <td className="py-2 px-4">Customizable</td>
+              </tr>
+               <tr>
+                <td className="py-2 px-4">UI Access</td>
+                <td className="py-2 px-4">Full</td>
+                <td className="py-2 px-4">Full</td>
+                <td className="py-2 px-4">Premium UI</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </motion.section>
 
