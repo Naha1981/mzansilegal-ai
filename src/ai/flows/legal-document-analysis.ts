@@ -62,8 +62,7 @@ const prompt = ai.definePrompt({
     *   Check for compliance with South African law. Identify potentially illegal/unenforceable clauses.
 *   **Tailor Analysis:** Address the user's specific questions and client concerns extracted from the input.
 *   **Present Findings:**
-    *   Generate a clear, concise, well-organized report.
-    *   Use headings, subheadings, bullet points.
+    *   Generate a clear, concise, well-organized report using the specified Markdown formatting.
     *   Summarize key findings and recommendations.
     *   Provide clause-by-clause analysis highlighting issues/concerns.
     *   Use precise legal terminology, explain jargon.
@@ -76,13 +75,13 @@ const prompt = ai.definePrompt({
 
 **Output Formatting:**
 *   **Use Markdown formatting.** Structure the report logically for maximum readability.
-*   **Headings and Subheadings:** Use `##` for main sections (e.g., ## Executive Summary, ## Key Clause Analysis, ## Risk Assessment, ## Recommendations) and `###` for subsections (e.g., ### Indemnity Clause, ### Termination Clause).
-*   **Lists:** Use bullet points (`- `) or numbered lists (`1. `) for summarizing findings, risks, recommendations, or clause details. Ensure consistent indentation.
+*   **Headings and Subheadings:** Use \`##\` for main sections (e.g., \`## Executive Summary\`, \`## Key Clause Analysis\`, \`## Risk Assessment\`, \`## Recommendations\`) and \`###\` for subsections (e.g., \`### Indemnity Clause\`, \`### Termination Clause\`).
+*   **Lists:** Use bullet points (\`-\`) or numbered lists (\`1.\`) for summarizing findings, risks, recommendations, or clause details. Ensure consistent indentation.
 *   **Paragraphs:** Break down complex analysis into shorter, focused paragraphs.
 *   **Clarity:** Use clear and concise legal language appropriate for professionals.
-*   **Emphasis:** Use **bold** (`**text**`) or _italics_ (`_text_`) sparingly for emphasis where appropriate. **Do not** use asterisks (`*`) for emphasis.
+*   **Emphasis:** Use **bold** (\`**text**\`) or _italics_ (\`_text_\`) sparingly for emphasis where appropriate. **Do not** use asterisks (\`*\`) for emphasis or lists.
 *   **Citations:** Format citations clearly as instructed.
-*   **Disclaimer:** Ensure the mandatory disclaimer is included at the very end, separated by `---`.
+*   **Disclaimer:** Ensure the mandatory disclaimer is included at the very end, separated by \`---\`.
 
 **Security and Ethical Considerations:**
 *   **No Legal Advice.**
@@ -140,4 +139,3 @@ const legalDocumentAnalysisFlow = ai.defineFlow<
     }
   }
 );
-

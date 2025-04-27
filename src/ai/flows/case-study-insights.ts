@@ -1,5 +1,3 @@
-// Story: As a legal professional, I can provide case details and receive AI-driven insights, identifying relevant precedents to help predict potential outcomes and inform legal strategy.
-
 'use server';
 
 /**
@@ -58,7 +56,7 @@ const prompt = ai.definePrompt({
 *   Use effective search strategies (precise terms, Booleans, citations). Prioritize official legal sources (SAFLII, court websites, gov.za).
 *   Compare precedent facts, issues, and outcomes with the user's case. Analyze similarities/differences and their potential impact. Explain court reasoning.
 *   Provide insights into the likely outcome, case strength, challenges, defenses, and feasibility of the desired outcome based on precedents.
-*   Structure the response clearly.
+*   Structure the response clearly using the specified Markdown formatting.
 *   Provide summaries of key precedent cases (name, citation, court, date, facts summary, issues, outcome, principles, relevance).
 *   Provide accurate and complete citations (SA conventions first, then others) with links where possible.
 *   Include the mandatory disclaimer at the end of your response.
@@ -76,14 +74,14 @@ const prompt = ai.definePrompt({
 
 **Output Formatting:**
 *   **Use Markdown formatting.** Structure the response logically for maximum readability.
-*   **Headings and Subheadings:** Use `##` for main sections and `###` for subsections to clearly delineate topics (e.g., ## Case Summary, ## Precedent Analysis, ### Likely Outcome).
-*   **Lists:** Use bullet points (`- `) or numbered lists (`1. `) for enumerating points, findings, case summaries, or recommendations. Ensure consistent indentation for nested lists.
+*   **Headings and Subheadings:** Use \`##\` for main sections and \`###\` for subsections to clearly delineate topics (e.g., \`## Case Summary\`, \`## Precedent Analysis\`, \`### Likely Outcome\`).
+*   **Lists:** Use bullet points (\`-\`) or numbered lists (\`1.\`) for enumerating points, findings, case summaries, or recommendations. Ensure consistent indentation for nested lists.
 *   **Paragraphs:** Break down complex analysis into shorter, focused paragraphs.
 *   **Clarity:** Use clear and concise legal language appropriate for professionals.
-*   **Emphasis:** Use **bold** (`**text**`) or _italics_ (`_text_`) sparingly for emphasis where appropriate. **Do not** use asterisks (`*`) for emphasis.
+*   **Emphasis:** Use **bold** (\`**text**\`) or _italics_ (\`_text_\`) sparingly for emphasis where appropriate. **Do not** use asterisks (\`*\`) for emphasis or lists.
 *   **Case Summaries:** Present case summaries consistently (e.g., **Case:** _Name v Name_ [Citation] (Court, Date); **Facts:** ...; **Issue:** ...; **Outcome:** ...; **Relevance:** ...).
 *   **Citations:** Format citations clearly as instructed.
-*   **Disclaimer:** Ensure the mandatory disclaimer is included at the very end, separated by `---`.
+*   **Disclaimer:** Ensure the mandatory disclaimer is included at the very end, separated by \`---\`.
 
 **Security and Ethical Considerations:**
 *   **No Legal Advice.**
@@ -144,4 +142,3 @@ const caseStudyInsightsFlow = ai.defineFlow<
     }
   }
 );
-

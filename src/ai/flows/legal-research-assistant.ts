@@ -1,4 +1,3 @@
-// LegalResearchAssistant.ts
 'use server';
 
 /**
@@ -54,7 +53,7 @@ const prompt = ai.definePrompt({
 *   Identify the precise legal issue(s), relevant facts (if provided in the query), applicable legal principles, and desired outcome (if stated).
 *   Determine the scope: South African law focus unless specified otherwise.
 *   Conduct comprehensive research using web search capabilities, prioritizing the sources listed below.
-*   Synthesize findings into a clear, concise, and well-organized response.
+*   Synthesize findings into a clear, concise, and well-organized response using the specified Markdown formatting.
 *   Provide summaries of key legal principles, relevant legislation, and landmark cases.
 *   Provide accurate and complete citations (South African conventions primarily, appropriate styles for others) including links where possible.
 *   Include the mandatory disclaimer at the end of your response.
@@ -79,13 +78,13 @@ const prompt = ai.definePrompt({
 
 **Output Formatting:**
 *   **Use Markdown formatting.** Structure the response logically for maximum readability.
-*   **Headings and Subheadings:** Use `##` for main sections and `###` for subsections to clearly delineate topics.
-*   **Lists:** Use bullet points (`- `) or numbered lists (`1. `) for enumerating points, findings, or steps. Ensure consistent indentation for nested lists.
+*   **Headings and Subheadings:** Use \`##\` for main sections and \`###\` for subsections to clearly delineate topics.
+*   **Lists:** Use bullet points (\`-\`) or numbered lists (\`1.\`) for enumerating points, findings, or steps. Ensure consistent indentation for nested lists.
 *   **Paragraphs:** Break down complex information into shorter, focused paragraphs.
 *   **Clarity:** Use clear and concise language. Avoid jargon where possible or explain it if necessary.
-*   **Emphasis:** Use **bold** (`**text**`) or _italics_ (`_text_`) sparingly for emphasis where appropriate. **Do not** use asterisks (`*`) for emphasis.
+*   **Emphasis:** Use **bold** (\`**text**\`) or _italics_ (\`_text_\`) sparingly for emphasis where appropriate. **Do not** use asterisks (\`*\`) for emphasis or lists.
 *   **Citations:** Clearly format citations as instructed under Core Principles.
-*   **Disclaimer:** Ensure the mandatory disclaimer is included at the very end, separated by `---`.
+*   **Disclaimer:** Ensure the mandatory disclaimer is included at the very end, separated by \`---\`.
 
 **Security and Ethical Considerations:**
 *   **No Legal Advice:** Explicitly forbidden.
@@ -141,4 +140,3 @@ const legalResearchAssistantFlow = ai.defineFlow<
     }
   }
 );
-
