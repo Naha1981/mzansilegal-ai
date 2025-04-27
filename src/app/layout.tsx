@@ -1,11 +1,11 @@
 import type {Metadata} from 'next';
 import { GeistSans } from 'geist/font/sans';
-import { GeistMono } from 'geist/font/mono';
+// Removed GeistMono import as it's not found
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: 'Legalese AI',
+  title: 'MzansiLegal AI',
   description: 'AI-Powered Legal Assistant for South African Lawyers',
 };
 
@@ -16,7 +16,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${GeistSans.variable} ${GeistMono.variable} font-sans antialiased`}>
+      {/* Removed GeistMono from className as it's not imported */}
+      <body className={`${GeistSans.variable} font-sans antialiased`}>
         {children}
         <Toaster />
       </body>

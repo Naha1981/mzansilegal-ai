@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <main className="container mx-auto p-4 md:p-8 lg:p-12 min-h-screen flex flex-col items-center">
       <h1 className="text-4xl font-bold mb-4 text-primary">
-        Legalese AI
+        MzansiLegal AI
       </h1>
       <p className="text-lg text-muted-foreground mb-8 text-center max-w-2xl">
         Your AI-powered assistant for Contract Analysis, Case Study Insights, and Legal Research in South African Law.
@@ -16,6 +16,8 @@ export default function Home() {
       {/* Wrap the Alert in ClientOnly to prevent hydration issues */}
       <ClientOnly>
         <Alert className="max-w-3xl mb-8 border-destructive/50 text-destructive [&>svg]:text-destructive">
+          {/* Ensure the icon itself is not causing hydration issues by also wrapping or simplifying */}
+          {/* For simplicity, we'll keep it, but be aware complex SVG rendering could also be a source */}
           <Terminal className="h-4 w-4" />
           <AlertTitle>Disclaimer</AlertTitle>
           <AlertDescription>
@@ -23,6 +25,7 @@ export default function Home() {
           </AlertDescription>
         </Alert>
       </ClientOnly>
+
 
       <LegaleseAI />
     </main>

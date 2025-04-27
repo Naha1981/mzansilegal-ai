@@ -10,41 +10,54 @@ import { Loader2, FileText, BookOpenCheck, Search, AlertCircle } from "lucide-re
 import { analyzeQuery } from "@/app/actions";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { cn } from "@/lib/utils"; // Import cn for conditional class names
+
+type AnalysisType = 'Legal Research' | 'Case Study Analysis' | 'Contract Analysis';
+
+const analysisTypes: { type: AnalysisType; icon: React.ElementType }[] = [
+  { type: 'Legal Research', icon: Search },
+  { type: 'Case Study Analysis', icon: BookOpenCheck },
+  { type: 'Contract Analysis', icon: FileText },
+];
 
 export function LegaleseAI() {
   const [query, setQuery] = useState("");
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
-  const [analysisType, setAnalysisType] = useState<string | null>(null); // To show relevant icon
+  const [selectedAnalysisType, setSelectedAnalysisType] = useState<AnalysisType>('Legal Research'); // Default to Legal Research
+
+  const handleTypeSelection = (type: AnalysisType) => {
+    setSelectedAnalysisType(type);
+    // Optionally clear query or result when type changes
+    // setQuery("");
+    // setResult(null);
+    // setError(null);
+  };
 
   const handleSubmit = () => {
     if (!query.trim()) {
-      setError("Please enter a query.");
+      setError("Please enter your details or query.");
       return;
+    }
+    if (!selectedAnalysisType) {
+        setError("Please select an analysis type.");
+        return;
     }
     setError(null);
     setResult(null);
-    setAnalysisType(null);
+
 
     startTransition(async () => {
       try {
-        const response = await analyzeQuery(query);
+        console.log(`Submitting query for ${selectedAnalysisType}:`, query);
+        const response = await analyzeQuery(query, selectedAnalysisType);
+        console.log("Analysis response:", response);
         if (response.error) {
           setError(response.error);
           setResult(null);
         } else {
           setResult(response.analysis || "No analysis provided.");
-          // Determine analysis type for icon based on keywords (simple check)
-          if (query.toLowerCase().includes("contract analysis")) {
-            setAnalysisType("Contract Analysis");
-          } else if (query.toLowerCase().includes("case study analysis")) {
-            setAnalysisType("Case Study Analysis");
-          } else if (query.toLowerCase().includes("legal research")) {
-            setAnalysisType("Legal Research");
-          } else {
-             setAnalysisType(null); // If no keywords, might be an error or general response
-          }
         }
       } catch (err) {
         console.error("Analysis failed:", err);
@@ -54,43 +67,64 @@ export function LegaleseAI() {
     });
   };
 
-  const getIconForAnalysisType = () => {
-    switch (analysisType) {
-      case "Contract Analysis":
-        return <FileText className="h-6 w-6 text-primary" />;
-      case "Case Study Analysis":
-        return <BookOpenCheck className="h-6 w-6 text-primary" />;
-      case "Legal Research":
-        return <Search className="h-6 w-6 text-primary" />;
-      default:
-        return null; // No icon if type is unknown or response is error
-    }
+  const getIconForAnalysisType = (type: AnalysisType | null = selectedAnalysisType) => {
+    const analysis = analysisTypes.find(t => t.type === type);
+    const Icon = analysis?.icon;
+    return Icon ? <Icon className="h-6 w-6 text-primary" /> : null;
   };
 
   return (
     <div className="w-full max-w-3xl space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle>Enter Your Legal Query</CardTitle>
+          <CardTitle>Select Analysis Type & Enter Details</CardTitle>
           <CardDescription>
-            Specify "Contract Analysis", "Case Study Analysis", or "Legal Research" followed by your details.
+            Choose the type of analysis you need, then provide the necessary details or text below.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
+          <div className="flex flex-wrap justify-center gap-2 mb-4">
+            {analysisTypes.map(({ type, icon: Icon }) => (
+              <Button
+                key={type}
+                variant={selectedAnalysisType === type ? "secondary" : "outline"}
+                onClick={() => handleTypeSelection(type)}
+                disabled={isPending}
+                className={cn(
+                  "flex-grow sm:flex-grow-0", // Allow wrap on small screens
+                   selectedAnalysisType === type && "ring-2 ring-primary ring-offset-2"
+                )}
+              >
+                <Icon className="mr-2 h-4 w-4" />
+                {type}
+              </Button>
+            ))}
+          </div>
+
           <Textarea
-            placeholder="e.g., Legal Research: What are the requirements for a valid will in South African law..."
+            placeholder={
+              selectedAnalysisType === 'Contract Analysis'
+                ? "Paste the full contract text here..."
+                : selectedAnalysisType === 'Case Study Analysis'
+                ? "Describe the case details..."
+                : "Enter your legal research question or topic..." // Legal Research placeholder
+            }
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className="min-h-[150px] text-base resize-y"
             disabled={isPending}
           />
-          <Button onClick={handleSubmit} disabled={isPending || !query.trim()} className="w-full">
+          <Button
+            onClick={handleSubmit}
+            disabled={isPending || !query.trim() || !selectedAnalysisType}
+            className="w-full"
+           >
             {isPending ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Analyzing...
               </>
             ) : (
-              "Analyze Query"
+              "Analyze"
             )}
           </Button>
         </CardContent>
@@ -108,7 +142,7 @@ export function LegaleseAI() {
         <Card>
           <CardContent className="p-6 flex flex-col items-center justify-center space-y-4">
             <Loader2 className="h-12 w-12 animate-spin text-primary" />
-            <p className="text-muted-foreground">Processing your request...</p>
+            <p className="text-muted-foreground">Processing your request for {selectedAnalysisType}...</p>
           </CardContent>
         </Card>
       )}
@@ -116,7 +150,7 @@ export function LegaleseAI() {
       {result && !isPending && (
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-             <CardTitle className="text-xl font-semibold">AI Analysis</CardTitle>
+             <CardTitle className="text-xl font-semibold">AI Analysis Result ({selectedAnalysisType})</CardTitle>
             {getIconForAnalysisType()}
           </CardHeader>
           <CardContent>

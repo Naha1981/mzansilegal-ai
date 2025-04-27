@@ -4,46 +4,55 @@ import { legalResearchAssistant } from "@/ai/flows/legal-research-assistant";
 import { caseStudyInsights } from "@/ai/flows/case-study-insights";
 import { legalDocumentAnalysis } from "@/ai/flows/legal-document-analysis";
 
-export async function analyzeQuery(query: string): Promise<{ analysis?: string | null; error?: string }> {
-  const lowerCaseQuery = query.toLowerCase();
+// Define the possible analysis types
+type AnalysisType = 'Legal Research' | 'Case Study Analysis' | 'Contract Analysis';
+
+export async function analyzeQuery(
+    query: string,
+    analysisType: AnalysisType // Explicitly pass the analysis type
+): Promise<{ analysis?: string | null; error?: string }> {
+
+  console.log(`Received request for ${analysisType}`);
 
   try {
-    if (lowerCaseQuery.includes("contract analysis")) {
-      // For Contract Analysis, we need more structured input potentially,
-      // but based on the prompt, we'll try to infer details from the query string.
-      // This is a simplification. A real app might need separate inputs.
-      console.log("Routing to Legal Document Analysis...");
-      const response = await legalDocumentAnalysis({
-        documentText: query, // Using the full query as document text for simplicity
-        contractType: "Inferred from query", // Placeholder - needs better extraction
-        clientInstructions: "Inferred from query", // Placeholder
-      });
-      console.log("Legal Document Analysis response:", response);
-      return { analysis: response.analysisReport };
+    switch (analysisType) {
+      case "Contract Analysis":
+        console.log("Routing to Legal Document Analysis...");
+        // Assume query contains the document text.
+        // ContractType and ClientInstructions might need more sophisticated extraction
+        // or separate input fields in a more complex UI.
+        const contractResponse = await legalDocumentAnalysis({
+          documentText: query,
+          contractType: "Provided in text", // Placeholder
+          clientInstructions: "Analyze the provided contract text.", // Placeholder
+        });
+        console.log("Legal Document Analysis response:", contractResponse);
+        return { analysis: contractResponse.analysisReport };
 
-    } else if (lowerCaseQuery.includes("case study analysis")) {
-       console.log("Routing to Case Study Insights...");
-       const response = await caseStudyInsights({
-         caseDetails: query, // Using the full query as case details
-       });
-       console.log("Case Study Insights response:", response);
-       return { analysis: response.analysis };
+      case "Case Study Analysis":
+        console.log("Routing to Case Study Insights...");
+        // Assume query contains the case details.
+        const caseResponse = await caseStudyInsights({
+          caseDetails: query,
+        });
+        console.log("Case Study Insights response:", caseResponse);
+        return { analysis: caseResponse.analysis };
 
-    } else if (lowerCaseQuery.includes("legal research")) {
-       console.log("Routing to Legal Research Assistant...");
-       const response = await legalResearchAssistant({
-         researchQuery: query,
-       });
-       console.log("Legal Research Assistant response:", response);
-       return { analysis: response.analysis };
+      case "Legal Research":
+        console.log("Routing to Legal Research Assistant...");
+        const researchResponse = await legalResearchAssistant({
+          researchQuery: query,
+        });
+        console.log("Legal Research Assistant response:", researchResponse);
+        return { analysis: researchResponse.analysis };
 
-    } else {
-      console.log("No specific keyword detected.");
-      return { error: "Please specify whether you require Legal Research, Case Study Analysis, or Contract Analysis for assistance." };
+      default:
+        // This case should technically not be reachable if the UI enforces selection
+        console.log("Unknown analysis type specified.");
+        return { error: "An unknown analysis type was specified. Please select a valid type." };
     }
   } catch (error) {
-     console.error("Error during analysis:", error);
-     // Check if the error object has a message property
+     console.error(`Error during ${analysisType}:`, error);
      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred during analysis.";
      return { error: `Analysis failed: ${errorMessage}` };
   }
