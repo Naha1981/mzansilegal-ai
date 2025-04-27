@@ -1,3 +1,4 @@
+
 "use client";
 
 import * as React from "react";
@@ -11,6 +12,7 @@ import { analyzeQuery } from "@/app/actions";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { cn } from "@/lib/utils"; // Import cn for conditional class names
+import { ClientOnly } from '@/components/client-only'; // Import ClientOnly
 
 type AnalysisType = 'Legal Research' | 'Case Study Analysis' | 'Contract Analysis';
 
@@ -83,23 +85,26 @@ export function LegaleseAI() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex flex-wrap justify-center gap-2 mb-4">
-            {analysisTypes.map(({ type, icon: Icon }) => (
-              <Button
-                key={type}
-                variant={selectedAnalysisType === type ? "secondary" : "outline"}
-                onClick={() => handleTypeSelection(type)}
-                disabled={isPending}
-                className={cn(
-                  "flex-grow sm:flex-grow-0", // Allow wrap on small screens
-                   selectedAnalysisType === type && "ring-2 ring-primary ring-offset-2"
-                )}
-              >
-                <Icon className="mr-2 h-4 w-4" />
-                {type}
-              </Button>
-            ))}
-          </div>
+          {/* Wrap the buttons section in ClientOnly */}
+          <ClientOnly>
+            <div className="flex flex-wrap justify-center gap-2 mb-4">
+              {analysisTypes.map(({ type, icon: Icon }) => (
+                <Button
+                  key={type}
+                  variant={selectedAnalysisType === type ? "secondary" : "outline"}
+                  onClick={() => handleTypeSelection(type)}
+                  disabled={isPending}
+                  className={cn(
+                    "flex-grow sm:flex-grow-0", // Allow wrap on small screens
+                     selectedAnalysisType === type && "ring-2 ring-primary ring-offset-2"
+                  )}
+                >
+                  <Icon className="mr-2 h-4 w-4" />
+                  {type}
+                </Button>
+              ))}
+            </div>
+          </ClientOnly>
 
           <Textarea
             placeholder={
@@ -151,7 +156,8 @@ export function LegaleseAI() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
              <CardTitle className="text-xl font-semibold">AI Analysis Result ({selectedAnalysisType})</CardTitle>
-            {getIconForAnalysisType()}
+             {/* Wrap the icon here as well to be safe */}
+             <ClientOnly>{getIconForAnalysisType()}</ClientOnly>
           </CardHeader>
           <CardContent>
             <div className="prose prose-blue dark:prose-invert max-w-none text-foreground">
@@ -163,3 +169,4 @@ export function LegaleseAI() {
     </div>
   );
 }
+
