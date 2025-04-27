@@ -62,9 +62,11 @@ export default {
   			}
   		},
   		borderRadius: {
-  			lg: 'var(--radius)',
-  			md: 'calc(var(--radius) - 2px)',
-  			sm: 'calc(var(--radius) - 4px)'
+            // Increased radius for a softer look, especially for glassmorphism
+  			xl: 'calc(var(--radius) + 12px)', // ~20px if --radius is 0.5rem
+			lg: 'var(--radius)', // ~8px
+			md: 'calc(var(--radius) - 2px)', // ~6px
+			sm: 'calc(var(--radius) - 4px)' // ~4px
   		},
   		keyframes: {
   			'accordion-down': {
@@ -82,13 +84,82 @@ export default {
   				to: {
   					height: '0'
   				}
-  			}
+  			},
+             // Add new keyframes
+             'gradient-x': { // For animated gradient text
+                 '0%, 100%': { 'background-position': '0% 50%' },
+                 '50%': { 'background-position': '100% 50%' },
+             },
+             'shimmer': { // For button loading shimmer
+                 '0%': { 'left': '-100%' },
+                 '100%': { 'left': '100%' },
+             },
+             'fadeIn': { // For page load fade-in
+                 'from': { opacity: '0' },
+                 'to': { opacity: '1' },
+             },
+              'bounce': { // For typing dots (optional)
+                '0%, 100%': { transform: 'translateY(-25%)', animationTimingFunction: 'cubic-bezier(0.8,0,1,1)' },
+                '50%': { transform: 'none', animationTimingFunction: 'cubic-bezier(0,0,0.2,1)' },
+              }
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
-  		}
+  			'accordion-up': 'accordion-up 0.2s ease-out',
+             // Add new animations
+             'gradient-x': 'gradient-x 5s ease infinite',
+             'shimmer': 'shimmer 1.5s infinite linear',
+             'fadeIn': 'fadeIn 0.5s ease-in-out forwards',
+             'bounce': 'bounce 1s infinite',
+  		},
+        // Add backgroundSize for gradient animation
+         backgroundSize: {
+           '200%': '200% 200%',
+         },
+          // Add typography plugin for prose styles if needed
+         typography: (theme: (arg0: string) => any) => ({
+           DEFAULT: {
+             css: {
+               '--tw-prose-body': theme('colors.foreground'),
+               '--tw-prose-headings': theme('colors.primary.DEFAULT'),
+               '--tw-prose-lead': theme('colors.muted.foreground'),
+               '--tw-prose-links': theme('colors.accent.DEFAULT'),
+               '--tw-prose-bold': theme('colors.foreground'), // Adjusted bold color
+               '--tw-prose-counters': theme('colors.muted.foreground'),
+               '--tw-prose-bullets': theme('colors.muted.foreground'),
+               '--tw-prose-hr': theme('colors.border'),
+               '--tw-prose-quotes': theme('colors.foreground'),
+               '--tw-prose-quote-borders': theme('colors.border'),
+               '--tw-prose-captions': theme('colors.muted.foreground'),
+               '--tw-prose-code': theme('colors.foreground'),
+               '--tw-prose-pre-code': theme('colors.foreground'),
+               '--tw-prose-pre-bg': theme('colors.muted.DEFAULT'),
+               '--tw-prose-th-borders': theme('colors.border'),
+               '--tw-prose-td-borders': theme('colors.border'),
+               '--tw-prose-invert-body': theme('colors.foreground'),
+               '--tw-prose-invert-headings': theme('colors.primary.DEFAULT'),
+               '--tw-prose-invert-lead': theme('colors.muted.foreground'),
+               '--tw-prose-invert-links': theme('colors.accent.DEFAULT'),
+               '--tw-prose-invert-bold': theme('colors.foreground'), // Adjusted bold color for dark
+               '--tw-prose-invert-counters': theme('colors.muted.foreground'),
+               '--tw-prose-invert-bullets': theme('colors.muted.foreground'),
+               '--tw-prose-invert-hr': theme('colors.border'),
+               '--tw-prose-invert-quotes': theme('colors.foreground'),
+               '--tw-prose-invert-quote-borders': theme('colors.border'),
+               '--tw-prose-invert-captions': theme('colors.muted.foreground'),
+               '--tw-prose-invert-code': theme('colors.foreground'),
+               '--tw-prose-invert-pre-code': theme('colors.foreground'),
+               '--tw-prose-invert-pre-bg': theme('colors.muted.DEFAULT'),
+               '--tw-prose-invert-th-borders': theme('colors.border'),
+               '--tw-prose-invert-td-borders': theme('colors.border'),
+                p: { color: 'hsl(var(--muted-foreground))' }, // Ensure paragraph text uses muted-foreground
+                li: { color: 'hsl(var(--muted-foreground))' }, // Ensure list item text uses muted-foreground
+                strong: { color: 'hsl(var(--foreground))', fontWeight: '600' }, // Ensure strong text is white and semibold
+             },
+           },
+         }),
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require('@tailwindcss/typography')], // Added typography plugin
 } satisfies Config;
+```
