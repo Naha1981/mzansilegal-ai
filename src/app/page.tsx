@@ -1,9 +1,55 @@
+
 'use client'; // Landing pages often benefit from client-side interactivity
 
 import React from 'react';
 import Link from 'next/link'; // Use Next.js Link for navigation
 import { motion } from 'framer-motion'; // Import motion for animations
 import { ClientOnly } from '@/components/client-only'; // Import ClientOnly
+
+// Logo Component (Inline SVG for simplicity and performance)
+const MzansiLegalLogo = ({ className }: { className?: string }) => (
+  <svg
+    className={cn("h-8 w-auto sm:h-10", className)} // Adjust size as needed
+    viewBox="0 0 180 40"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-label="MzansiLegal AI Logo"
+  >
+    {/* Using primary color from theme */}
+    <defs>
+      <linearGradient id="logoGradient" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stopColor="hsl(var(--primary))" />
+        <stop offset="100%" stopColor="hsl(var(--accent))" />
+      </linearGradient>
+    </defs>
+    {/* Abstract 'M' shape incorporating scales */}
+    <path
+      d="M10 35 V5 H20 L30 25 L40 5 H50 V35 H40 V15 L30 35 L20 15 V35 H10 Z"
+      fill="url(#logoGradient)"
+    />
+    {/* Text part */}
+    <text
+      x="60"
+      y="28"
+      fontFamily="Poppins, sans-serif"
+      fontSize="24"
+      fontWeight="bold"
+      fill="hsl(var(--foreground))"
+    >
+      MzansiLegal
+    </text>
+    <text
+      x="155" // Position 'AI' slightly offset
+      y="18" // Position 'AI' slightly higher
+      fontFamily="Poppins, sans-serif"
+      fontSize="14"
+      fontWeight="600"
+      fill="hsl(var(--primary))" // Use primary color for 'AI'
+    >
+      AI
+    </text>
+  </svg>
+);
 
 // Animation variants
 const fadeDown = {
@@ -16,6 +62,9 @@ const fadeUp = {
   visible: { opacity: 1, y: 0, transition: { duration: 1, ease: "easeOut" } },
 };
 
+import { cn } from "@/lib/utils";
+
+
 export default function LandingPage() {
   return (
     // Apply global styles equivalent to body styling
@@ -27,19 +76,22 @@ export default function LandingPage() {
           initial="hidden"
           animate="visible"
           variants={fadeDown}
-          className="bg-[#141432] py-6 px-4 sm:px-12 flex justify-between items-center" // Adjusted padding for responsiveness
+          className="bg-[#141432]/80 backdrop-blur-sm sticky top-0 z-50 py-4 px-4 sm:px-12 flex justify-between items-center border-b border-white/10" // Adjusted padding, added backdrop blur, sticky
         >
-          <div className="text-2xl sm:text-3xl font-bold text-[#00d4ff]">MzansiLegal AI</div>
-          <nav className="hidden sm:flex space-x-8"> {/* Hide nav on small screens, adjust spacing */}
+          {/* Clickable Logo */}
+          <Link href="/app" aria-label="Go to MzansiLegal AI App">
+            <MzansiLegalLogo className="cursor-pointer transition-transform duration-300 hover:scale-105" />
+          </Link>
+          <nav className="hidden sm:flex space-x-8 items-center"> {/* Hide nav on small screens, adjust spacing, center items */}
             <a href="#pricing" className="font-medium text-[#ccc] hover:text-[#00d4ff] transition-colors duration-300">Pricing</a>
             {/* Link to the actual app page */}
-            <Link href="/app" className="font-medium text-[#00d4ff] hover:text-white transition-colors duration-300 border border-[#00d4ff] px-3 py-1 rounded-md text-sm">
+            <Link href="/app" className="font-medium text-[#00d4ff] hover:text-white transition-colors duration-300 border border-[#00d4ff] px-4 py-2 rounded-lg text-sm hover:bg-[#00d4ff]/10">
               Go to App
             </Link>
           </nav>
            {/* Simple Link for Mobile */}
            <nav className="sm:hidden">
-             <Link href="/app" className="font-medium text-[#00d4ff] hover:text-white transition-colors duration-300 border border-[#00d4ff] px-3 py-1 rounded-md text-sm">
+             <Link href="/app" className="font-medium text-[#00d4ff] hover:text-white transition-colors duration-300 border border-[#00d4ff] px-3 py-1.5 rounded-md text-xs hover:bg-[#00d4ff]/10">
                Launch App
              </Link>
            </nav>
@@ -55,12 +107,12 @@ export default function LandingPage() {
             custom={0.4} // Delay animation
             className="text-center py-20 px-4 sm:py-32 sm:px-5" // Adjusted padding
           >
-            <h1 className="text-3xl sm:text-5xl font-bold mb-5 text-[#00d4ff]">Empowering South African Legal Professionals with AI</h1>
+            <h1 className="text-3xl sm:text-5xl font-bold mb-5 text-[#00d4ff] drop-shadow-[0_2px_10px_rgba(0,212,255,0.3)]">Empowering South African Legal Professionals with AI</h1>
             <p className="text-lg sm:text-xl max-w-3xl mx-auto mb-10 text-[#ccc]">
               Your trusted AI partner for Legal Research, Case Studies, and Contract Analysis. Fast, accurate, and built for the South African legal system.
             </p>
             {/* Link to the actual app page */}
-            <Link href="/app" className="inline-block bg-[#00d4ff] text-[#0b0b1f] py-3 px-8 rounded-lg font-bold text-base sm:text-lg transition-all duration-300 hover:bg-[#00aacd] hover:scale-105">
+            <Link href="/app" className="inline-block bg-[#00d4ff] text-[#0b0b1f] py-3 px-8 rounded-lg font-bold text-base sm:text-lg transition-all duration-300 hover:bg-[#00aacd] hover:scale-105 shadow-lg shadow-[#00d4ff]/30">
               Get Started
             </Link>
           </motion.section>
@@ -75,7 +127,7 @@ export default function LandingPage() {
           viewport={{ once: true, amount: 0.3 }} // Trigger animation once when 30% visible
           variants={fadeUp}
           custom={0.8} // Animation delay
-          className="bg-[#1c1c45] py-20 px-4 sm:px-5 text-center" // Adjusted padding
+          className="bg-[#1c1c45]/70 backdrop-blur-md py-20 px-4 sm:px-5 text-center" // Adjusted padding, added backdrop blur
         >
           <h2 className="text-3xl sm:text-4xl font-bold mb-12 text-[#00d4ff]">Simple, Transparent Pricing</h2>
           <div className="flex flex-wrap justify-center gap-8"> {/* Use flex-wrap and gap */}
@@ -83,7 +135,7 @@ export default function LandingPage() {
             {/* Pricing Card 1: Starter */}
             <motion.div
                whileHover={{ y: -10, scale: 1.05 }} // Hover animation
-               className="bg-[#27275a] rounded-2xl p-8 w-full sm:w-auto max-w-sm sm:max-w-xs shadow-xl transition-transform duration-300" // Responsive width
+               className="bg-[#27275a]/80 backdrop-blur-sm rounded-2xl p-8 w-full sm:w-auto max-w-sm sm:max-w-xs shadow-xl transition-transform duration-300 border border-white/10" // Responsive width, added border
              >
               <h3 className="text-2xl font-semibold mb-3 text-[#f5f5f5]">Starter</h3>
               <p className="text-4xl font-bold text-[#00d4ff] my-5">R0<span className="text-lg font-normal text-[#ccc]"> / month</span></p>
@@ -95,7 +147,7 @@ export default function LandingPage() {
                  <li>✅ Full UI Access</li>
               </ul>
               {/* Link to the actual app page */}
-              <Link href="/app" className="inline-block bg-[#00d4ff] text-[#0b0b1f] py-3 px-6 rounded-lg font-bold text-sm transition-all duration-300 hover:bg-[#00aacd] hover:scale-105">
+              <Link href="/app" className="inline-block bg-[#00d4ff] text-[#0b0b1f] py-3 px-6 rounded-lg font-bold text-sm transition-all duration-300 hover:bg-[#00aacd] hover:scale-105 shadow-md shadow-[#00d4ff]/20">
                 Choose Starter
               </Link>
             </motion.div>
@@ -103,7 +155,7 @@ export default function LandingPage() {
             {/* Pricing Card 2: Professional */}
              <motion.div
                whileHover={{ y: -10, scale: 1.05 }}
-               className="bg-[#27275a] rounded-2xl p-8 w-full sm:w-auto max-w-sm sm:max-w-xs shadow-xl transition-transform duration-300 border-2 border-[#00d4ff]" // Highlighted card
+               className="bg-[#27275a]/80 backdrop-blur-sm rounded-2xl p-8 w-full sm:w-auto max-w-sm sm:max-w-xs shadow-xl transition-transform duration-300 border-2 border-[#00d4ff]" // Highlighted card
              >
               <h3 className="text-2xl font-semibold mb-3 text-[#f5f5f5]">Professional</h3>
               <p className="text-4xl font-bold text-[#00d4ff] my-5">R500<span className="text-lg font-normal text-[#ccc]"> / month</span></p>
@@ -116,7 +168,7 @@ export default function LandingPage() {
                  <li>✅ Disclaimer</li>
                  <li>✅ Full UI Access</li>
               </ul>
-              <Link href="/app" className="inline-block bg-[#00d4ff] text-[#0b0b1f] py-3 px-6 rounded-lg font-bold text-sm transition-all duration-300 hover:bg-[#00aacd] hover:scale-105">
+              <Link href="/app" className="inline-block bg-[#00d4ff] text-[#0b0b1f] py-3 px-6 rounded-lg font-bold text-sm transition-all duration-300 hover:bg-[#00aacd] hover:scale-105 shadow-md shadow-[#00d4ff]/20">
                 Choose Professional
               </Link>
             </motion.div>
@@ -124,7 +176,7 @@ export default function LandingPage() {
             {/* Pricing Card 3: Enterprise */}
              <motion.div
                whileHover={{ y: -10, scale: 1.05 }}
-               className="bg-[#27275a] rounded-2xl p-8 w-full sm:w-auto max-w-sm sm:max-w-xs shadow-xl transition-transform duration-300"
+               className="bg-[#27275a]/80 backdrop-blur-sm rounded-2xl p-8 w-full sm:w-auto max-w-sm sm:max-w-xs shadow-xl transition-transform duration-300 border border-white/10"
              >
               <h3 className="text-2xl font-semibold mb-3 text-[#f5f5f5]">Enterprise</h3>
               <p className="text-4xl font-bold text-[#00d4ff] my-5">R1000<span className="text-lg font-normal text-[#ccc]"> / month</span></p>
@@ -139,7 +191,7 @@ export default function LandingPage() {
                  <li>✅ Dedicated Support</li>
                  <li>✅ API Access (on request)</li>
               </ul>
-              <Link href="/app" className="inline-block bg-[#00d4ff] text-[#0b0b1f] py-3 px-6 rounded-lg font-bold text-sm transition-all duration-300 hover:bg-[#00aacd] hover:scale-105">
+              <Link href="/app" className="inline-block bg-[#00d4ff] text-[#0b0b1f] py-3 px-6 rounded-lg font-bold text-sm transition-all duration-300 hover:bg-[#00aacd] hover:scale-105 shadow-md shadow-[#00d4ff]/20">
                 Choose Enterprise
               </Link>
             </motion.div>
@@ -147,61 +199,68 @@ export default function LandingPage() {
           </div>
           {/* Summary Table */}
           <div className="overflow-x-auto mt-16"> {/* Increased margin-top */}
-            <table className="w-full max-w-4xl mx-auto text-left text-sm sm:text-base">
-              <caption className="text-xl font-semibold mb-4 text-white/80">Feature Comparison</caption>
-              <thead>
+             <motion.table
+               initial="hidden"
+               whileInView="visible"
+               viewport={{ once: true, amount: 0.5 }}
+               variants={fadeUp}
+               custom={1.0} // Animation delay
+               className="w-full max-w-4xl mx-auto text-left text-sm sm:text-base bg-gradient-to-br from-[#27275a]/50 to-[#1c1c45]/50 rounded-lg border border-white/10 shadow-lg"
+             >
+              <caption className="text-xl font-semibold mb-4 text-white/80 p-4">Feature Comparison</caption>
+              <thead >
                 <tr className="text-[#00d4ff] border-b border-white/20">
-                  <th className="py-3 px-2 sm:px-4">Feature</th>
-                  <th className="py-3 px-2 sm:px-4 text-center">Starter (R0)</th>
-                  <th className="py-3 px-2 sm:px-4 text-center">Professional (R500)</th>
-                  <th className="py-3 px-2 sm:px-4 text-center">Enterprise (R1000)</th>
+                  <th className="py-3 px-2 sm:px-4 font-semibold">Feature</th>
+                  <th className="py-3 px-2 sm:px-4 text-center font-semibold">Starter (R0)</th>
+                  <th className="py-3 px-2 sm:px-4 text-center font-semibold">Professional (R500)</th>
+                  <th className="py-3 px-2 sm:px-4 text-center font-semibold">Enterprise (R1000)</th>
                 </tr>
               </thead>
               <tbody className="text-white/90">
-                <tr className="border-b border-white/10">
+                <tr className="border-b border-white/10 hover:bg-white/5 transition-colors">
                   <td className="py-3 px-2 sm:px-4 font-medium">AI Legal Assistance</td>
                   <td className="py-3 px-2 sm:px-4 text-center">Limited</td>
                   <td className="py-3 px-2 sm:px-4 text-center">Full</td>
                   <td className="py-3 px-2 sm:px-4 text-center">Unlimited</td>
                 </tr>
-                <tr className="border-b border-white/10">
+                <tr className="border-b border-white/10 hover:bg-white/5 transition-colors">
                   <td className="py-3 px-2 sm:px-4 font-medium">Legal Research</td>
                   <td className="py-3 px-2 sm:px-4 text-center">SA Only</td>
                   <td className="py-3 px-2 sm:px-4 text-center">SA + Intl</td>
                   <td className="py-3 px-2 sm:px-4 text-center">Full Access</td>
                 </tr>
-                <tr className="border-b border-white/10">
+                <tr className="border-b border-white/10 hover:bg-white/5 transition-colors">
                   <td className="py-3 px-2 sm:px-4 font-medium">Case Study Analysis</td>
                   <td className="py-3 px-2 sm:px-4 text-center">❌</td>
                   <td className="py-3 px-2 sm:px-4 text-center">Basic (5/month)</td>
                   <td className="py-3 px-2 sm:px-4 text-center">Unlimited</td>
                 </tr>
-                <tr className="border-b border-white/10">
+                <tr className="border-b border-white/10 hover:bg-white/5 transition-colors">
                   <td className="py-3 px-2 sm:px-4 font-medium">Contract Analysis</td>
                   <td className="py-3 px-2 sm:px-4 text-center">❌</td>
                   <td className="py-3 px-2 sm:px-4 text-center">5 docs/month</td>
                   <td className="py-3 px-2 sm:px-4 text-center">Unlimited</td>
                 </tr>
-                <tr className="border-b border-white/10">
+                <tr className="border-b border-white/10 hover:bg-white/5 transition-colors">
                   <td className="py-3 px-2 sm:px-4 font-medium">Daily Legal News</td>
                   <td className="py-3 px-2 sm:px-4 text-center">5 articles/day</td>
                   <td className="py-3 px-2 sm:px-4 text-center">10+ articles/day</td>
                   <td className="py-3 px-2 sm:px-4 text-center">Custom alerts</td>
                 </tr>
-                <tr className="border-b border-white/10">
+                <tr className="border-b border-white/10 hover:bg-white/5 transition-colors">
                   <td className="py-3 px-2 sm:px-4 font-medium">Disclaimer</td>
                   <td className="py-3 px-2 sm:px-4 text-center">Standard</td>
                   <td className="py-3 px-2 sm:px-4 text-center">Standard</td>
                   <td className="py-3 px-2 sm:px-4 text-center">Customizable</td>
                 </tr>
-                 <tr className="border-b border-white/10">
+                 <tr className="hover:bg-white/5 transition-colors"> {/* Removed last border */}
                   <td className="py-3 px-2 sm:px-4 font-medium">UI Access</td>
                   <td className="py-3 px-2 sm:px-4 text-center">Full</td>
                   <td className="py-3 px-2 sm:px-4 text-center">Full</td>
                   <td className="py-3 px-2 sm:px-4 text-center">Premium UI</td>
                 </tr>
               </tbody>
-            </table>
+            </motion.table>
           </div>
         </motion.section>
       </ClientOnly>
@@ -214,7 +273,7 @@ export default function LandingPage() {
             viewport={{ once: true }}
             variants={fadeUp}
             custom={1.2} // Animation delay
-            className="bg-[#141432] py-5 px-4 text-center text-sm text-[#777] mt-10" // Add margin top
+            className="bg-[#141432]/80 backdrop-blur-sm py-5 px-4 text-center text-sm text-[#777] mt-10 border-t border-white/10" // Add margin top, backdrop blur, border
           >
             Built by: T.Naha
           </motion.footer>
@@ -223,3 +282,4 @@ export default function LandingPage() {
     </div>
   );
 }
+
