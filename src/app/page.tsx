@@ -6,7 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { ClientOnly } from '@/components/client-only'; // Assuming ClientOnly component exists
+// import { ClientOnly } from '@/components/client-only'; // Removed import
 import { Sparkles, Search, BookOpenCheck, FileText, Info, Loader2 } from 'lucide-react';
 
 // Import Genkit flow functions and types
@@ -50,31 +50,50 @@ export default function Home() {
       let result: LegalResearchAssistantOutput | CaseStudyInsightsOutput | LegalDocumentAnalysisOutput;
       let outputText: string | undefined;
 
+      // Automatically prepend the analysis type to the input text
+      const fullInputText = `${selectedType}: ${inputText}`;
+
       switch (selectedType) {
         case 'Legal Research':
-          const researchInput: LegalResearchAssistantInput = { researchQuery: inputText };
+          const researchInput: LegalResearchAssistantInput = { researchQuery: fullInputText };
           result = await legalResearchAssistant(researchInput);
           outputText = result.analysis;
           break;
         case 'Case Study Analysis':
-          const caseInput: CaseStudyInsightsInput = { caseDetails: inputText };
+          const caseInput: CaseStudyInsightsInput = { caseDetails: fullInputText };
           result = await caseStudyInsights(caseInput);
           outputText = result.analysis;
           break;
         case 'Contract Analysis':
-          const contractInput: LegalDocumentAnalysisInput = { documentDetails: inputText };
+          const contractInput: LegalDocumentAnalysisInput = { documentDetails: fullInputText };
           result = await legalDocumentAnalysis(contractInput);
           outputText = result.analysisReport;
           break;
         default:
+          // Fallback or default behavior if needed, maybe generic prompt?
+          // For now, let's assume a type is always selected.
+          // If not, might need a general-purpose flow or error handling.
+          // Using Legal Research as a fallback for now, or throw error:
+           // result = await legalResearchAssistant({ researchQuery: inputText }); // Example fallback
+           // outputText = result.analysis;
           throw new Error('Invalid analysis type selected');
+
       }
 
-      if (!outputText) {
-        throw new Error('Analysis did not return any output.');
-      }
+       if (!outputText) {
+         // Handle cases where the flow returns an empty or undefined analysis/report
+         // Check if the result object itself has an error message structure
+         const errorAnalysis = (result as any)?.analysis || (result as any)?.analysisReport;
+         if (typeof errorAnalysis === 'string' && errorAnalysis.toLowerCase().includes('error')) {
+             setError(errorAnalysis); // Display error from flow
+         } else {
+             throw new Error('Analysis did not return any output.');
+         }
+         setAnalysisResult(null); // Ensure no result is displayed on error
+       } else {
+         setAnalysisResult({ type: selectedType, input: inputText, output: outputText });
+       }
 
-      setAnalysisResult({ type: selectedType, input: inputText, output: outputText });
 
     } catch (err: any) {
       console.error("Analysis Error:", err);
@@ -85,10 +104,11 @@ export default function Home() {
     }
   };
 
+
   const currentPlaceholder = analysisTypes.find(t => t.type === selectedType)?.placeholder || 'Enter details...';
 
   return (
-    <ClientOnly> {/* Wrap with ClientOnly if hydration errors persist */}
+    // <ClientOnly> Removed ClientOnly wrapper
         <main className="flex flex-col items-center justify-start min-h-screen p-6 sm:p-10 bg-gradient-to-br from-[#0D0D2B] to-[#161636] text-[#f5f5f5]">
 
           {/* App Name */}
@@ -129,7 +149,7 @@ export default function Home() {
           {/* Analysis Card */}
           <Card className="w-full max-w-3xl bg-[rgba(255,255,255,0.05)] border border-white/10 rounded-[28px] shadow-xl backdrop-blur-lg transition-all duration-300 hover:shadow-2xl hover:shadow-[#4ADE80]/10 animate-fade-in animation-delay-400">
             <CardHeader className="text-center">
-                <CardTitle className="text-xl md:text-2xl font-semibold text-foreground">
+                <CardTitle className="text-xl md:text-2xl font-semibold text-foreground text-center"> {/* Added text-center */}
                     Select Analysis Type & Enter Details
                 </CardTitle>
             </CardHeader>
@@ -228,7 +248,7 @@ export default function Home() {
             </motion.div>
           )}
         </main>
-    </ClientOnly>
+    // </ClientOnly> // Removed ClientOnly wrapper
   );
 }
 
