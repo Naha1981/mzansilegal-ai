@@ -1,1 +1,3 @@
-// Flows will be imported for their side effects in this file.
+import '@/ai/flows/legal-research-assistant.ts';
+import '@/ai/flows/case-study-insights.ts';
+import '@/ai/flows/legal-document-analysis.ts';
