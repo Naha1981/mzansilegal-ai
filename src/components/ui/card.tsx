@@ -42,6 +42,7 @@ const CardTitle = React.forwardRef<
     className={cn(
       "text-2xl font-semibold leading-none tracking-tight", // Base styles from Shadcn
       // Custom styles based on guidelines - can be overridden by parent component styles
+      "text-center", // Center the text
       "md:text-xl", // Adjusted size for card title context
       className
     )}
@@ -94,4 +95,3 @@ const CardFooter = React.forwardRef<
 CardFooter.displayName = "CardFooter"
 
 export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
-```
