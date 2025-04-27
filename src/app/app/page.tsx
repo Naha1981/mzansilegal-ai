@@ -292,13 +292,7 @@ export default function Home() {
                   <CardHeader className="pt-4 pb-2 sm:pt-6 sm:pb-3">
                       <CardTitle className="text-lg sm:text-xl md:text-2xl font-semibold text-[#4ADE80] flex items-center gap-2 justify-center">
                            {/* Dynamic Icon based on result type */}
-                           {(() => {
-                             if (analysisResult.type === 'Legal Research') return <Search className="h-5 w-5 sm:h-6 sm:w-6" />;
-                             if (analysisResult.type === 'Case Study Analysis') return <BookOpenCheck className="h-5 w-5 sm:h-6 sm:w-6" />;
-                             if (analysisResult.type === 'Contract Analysis') return <FileText className="h-5 w-5 sm:h-6 sm:w-6" />;
-                             if (analysisResult.type === 'Daily Legal News') return <Newspaper className="h-5 w-5 sm:h-6 sm:w-6" />;
-                             return null;
-                          })()}
+                            <AnalysisResultIcon type={analysisResult.type} />
                         Results ({analysisResult.type})
                       </CardTitle>
                   </CardHeader>
@@ -316,4 +310,3 @@ export default function Home() {
       </main>
   );
 }
-

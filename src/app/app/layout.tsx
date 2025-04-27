@@ -14,10 +14,7 @@ import type { Metadata } from 'next';
    return (
      <html lang="en" suppressHydrationWarning>
        <head>
-          {/* Include fonts if needed specifically for the app layout */}
-         <link rel="preconnect" href="https://fonts.googleapis.com" />
-         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+          {/* Keep head for potential future meta tags, links, etc. */}
        </head>
        <body>
          {children}
