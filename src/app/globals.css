@@ -87,10 +87,12 @@
      @apply bg-gradient-to-br from-[#0D0D2B] to-[#161636];
   }
    h1 {
-     @apply text-4xl md:text-5xl font-extrabold; /* Matches page h1 */
+     /* Adjusted base h1 size, specific overrides in component */
+     @apply text-3xl sm:text-4xl md:text-5xl font-extrabold;
    }
     p {
-      @apply text-lg md:text-xl; /* Matches page subtitle */
+      /* Adjusted base p size, specific overrides in component */
+      @apply text-base sm:text-lg md:text-xl;
     }
     button {
       @apply font-bold uppercase tracking-wider; /* Matches button styles */
@@ -99,7 +101,8 @@
     }
     /* Specific hover styles moved to page component for better control */
     textarea, input {
-       @apply text-base md:text-sm; /* Matches input styles */
+       /* Adjusted base input size */
+       @apply text-sm sm:text-base;
     }
 }
 
@@ -171,19 +174,24 @@
   margin-top: 1.2em;
   margin-bottom: 0.6em;
   font-weight: 600;
+  /* Responsive heading sizes */
+  @apply text-lg sm:text-xl md:text-2xl;
 }
 .prose h2 {
-  font-size: 1.5em; /* Example size */
+  font-size: 1.25em; /* Example size, adjust relative to base */
   border-bottom: 1px solid hsl(var(--border));
   padding-bottom: 0.3em;
+  @apply sm:text-lg md:text-xl; /* Responsive */
 }
 .prose h3 {
-  font-size: 1.25em; /* Example size */
+  font-size: 1.1em; /* Example size, adjust relative to base */
+  @apply sm:text-base md:text-lg; /* Responsive */
 }
 .prose p {
   margin-bottom: 1em;
   line-height: 1.6;
-   @apply text-sm sm:text-base; /* Resetting paragraph size for prose */
+   /* Responsive paragraph size for prose content */
+   @apply text-xs sm:text-sm md:text-base;
 }
 .prose strong {
    color: hsl(var(--foreground));
@@ -195,18 +203,22 @@
 }
 .prose li {
   margin-bottom: 0.4em;
+  /* Responsive list item size */
+   @apply text-xs sm:text-sm md:text-base;
 }
 .prose code {
   background-color: hsl(var(--muted));
   padding: 0.2em 0.4em;
   border-radius: 0.3em;
-  font-size: 0.9em;
+  font-size: 0.85em; /* Slightly smaller */
+  @apply text-xs sm:text-sm; /* Responsive */
 }
 .prose pre {
   background-color: hsl(var(--muted));
-  padding: 1em;
+  padding: 0.8em 1em; /* Adjust padding */
   border-radius: 0.5em;
   overflow-x: auto;
+  @apply text-xs sm:text-sm; /* Responsive */
 }
 .prose a {
   color: hsl(var(--primary));
