@@ -5,6 +5,7 @@ import React from 'react';
 import Link from 'next/link'; // Use Next.js Link for navigation
 import { motion } from 'framer-motion'; // Import motion for animations
 import { ClientOnly } from '@/components/client-only'; // Import ClientOnly
+import { cn } from "@/lib/utils"; // Import cn utility
 
 // Logo Component (Inline SVG for simplicity and performance)
 const MzansiLegalLogo = ({ className }: { className?: string }) => (
@@ -51,6 +52,7 @@ const MzansiLegalLogo = ({ className }: { className?: string }) => (
   </svg>
 );
 
+
 // Animation variants
 const fadeDown = {
   hidden: { opacity: 0, y: -20 },
@@ -61,8 +63,6 @@ const fadeUp = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 1, ease: "easeOut" } },
 };
-
-import { cn } from "@/lib/utils";
 
 
 export default function LandingPage() {
@@ -138,6 +138,7 @@ export default function LandingPage() {
                className="bg-[#27275a]/80 backdrop-blur-sm rounded-2xl p-8 w-full sm:w-auto max-w-sm sm:max-w-xs shadow-xl transition-transform duration-300 border border-white/10" // Responsive width, added border
              >
               <h3 className="text-2xl font-semibold mb-3 text-[#f5f5f5]">Starter</h3>
+              <p className="text-lg mb-2 text-[#ccc]">For law students, legal interns, and individual researchers.</p>
               <p className="text-4xl font-bold text-[#00d4ff] my-5">R0<span className="text-lg font-normal text-[#ccc]"> / month</span></p>
               <ul className="list-none p-0 mb-6 text-base text-[#ccc] space-y-2 text-left pl-4"> {/* Align text left */}
                  <li>✅ AI Legal Assistant (basic)</li>
@@ -158,6 +159,7 @@ export default function LandingPage() {
                className="bg-[#27275a]/80 backdrop-blur-sm rounded-2xl p-8 w-full sm:w-auto max-w-sm sm:max-w-xs shadow-xl transition-transform duration-300 border-2 border-[#00d4ff]" // Highlighted card
              >
               <h3 className="text-2xl font-semibold mb-3 text-[#f5f5f5]">Professional</h3>
+              <p className="text-lg mb-2 text-[#ccc]">For solo attorneys, small practices, and legal consultants.</p>
               <p className="text-4xl font-bold text-[#00d4ff] my-5">R500<span className="text-lg font-normal text-[#ccc]"> / month</span></p>
               <ul className="list-none p-0 mb-6 text-base text-[#ccc] space-y-2 text-left pl-4">
                  <li>✅ AI Legal Assistant (advanced)</li>
@@ -179,6 +181,7 @@ export default function LandingPage() {
                className="bg-[#27275a]/80 backdrop-blur-sm rounded-2xl p-8 w-full sm:w-auto max-w-sm sm:max-w-xs shadow-xl transition-transform duration-300 border border-white/10"
              >
               <h3 className="text-2xl font-semibold mb-3 text-[#f5f5f5]">Enterprise</h3>
+              <p className="text-lg mb-2 text-[#ccc]">For law firms, corporate legal teams, and serious users.</p>
               <p className="text-4xl font-bold text-[#00d4ff] my-5">R1000<span className="text-lg font-normal text-[#ccc]"> / month</span></p>
               <ul className="list-none p-0 mb-6 text-base text-[#ccc] space-y-2 text-left pl-4">
                  <li>✅ AI Legal Assistant (unlimited, priority)</li>
