@@ -6,6 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { ClientOnly } from '@/components/client-only'; // Import ClientOnly
 import { Sparkles, Search, BookOpenCheck, FileText, Info, Loader2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown'; // Import react-markdown
 
@@ -104,6 +105,7 @@ export default function Home() {
   const currentPlaceholder = analysisTypes.find(t => t.type === selectedType)?.placeholder || 'Enter details...';
 
   return (
+    <ClientOnly> {/* Wrap main content in ClientOnly */}
         <main className="flex flex-col items-center justify-start min-h-screen p-6 sm:p-10 bg-gradient-to-br from-[#0D0D2B] to-[#161636] text-[#f5f5f5]">
 
           {/* App Name */}
@@ -186,7 +188,7 @@ export default function Home() {
                 onChange={(e) => setInputText(e.target.value)}
                 disabled={isLoading}
                 rows={8}
-                className="bg-white/5 border border-white/10 rounded-xl p-4 text-base focus:ring-[#4ADE80] focus:border-[#4ADE80] focus:shadow-lg focus:shadow-[#4ADE80]/20 transition-all duration-300 min-h-[150px]"
+                className="bg-white/5 border border-white/10 rounded-xl p-4 text-base focus:ring-[#4ADE80] focus:border-[#4ADE80] focus:shadow-lg focus:shadow-[#4ADE80]/20 transition-all duration-300 min-h-[150px] animated-input" // Added animated-input class
                 aria-label="Input text for analysis"
               />
 
@@ -244,17 +246,6 @@ export default function Home() {
             </motion.div>
           )}
         </main>
+    </ClientOnly> // End ClientOnly wrapper
   );
 }
-
-// Basic shimmer animation definition (ensure tailwind.config.ts has this)
-// keyframes: {
-//   shimmer: {
-//     '0%': { transform: 'translateX(-100%)' },
-//     '100%': { transform: 'translateX(100%)' },
-//   },
-// },
-// animation: {
-//   shimmer: 'shimmer 1.5s infinite linear',
-// },
-
