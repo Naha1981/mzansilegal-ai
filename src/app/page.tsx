@@ -1,5 +1,4 @@
 
-
 'use client'; // Landing pages often benefit from client-side interactivity
 
 import React from 'react';
@@ -12,10 +11,10 @@ import { cn } from "@/lib/utils"; // Import cn utility
 const MzansiLegalLogo = ({ className }: { className?: string }) => (
   <svg
     className={cn("h-8 w-auto sm:h-10", className)} // Adjust size as needed
-    viewBox="0 0 180 40"
+    viewBox="0 0 180 40" // Adjusted viewBox slightly for potentially longer text if needed
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    aria-label="MzansiLegal AI Logo"
+    aria-label="MzansiLegal Logo" // Updated aria-label
   >
     {/* Using primary color from theme */}
     <defs>
@@ -29,27 +28,18 @@ const MzansiLegalLogo = ({ className }: { className?: string }) => (
       d="M10 35 V5 H20 L30 25 L40 5 H50 V35 H40 V15 L30 35 L20 15 V35 H10 Z"
       fill="url(#logoGradient)"
     />
-    {/* Text part */}
+    {/* Text part - changed to "zansilegal" and removed the "AI" text element */}
     <text
-      x="60"
+      x="60" // Kept original x, adjust if needed visually
       y="28"
       fontFamily="Poppins, sans-serif"
       fontSize="24"
       fontWeight="bold"
       fill="hsl(var(--foreground))"
     >
-      MzansiLegal
+      zansilegal
     </text>
-    <text
-      x="155" // Position 'AI' slightly offset
-      y="18" // Position 'AI' slightly higher
-      fontFamily="Poppins, sans-serif"
-      fontSize="14"
-      fontWeight="600"
-      fill="hsl(var(--primary))" // Use primary color for 'AI'
-    >
-      AI
-    </text>
+    {/* Removed the separate "AI" text element */}
   </svg>
 );
 
@@ -80,9 +70,10 @@ export default function LandingPage() {
           className="bg-[#141432]/80 backdrop-blur-sm sticky top-0 z-50 py-4 px-4 sm:px-12 flex justify-between items-center border-b border-white/10" // Adjusted padding, added backdrop blur, sticky
         >
           {/* Clickable Logo */}
-          <Link href="/app" aria-label="Go to MzansiLegal AI App">
+           <Link href="/app" aria-label="Go to MzansiLegal App">
+             {/* Ensure the className is applied correctly */}
             <MzansiLegalLogo className="cursor-pointer transition-transform duration-300 hover:scale-105" />
-          </Link>
+           </Link>
           <nav className="hidden sm:flex space-x-8 items-center"> {/* Hide nav on small screens, adjust spacing, center items */}
             <a href="#pricing" className="font-medium text-[#ccc] hover:text-[#00d4ff] transition-colors duration-300">Pricing</a>
             {/* Link to the actual app page */}
@@ -114,7 +105,7 @@ export default function LandingPage() {
             </p>
             {/* Link to the actual app page */}
             <Link href="/app" className="inline-block bg-[#00d4ff] text-[#0b0b1f] py-3 px-8 rounded-lg font-bold text-base sm:text-lg transition-all duration-300 hover:bg-[#00aacd] hover:scale-105 shadow-lg shadow-[#00d4ff]/30">
-              Get Started
+              Go to App {/* Changed text to Go to App */}
             </Link>
           </motion.section>
        </ClientOnly>
@@ -257,7 +248,7 @@ export default function LandingPage() {
                   <td className="py-3 px-2 sm:px-4 text-center">Standard</td>
                   <td className="py-3 px-2 sm:px-4 text-center">Customizable</td>
                 </tr>
-                 <tr className="hover:bg-white/5 transition-colors">{/* Removed last border */}
+                 <tr className="hover:bg-white/5 transition-colors">
                   <td className="py-3 px-2 sm:px-4 font-medium">UI Access</td>
                   <td className="py-3 px-2 sm:px-4 text-center">Full</td>
                   <td className="py-3 px-2 sm:px-4 text-center">Full</td>
@@ -286,5 +277,3 @@ export default function LandingPage() {
     </div>
   );
 }
-
-
