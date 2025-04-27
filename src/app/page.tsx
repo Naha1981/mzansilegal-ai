@@ -1,6 +1,7 @@
 'use client'; // Mark as client component to use useEffect
 
-import React, AwaitedReactNode, JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
+import type { AwaitedReactNode, JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal } from 'react';
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -22,17 +23,23 @@ export default function Home() {
         // Update textarea placeholder based on active button
         const activeType = targetButton.textContent;
         if (activeType === 'Contract Analysis') {
-          textarea.placeholder = "Paste the full contract text here...";
+          (textarea as HTMLTextAreaElement).placeholder = "Paste the full contract text here...";
         } else if (activeType === 'Case Study Analysis') {
-          textarea.placeholder = "Describe the case details...";
+          (textarea as HTMLTextAreaElement).placeholder = "Describe the case details...";
         } else { // Legal Research
-          textarea.placeholder = "Enter your legal research question or topic...";
+          (textarea as HTMLTextAreaElement).placeholder = "Enter your legal research question or topic...";
         }
       };
 
       buttons.forEach(button => {
         button.addEventListener('click', handleClick);
+        // Set initial active state for the first button
+        if (button.textContent === 'Legal Research') {
+            button.classList.add('active');
+            (textarea as HTMLTextAreaElement).placeholder = "Enter your legal research question or topic...";
+        }
       });
+
 
       // Cleanup function to remove event listeners
       return () => {
@@ -70,19 +77,19 @@ export default function Home() {
         <div className="subtitle">Your AI-powered assistant for Contract Analysis, Case Study Insights, and Legal Research in South African Law.</div>
 
         <div className="disclaimer">
-          ⚠️ Disclaimer: This AI provides information for legal research and analysis. It is a tool to support, not replace, independent legal judgment. This output does not constitute legal advice and should not be relied upon as such. Always verify findings with primary legal sources and exercise professional discretion. Do not submit client confidential information.
+          ⚠️ Disclaimer: This AI provides information for legal research and analysis. It is a tool to support, not replace, independent legal judgment. This output does not constitute legal advice and should not be relied upon as such. Always verify findings with primary legal sources and exercise professional discretion.
         </div>
 
         <div className="form-section">
           <div className="tab-buttons">
-            {/* Default active state set here, JS will handle changes */}
-            <button className="active">Legal Research</button>
+            {/* Default active state set via JS */}
+            <button>Legal Research</button>
             <button>Case Study Analysis</button>
             <button>Contract Analysis</button>
           </div>
 
-          {/* Initial placeholder, JS updates it */}
-          <textarea placeholder="Enter your legal research question or topic..."></textarea>
+          {/* Initial placeholder set via JS */}
+          <textarea ></textarea>
 
           {/* Note: The submit button currently doesn't trigger any action */}
           <button className="submit-btn">Analyze</button>
