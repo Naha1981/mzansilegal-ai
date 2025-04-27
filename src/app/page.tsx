@@ -202,13 +202,7 @@ export default function Home() {
               )}
             </Button>
 
-            {error && (
-              <Alert variant="destructive" className="alert-destructive text-xs sm:text-sm"> {/* Adjusted font size */}
-                <Info className="h-4 w-4" />
-                <AlertTitle className="text-sm sm:text-base">Error</AlertTitle> {/* Adjusted font size */}
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
-            )}
+            
           </CardContent>
         </Card>
 
@@ -222,10 +216,13 @@ export default function Home() {
             <Card className="bg-[rgba(255,255,255,0.05)] border border-white/10 rounded-[28px] shadow-xl backdrop-blur-lg">
               <CardHeader className="pt-4 pb-2 sm:pt-6 sm:pb-3"> {/* Adjusted padding */}
                   <CardTitle className="text-lg sm:text-xl md:text-2xl font-semibold text-[#4ADE80] flex items-center gap-2 justify-center">
-                       {analysisResult.type === 'Legal Research' && <Search size={20} sm:size={24} />}
-                       {analysisResult.type === 'Case Study Analysis' && <BookOpenCheck size={20} sm:size={24} />}
-                       {analysisResult.type === 'Contract Analysis' && <FileText size={20} sm:size={24} />}
-                       {analysisResult.type === 'Daily Legal News' && <Newspaper size={20} sm:size={24} />}
+                       {(() => {
+                            if (analysisResult.type === 'Legal Research') return <Search size={20} sm:size={24} />;
+                            if (analysisResult.type === 'Case Study Analysis') return <BookOpenCheck size={20} sm:size={24} />;
+                            if (analysisResult.type === 'Contract Analysis') return <FileText size={20} sm:size={24} />;
+                            if (analysisResult.type === 'Daily Legal News') return <Newspaper size={20} sm:size={24} />;
+                            return null;
+                         })()}
                        Results ({analysisResult.type})
                   </CardTitle>
               </CardHeader>
@@ -238,7 +235,36 @@ export default function Home() {
             </Card>
           </motion.div>
         )}
+
+        {/* Disclaimer Button Section */}
+        <button
+            onClick={() => setShowDisclaimer((prev) => !prev)}
+            className="mb-10 bg-red-600 animate-pulse hover:bg-red-700 text-white font-bold py-2 px-5 rounded-full text-base transition-all duration-300 flex items-center gap-2"
+        >
+            <Info size={18} /> {showDisclaimer ? 'Hide Disclaimer' : 'Show Disclaimer'}
+        </button>
+
+        {/* Animated Disclaimer */}
+        <AnimatePresence>
+            {showDisclaimer && (
+                <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="overflow-hidden mt-2 w-full max-w-3xl"
+                >
+                    
+                        
+                        
+                            This AI provides information for legal research and analysis. It is a tool to support, not replace, independent legal judgment. This output does not constitute legal advice and should not be relied upon as such. Always verify findings with primary legal sources and exercise professional discretion. Do not submit client confidential information.
+                        
+                    
+                </motion.div>
+            )}
+        </AnimatePresence>
       </main>
     </ClientOnly>
   );
 }
+
