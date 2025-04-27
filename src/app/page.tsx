@@ -1,320 +1,149 @@
-'use client';
+'use client'; // Landing pages often benefit from client-side interactivity
 
-import { useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { ClientOnly } from '@/components/client-only'; // Import ClientOnly
-import { Sparkles, Search, BookOpenCheck, FileText, Info, Loader2, Newspaper } from 'lucide-react';
-import ReactMarkdown from 'react-markdown';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import React from 'react';
+import Link from 'next/link'; // Use Next.js Link for navigation
+import { motion } from 'framer-motion'; // Import motion for animations
 
-
-// Import Genkit flow functions and types
-import { legalResearchAssistant, LegalResearchAssistantInput, LegalResearchAssistantOutput } from '@/ai/flows/legal-research-assistant';
-import { caseStudyInsights, CaseStudyInsightsInput, CaseStudyInsightsOutput } from '@/ai/flows/case-study-insights';
-import { legalDocumentAnalysis, LegalDocumentAnalysisInput, LegalDocumentAnalysisOutput } from '@/ai/flows/legal-document-analysis';
-import { dailyLegalNews, DailyLegalNewsOutput } from '@/ai/flows/daily-legal-news';
-
-type AnalysisType = 'Legal Research' | 'Case Study Analysis' | 'Contract Analysis' | 'Daily Legal News';
-
-interface AnalysisResult {
-  type: AnalysisType;
-  input?: string;
-  output: string;
-}
-
-// Functional component to render the icon
-const AnalysisResultIcon = ({ type }: { type: AnalysisType }) => {
-  switch (type) {
-    case 'Legal Research':
-      return <Search size={20} className="inline-block" />;
-    case 'Case Study Analysis':
-      return <BookOpenCheck size={20} className="inline-block" />;
-    case 'Contract Analysis':
-      return <FileText size={20} className="inline-block" />;
-    case 'Daily Legal News':
-       // Ensure size prop compatibility if needed, using standard size for consistency
-       return <Newspaper size={20} className="inline-block" />;
-    default:
-      return null;
-  }
+// Animation variants
+const fadeDown = {
+  hidden: { opacity: 0, y: -20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 1, ease: "easeOut" } },
 };
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 1, ease: "easeOut" } },
+};
 
-export default function Home() {
-  const [selectedType, setSelectedType] = useState<AnalysisType>('Legal Research');
-  const [inputText, setInputText] = useState('');
-  const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [showDisclaimer, setShowDisclaimer] = useState(false);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  const analysisTypes: { type: AnalysisType; icon: React.ElementType; placeholder?: string }[] = [
-    { type: 'Legal Research', icon: Search, placeholder: 'Enter your legal research question or topic...' },
-    { type: 'Case Study Analysis', icon: BookOpenCheck, placeholder: 'Describe the case details, facts, and desired outcome...' },
-    { type: 'Contract Analysis', icon: FileText, placeholder: 'Paste the full contract text or describe it, including type, client context, and specific clauses of interest...' },
-    { type: 'Daily Legal News', icon: Newspaper },
-  ];
-
-  const handleAnalysis = async () => {
-    if (selectedType !== 'Daily Legal News' && !inputText.trim()) {
-      setError('Please enter some text for analysis.');
-      return;
-    }
-    setIsLoading(true);
-    setError(null);
-    setAnalysisResult(null);
-    console.log(`Starting analysis for: ${selectedType}`); // Log start
-
-    try {
-      let result: LegalResearchAssistantOutput | CaseStudyInsightsOutput | LegalDocumentAnalysisOutput | DailyLegalNewsOutput;
-      let outputText: string | undefined;
-      let analysisInput: AnalysisResult['input'] = inputText;
-
-      // Prefix input only if not Daily Legal News
-      const fullInputText = selectedType !== 'Daily Legal News' ? `${selectedType}: ${inputText}` : '';
-       console.log("Input Text (prefixed for relevant types):", fullInputText);
-
-
-      switch (selectedType) {
-        case 'Legal Research':
-           console.log("Calling legalResearchAssistant...");
-          const researchInput: LegalResearchAssistantInput = { researchQuery: fullInputText };
-          result = await legalResearchAssistant(researchInput);
-          outputText = result.analysis;
-           console.log("legalResearchAssistant finished.");
-          break;
-        case 'Case Study Analysis':
-           console.log("Calling caseStudyInsights...");
-          const caseInput: CaseStudyInsightsInput = { caseDetails: fullInputText };
-          result = await caseStudyInsights(caseInput);
-          outputText = result.analysis;
-           console.log("caseStudyInsights finished.");
-          break;
-        case 'Contract Analysis':
-           console.log("Calling legalDocumentAnalysis...");
-          const contractInput: LegalDocumentAnalysisInput = { documentDetails: fullInputText };
-          result = await legalDocumentAnalysis(contractInput);
-          outputText = result.analysisReport;
-           console.log("legalDocumentAnalysis finished.");
-          break;
-        case 'Daily Legal News':
-           console.log("Calling dailyLegalNews...");
-          // Directly call the function which now handles fetching internally
-          result = await dailyLegalNews(); // No input needed here
-          outputText = result.newsReport;
-          analysisInput = undefined; // No user input for news
-          setInputText(''); // Clear input field for news
-          console.log("dailyLegalNews finished.");
-          break;
-        default:
-           console.error(`Invalid analysis type: ${selectedType}`);
-           throw new Error('Invalid analysis type selected');
-      }
-
-       console.log("Raw Output:", outputText);
-
-       if (!outputText) {
-         console.warn("Analysis returned no output text.");
-         // Attempt to get error message from analysis/report properties if they exist
-         const errorAnalysis = (result as any)?.analysis || (result as any)?.analysisReport || (result as any)?.newsReport;
-         if (typeof errorAnalysis === 'string' && errorAnalysis.toLowerCase().includes('error')) {
-             console.error("Analysis returned an error message:", errorAnalysis);
-             setError(errorAnalysis); // Show the error from the flow
-         } else {
-             console.error("Analysis returned empty or non-string output.");
-             // Provide a more generic error if no specific message is found
-             setError('Analysis failed to return output. Please check the details or try again.');
-         }
-         setAnalysisResult(null);
-       } else {
-         console.log("Setting analysis result.");
-         setAnalysisResult({ type: selectedType, input: analysisInput, output: outputText });
-       }
-
-    } catch (err: any) {
-      console.error("Analysis Error Caught:", err);
-      setError(`Failed to perform analysis: ${err.message || 'Unknown error'}`);
-      setAnalysisResult(null);
-    } finally {
-      setIsLoading(false);
-      console.log("Analysis process finished.");
-    }
-  };
-
-
-  const currentInfo = analysisTypes.find(t => t.type === selectedType);
-  const currentPlaceholder = currentInfo?.placeholder || 'Click "Get News" for Daily Legal News';
-
-
+export default function LandingPage() {
   return (
-      <main className="flex flex-col items-center justify-start min-h-screen p-4 sm:p-6 md:p-10 bg-gradient-to-br from-[#0D0D2B] to-[#161636] text-[#f5f5f5]">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#4ADE80] mb-2 text-center animate-fade-in drop-shadow-[0_2px_4px_rgba(74,222,128,0.4)]">
-          MzansiLegal AI
-        </h1>
-        <p className="text-base sm:text-lg md:text-xl text-[#A0AEC0] mb-6 md:mb-8 text-center animate-fade-in animation-delay-200">
-          Your AI-powered assistant for South African Law
+    // Apply global styles equivalent to body styling
+    <div className="font-poppins bg-gradient-to-br from-[#0b0b1f] to-[#1f2a5d] text-[#f5f5f5] min-h-screen overflow-x-hidden">
+
+      {/* Header */}
+      <motion.header
+        initial="hidden"
+        animate="visible"
+        variants={fadeDown}
+        className="bg-[#141432] py-6 px-4 sm:px-12 flex justify-between items-center" // Adjusted padding for responsiveness
+      >
+        <div className="text-2xl sm:text-3xl font-bold text-[#00d4ff]">MzansiLegal AI</div>
+        <nav className="hidden sm:flex space-x-8"> {/* Hide nav on small screens, adjust spacing */}
+          <a href="#pricing" className="font-medium text-[#ccc] hover:text-[#00d4ff] transition-colors duration-300">Pricing</a>
+          <a href="#features" className="font-medium text-[#ccc] hover:text-[#00d4ff] transition-colors duration-300">Features</a>
+          {/* Link to the actual app page */}
+          <Link href="/app" className="font-medium text-[#00d4ff] hover:text-white transition-colors duration-300 border border-[#00d4ff] px-3 py-1 rounded-md text-sm">
+            Go to App
+          </Link>
+        </nav>
+         {/* Simple Link for Mobile */}
+         <nav className="sm:hidden">
+           <Link href="/app" className="font-medium text-[#00d4ff] hover:text-white transition-colors duration-300 border border-[#00d4ff] px-3 py-1 rounded-md text-sm">
+             Launch App
+           </Link>
+         </nav>
+      </motion.header>
+
+      {/* Hero Section */}
+      <motion.section
+        initial="hidden"
+        animate="visible"
+        variants={fadeUp}
+        custom={0.4} // Delay animation
+        className="text-center py-20 px-4 sm:py-32 sm:px-5" // Adjusted padding
+      >
+        <h1 className="text-3xl sm:text-5xl font-bold mb-5 text-[#00d4ff]">Empowering South African Legal Professionals with AI</h1>
+        <p className="text-lg sm:text-xl max-w-3xl mx-auto mb-10 text-[#ccc]">
+          Your trusted AI partner for Legal Research, Case Studies, and Contract Analysis. Fast, accurate, and built for the South African legal system.
         </p>
+        {/* Link to the actual app page */}
+        <Link href="/app" className="inline-block bg-[#00d4ff] text-[#0b0b1f] py-3 px-8 rounded-lg font-bold text-base sm:text-lg transition-all duration-300 hover:bg-[#00aacd] hover:scale-105">
+          Get Started
+        </Link>
+      </motion.section>
 
-         {/* Disclaimer Button */}
-          <ClientOnly> {/* Wrap Disclaimer button */}
-             <button
-                onClick={() => setShowDisclaimer((prev) => !prev)}
-                className="mb-10 bg-red-600 animate-pulse hover:bg-red-700 text-white font-bold py-2 px-5 rounded-full text-base transition-all duration-300 flex items-center gap-2"
-            >
-               <Info size={18} /> {showDisclaimer ? 'Hide Disclaimer' : 'Show Disclaimer'}
-            </button>
-          </ClientOnly>
+      {/* Pricing Section */}
+      <motion.section
+        id="pricing"
+        initial="hidden"
+        whileInView="visible" // Animate when in view
+        viewport={{ once: true, amount: 0.3 }} // Trigger animation once when 30% visible
+        variants={fadeUp}
+        custom={0.8} // Animation delay
+        className="bg-[#1c1c45] py-20 px-4 sm:px-5 text-center" // Adjusted padding
+      >
+        <h2 className="text-3xl sm:text-4xl font-bold mb-12 text-[#00d4ff]">Simple, Transparent Pricing</h2>
+        <div className="flex flex-wrap justify-center gap-8"> {/* Use flex-wrap and gap */}
 
+          {/* Pricing Card 1 */}
+          <motion.div
+             whileHover={{ y: -10, scale: 1.05 }} // Hover animation
+             className="bg-[#27275a] rounded-2xl p-8 w-full sm:w-auto max-w-sm sm:max-w-xs shadow-xl transition-transform duration-300" // Responsive width
+           >
+            <h3 className="text-2xl font-semibold mb-3 text-[#f5f5f5]">Starter</h3>
+            <p className="text-4xl font-bold text-[#00d4ff] my-5">R500<span className="text-lg font-normal text-[#ccc]"> / month</span></p>
+            <ul className="list-none p-0 mb-6 text-base text-[#ccc] space-y-2 text-left pl-4"> {/* Align text left */}
+              <li>✓ Legal Research Access</li>
+              <li>✓ Basic Case Study Insights</li>
+              <li>✓ Email Support</li>
+            </ul>
+            {/* Link to the actual app page */}
+            <Link href="/app" className="inline-block bg-[#00d4ff] text-[#0b0b1f] py-3 px-6 rounded-lg font-bold text-sm transition-all duration-300 hover:bg-[#00aacd] hover:scale-105">
+              Choose Starter
+            </Link>
+          </motion.div>
 
-         {/* Animated Disclaimer Text */}
-         <AnimatePresence>
-           {showDisclaimer && (
-             <motion.div
-               initial={{ opacity: 0, height: 0 }}
-               animate={{ opacity: 1, height: 'auto' }}
-               exit={{ opacity: 0, height: 0 }}
-               transition={{ duration: 0.4, ease: "easeInOut" }}
-               className="overflow-hidden w-full max-w-3xl mb-8" // Adjusted margin
-             >
-               <div className="bg-red-100/10 border border-red-400/30 text-red-200 p-4 rounded-lg text-sm shadow-md backdrop-blur-sm alert-destructive">
-                 <strong>Disclaimer:</strong> This AI provides information for legal research and analysis. It is a tool to support, not replace, independent legal judgment. This output does not constitute legal advice and should not be relied upon as such. Always verify findings with primary legal sources and exercise professional discretion. Do not submit client confidential information.
-               </div>
-             </motion.div>
-           )}
-         </AnimatePresence>
+          {/* Pricing Card 2 */}
+           <motion.div
+             whileHover={{ y: -10, scale: 1.05 }}
+             className="bg-[#27275a] rounded-2xl p-8 w-full sm:w-auto max-w-sm sm:max-w-xs shadow-xl transition-transform duration-300 border-2 border-[#00d4ff]" // Highlighted card
+           >
+            <h3 className="text-2xl font-semibold mb-3 text-[#f5f5f5]">Professional</h3>
+            <p className="text-4xl font-bold text-[#00d4ff] my-5">R1000<span className="text-lg font-normal text-[#ccc]"> / month</span></p>
+            <ul className="list-none p-0 mb-6 text-base text-[#ccc] space-y-2 text-left pl-4">
+              <li>✓ Everything in Starter</li>
+              <li>✓ Advanced Case Study Analysis</li>
+              <li>✓ Contract Draft Assistance</li>
+              <li>✓ Priority Email Support</li>
+            </ul>
+            <Link href="/app" className="inline-block bg-[#00d4ff] text-[#0b0b1f] py-3 px-6 rounded-lg font-bold text-sm transition-all duration-300 hover:bg-[#00aacd] hover:scale-105">
+              Choose Professional
+            </Link>
+          </motion.div>
 
-         <ClientOnly> {/* Wrap main Card component */}
-            <Card className="w-full max-w-3xl bg-[rgba(255,255,255,0.05)] border border-white/10 rounded-[28px] shadow-xl backdrop-blur-lg transition-all duration-300 hover:shadow-2xl hover:shadow-[#4ADE80]/10 animate-fade-in animation-delay-400">
-               <CardHeader className="text-center pt-4 pb-2 sm:pt-6 sm:pb-2">
-                   <CardTitle className="text-lg sm:text-xl md:text-2xl font-semibold text-foreground text-center"> {/* Added text-center */}
-                       Select Action
-                   </CardTitle>
-               </CardHeader>
+          {/* Pricing Card 3 */}
+           <motion.div
+             whileHover={{ y: -10, scale: 1.05 }}
+             className="bg-[#27275a] rounded-2xl p-8 w-full sm:w-auto max-w-sm sm:max-w-xs shadow-xl transition-transform duration-300"
+           >
+            <h3 className="text-2xl font-semibold mb-3 text-[#f5f5f5]">Elite</h3>
+            <p className="text-4xl font-bold text-[#00d4ff] my-5">R1500<span className="text-lg font-normal text-[#ccc]"> / month</span></p>
+            <ul className="list-none p-0 mb-6 text-base text-[#ccc] space-y-2 text-left pl-4">
+              <li>✓ Everything in Professional</li>
+              <li>✓ Custom Legal Research Reports</li>
+              <li>✓ Dedicated AI Legal Advisor</li>
+              <li>✓ 24/7 Premium Support</li>
+            </ul>
+            <Link href="/app" className="inline-block bg-[#00d4ff] text-[#0b0b1f] py-3 px-6 rounded-lg font-bold text-sm transition-all duration-300 hover:bg-[#00aacd] hover:scale-105">
+              Choose Elite
+            </Link>
+          </motion.div>
 
-              <CardContent className="space-y-4 sm:space-y-6 p-4 sm:p-6">
-                <div className="grid grid-cols-2 sm:flex sm:flex-row gap-2 sm:gap-3 justify-center relative">
-                  {analysisTypes.map(({ type, icon: Icon }) => (
-                      <Button
-                        key={type}
-                        variant={selectedType === type ? 'default' : 'secondary'}
-                        onClick={() => {
-                           setSelectedType(type);
-                           setInputText('');
-                           setAnalysisResult(null);
-                           setError(null);
-                           }}
-                        disabled={isLoading}
-                        className={`flex-grow justify-center transition-all duration-300 rounded-lg text-xs sm:text-sm font-semibold uppercase tracking-normal sm:tracking-wider relative overflow-hidden px-2 py-2 sm:px-4 sm:py-3 group ${
-                          selectedType === type
-                            ? 'bg-[#4ADE80] text-[#0D0D2B] shadow-lg shadow-[#4ADE80]/30 hover:bg-[#3BDC7F] hover:brightness-110'
-                            : 'bg-white/10 text-white/80 hover:bg-white/20 hover:text-white hover:scale-[1.03] hover:shadow-md' // Added shadow on hover for secondary
-                        }`}
-                      >
-                        <Icon className="mr-1 sm:mr-2 h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" /> {/* Added flex-shrink-0 */}
-                         <span className="whitespace-nowrap overflow-hidden text-ellipsis">{type}</span>
-                         {selectedType === type && (
-                            <motion.div
-                                className="absolute bottom-0 left-0 right-0 h-1 bg-[#4ADE80]"
-                                layoutId="underline"
-                                initial={false}
-                                transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-                            />
-                         )}
-                          {/* Optional: Add a subtle glow effect on hover for non-active buttons */}
-                         <div className={`absolute inset-0 rounded-lg bg-white/10 opacity-0 transition-opacity duration-300 group-hover:opacity-10 ${selectedType === type ? 'hidden' : ''}`}></div>
-                      </Button>
-                  ))}
-                </div>
+        </div>
+      </motion.section>
 
-                {selectedType !== 'Daily Legal News' && (
-                  <Textarea
-                    ref={textareaRef}
-                    placeholder={currentPlaceholder}
-                    value={inputText}
-                    onChange={(e) => setInputText(e.target.value)}
-                    disabled={isLoading}
-                    rows={6}
-                    className="bg-white/5 border border-white/10 rounded-xl p-3 sm:p-4 text-sm sm:text-base focus:ring-[#4ADE80] focus:border-[#4ADE80] focus:shadow-lg focus:shadow-[#4ADE80]/20 transition-all duration-300 min-h-[120px] sm:min-h-[150px] animated-input"
-                    aria-label="Input text for analysis"
-                  />
-                )}
+      {/* Footer */}
+      <motion.footer
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={fadeUp}
+        custom={1.2} // Animation delay
+        className="bg-[#141432] py-5 px-4 text-center text-sm text-[#777] mt-10" // Add margin top
+      >
+        Built by: T.Naha
+      </motion.footer>
 
-                 {error && (
-                   <Alert variant="destructive" className="mt-4">
-                     <Info className="h-4 w-4" />
-                     <AlertTitle>Error</AlertTitle>
-                     <AlertDescription>{error}</AlertDescription>
-                   </Alert>
-                 )}
-
-
-                <Button
-                  onClick={handleAnalysis}
-                  disabled={isLoading || (selectedType !== 'Daily Legal News' && !inputText.trim())}
-                  className="w-full bg-gradient-to-r from-[#4ADE80] to-[#3B82F6] text-white font-bold text-base sm:text-lg py-2.5 sm:py-3 rounded-lg uppercase tracking-wider transition-all duration-300 hover:shadow-xl hover:shadow-[#4ADE80]/40 hover:brightness-110 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden group"
-                >
-                  {isLoading ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 sm:h-5 sm:w-5 animate-spin" />
-                      Analyzing...
-                      <div className="absolute inset-0 bg-white/20 animate-shimmer opacity-50 group-disabled:hidden"></div>
-                    </>
-                  ) : (
-                    <>
-                      <Sparkles className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
-                       {selectedType === 'Daily Legal News' ? 'Get News' : 'Analyze'}
-                    </>
-                  )}
-                </Button>
-              </CardContent>
-            </Card>
-         </ClientOnly>
-
-
-        {isLoading && !analysisResult && ( // Show loading indicator below card only when loading and no result yet
-           <ClientOnly> {/* Wrap loading indicator */}
-               <div className="mt-8 text-center text-gray-400 flex items-center justify-center">
-                    <Loader2 className="mr-2 h-5 w-5 animate-spin text-[#4ADE80]" />
-                    Fetching analysis...
-                </div>
-           </ClientOnly>
-         )}
-
-
-        {analysisResult && (
-          <ClientOnly> {/* Wrap analysis result section */}
-              <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                  className="w-full max-w-3xl mt-8 md:mt-10"
-              >
-                <Card className="bg-[rgba(255,255,255,0.05)] border border-white/10 rounded-[28px] shadow-xl backdrop-blur-lg">
-                  <CardHeader className="pt-4 pb-2 sm:pt-6 sm:pb-3">
-                      <CardTitle className="text-lg sm:text-xl md:text-2xl font-semibold text-[#4ADE80] flex items-center gap-2 justify-center">
-                          {/* Dynamic Icon based on result type */}
-                          {(() => {
-                             if (!analysisResult) return null;
-                             // Use the AnalysisResultIcon component for cleaner code
-                             return <AnalysisResultIcon type={analysisResult.type} />;
-                          })()}
-                           Results ({analysisResult.type})
-                      </CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-4 sm:p-6">
-                       {/* Apply prose styles for better Markdown rendering */}
-                       <div className="prose prose-sm sm:prose-base md:prose-lg prose-invert max-w-none bg-black/20 p-4 rounded-lg overflow-x-auto max-h-[50vh] sm:max-h-[60vh]">
-                          <ReactMarkdown>{analysisResult.output}</ReactMarkdown>
-                      </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-          </ClientOnly>
-        )}
-      </main>
+    </div>
   );
 }
