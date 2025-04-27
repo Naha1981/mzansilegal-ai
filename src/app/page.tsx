@@ -1,6 +1,7 @@
 import { LegaleseAI } from '@/components/legalese-ai';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Terminal } from "lucide-react";
+import { ClientOnly } from '@/components/client-only'; // Import ClientOnly
 
 export default function Home() {
   return (
@@ -12,13 +13,16 @@ export default function Home() {
         Your AI-powered assistant for Contract Analysis, Case Study Insights, and Legal Research in South African Law.
       </p>
 
-      <Alert className="max-w-3xl mb-8 border-destructive/50 text-destructive [&>svg]:text-destructive">
-        <Terminal className="h-4 w-4" />
-        <AlertTitle>Disclaimer</AlertTitle>
-        <AlertDescription>
-          This AI provides informational analysis based on the data provided and its training. It does not constitute legal advice. Always consult with a qualified legal professional for advice tailored to your specific circumstances. Do not share sensitive or confidential information.
-        </AlertDescription>
-      </Alert>
+      {/* Wrap the Alert in ClientOnly to prevent hydration issues */}
+      <ClientOnly>
+        <Alert className="max-w-3xl mb-8 border-destructive/50 text-destructive [&>svg]:text-destructive">
+          <Terminal className="h-4 w-4" />
+          <AlertTitle>Disclaimer</AlertTitle>
+          <AlertDescription>
+            This AI provides informational analysis based on the data provided and its training. It does not constitute legal advice. Always consult with a qualified legal professional for advice tailored to your specific circumstances. Do not share sensitive or confidential information.
+          </AlertDescription>
+        </Alert>
+      </ClientOnly>
 
       <LegaleseAI />
     </main>
