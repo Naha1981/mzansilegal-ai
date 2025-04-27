@@ -1,252 +1,109 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
+/* Removed Tailwind base, components, utilities directives and theme variables */
+/* Added styles from the provided HTML */
 body {
-  /* Apply Inter font using its CSS variable */
-  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #0b0b1f, #1f2a5d);
+  color: #f5f5f5;
+  min-height: 100vh;
+  /* Centering happens in page component now */
+  /* display: flex; */
+  /* align-items: center; */
+  /* justify-content: center; */
+  /* padding: 40px; */
 }
 
-@layer base {
-  :root {
-    /* Light Theme (Reference - Not actively used as dark is default) */
-    --background-light: 0 0% 100%;
-    --foreground-light: 240 10% 3.9%;
-    --card-light: 0 0% 100%;
-    --card-foreground-light: 240 10% 3.9%;
-    --popover-light: 0 0% 100%;
-    --popover-foreground-light: 240 10% 3.9%;
-    --primary-light: 217 91% 60%; /* Royal Blue */
-    --primary-foreground-light: 0 0% 100%;
-    --secondary-light: 215 16% 69%; /* Muted Gray */
-    --secondary-foreground-light: 240 10% 3.9%;
-    --muted-light: 210 40% 96.1%;
-    --muted-foreground-light: 215 16% 69%; /* Muted Gray */
-    --accent-light: 145 63% 59%; /* Soft Green */
-    --accent-foreground-light: 240 10% 3.9%;
-    --destructive-light: 0 84.2% 60.2%;
-    --destructive-foreground-light: 0 0% 98%;
-    --border-light: 214.3 31.8% 91.4%;
-    --input-light: 214.3 31.8% 91.4%;
-    --ring-light: 217 91% 60%; /* Royal Blue */
+/* Container styles applied directly in page.tsx now */
+/* .container { ... } */
 
-    /* Dark Theme (Active) */
-    --background: 240 68% 11%; /* #0D0D2B */
-    --foreground: 0 0% 100%; /* White */
+/* Other styles assumed to be applied via classes in page.tsx */
 
-    --card: 240 43% 15%; /* #161636 - slightly lighter dark */
-    --card-foreground: 0 0% 100%;
-
-    --popover: 240 43% 15%;
-    --popover-foreground: 0 0% 100%;
-
-    --primary: 217 91% 60%; /* Royal Blue #3B82F6 */
-    --primary-foreground: 0 0% 100%; /* White */
-
-    --secondary: 215 16% 34%; /* Darker Muted Gray for secondary elements */
-    --secondary-foreground: 0 0% 100%; /* White */
-
-    --muted: 240 5% 14.9%; /* Dark Muted */
-    --muted-foreground: 215 16% 69%; /* Muted Gray #A0AEC0 */
-
-    --accent: 145 63% 59%; /* Soft Green #4ADE80 */
-    --accent-foreground: 240 10% 3.9%; /* Dark contrast for green */
-
-    --destructive: 0 70% 55%; /* Destructive Red */
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 240 5% 20%; /* Slightly lighter border */
-    --input: 240 5% 20%;
-    --ring: 217 91% 60%; /* Royal Blue */
-
-    --chart-1: 200 70% 60%;
-    --chart-2: 120 60% 55%;
-    --chart-3: 30 80% 65%;
-    --chart-4: 280 65% 70%;
-    --chart-5: 340 75% 65%;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 240 8% 8%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 217 91% 60%; /* Royal Blue */
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 145 63% 59%; /* Soft Green */
-    --sidebar-accent-foreground: 240 10% 3.9%;
-    --sidebar-border: 240 5% 20%;
-    --sidebar-ring: 217 91% 60%; /* Royal Blue */
-  }
-
-  /* Define dark theme explicitely for clarity, although :root is already set to dark */
-  .dark {
-    --background: 240 68% 11%; /* #0D0D2B */
-    --foreground: 0 0% 100%; /* White */
-
-    --card: 240 43% 15%; /* #161636 - slightly lighter dark */
-    --card-foreground: 0 0% 100%;
-
-    --popover: 240 43% 15%;
-    --popover-foreground: 0 0% 100%;
-
-    --primary: 217 91% 60%; /* Royal Blue #3B82F6 */
-    --primary-foreground: 0 0% 100%; /* White */
-
-    --secondary: 215 16% 34%; /* Darker Muted Gray for secondary elements */
-    --secondary-foreground: 0 0% 100%; /* White */
-
-    --muted: 240 5% 14.9%; /* Dark Muted */
-    --muted-foreground: 215 16% 69%; /* Muted Gray #A0AEC0 */
-
-    --accent: 145 63% 59%; /* Soft Green #4ADE80 */
-    --accent-foreground: 240 10% 3.9%; /* Dark contrast for green */
-
-    --destructive: 0 70% 55%; /* Destructive Red */
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 240 5% 20%; /* Slightly lighter border */
-    --input: 240 5% 20%;
-    --ring: 217 91% 60%; /* Royal Blue */
-
-    --chart-1: 200 70% 60%;
-    --chart-2: 120 60% 55%;
-    --chart-3: 30 80% 65%;
-    --chart-4: 280 65% 70%;
-    --chart-5: 340 75% 65%;
-
-    --sidebar-background: 240 8% 8%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 217 91% 60%; /* Royal Blue */
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 145 63% 59%; /* Soft Green */
-    --sidebar-accent-foreground: 240 10% 3.9%;
-    --sidebar-border: 240 5% 20%;
-    --sidebar-ring: 217 91% 60%; /* Royal Blue */
-  }
+h1 {
+  font-size: 2.8rem;
+  margin-bottom: 10px;
+  color: #00d4ff;
+  text-align: center;
+  font-weight: 700; /* Added font-weight */
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-    /* Apply luxurious dark gradient background */
-    @apply bg-gradient-to-br from-[#0D0D2B] to-[#161636];
-    font-feature-settings: "rlig" 1, "calt" 1;
-    /* Add subtle animated background */
-    /* Note: Complex animations might require JS or more CSS */
-    /* Simple example: pulsing background */
-    /* animation: pulse-bg 10s infinite alternate; */
-  }
-
-  /* Define Inter font variable if not already done in layout.tsx */
-  /* Ensure you import the font */
-  h1 { @apply font-sans text-5xl font-bold; } /* 48px approx */
-  h2 { @apply font-sans text-2xl font-semibold; } /* 24px approx */
-  p, div, span, li, button, input, textarea, label { @apply font-sans; }
-
-  /* Glassmorphism Card Style */
-  .glassmorphism-card {
-      @apply bg-[rgba(22,22,54,0.5)] backdrop-blur-lg border border-[rgba(255,255,255,0.1)] rounded-[28px] shadow-lg; /* Adjusted background color */
-      box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-      -webkit-backdrop-filter: blur( 10px ); /* For Safari */
-  }
-  .glassmorphism-card:hover {
-       box-shadow: 0 0 20px 5px hsla(var(--primary) / 0.3); /* Subtle glow on hover */
-  }
-
-  /* Animated Underline for Tabs */
-  .tab-button {
-    position: relative;
-    overflow: hidden;
-  }
-  .tab-button::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background-color: hsl(var(--primary));
-    transition: all 0.3s ease-in-out;
-    transform: translateX(-50%);
-  }
-  .tab-button[data-state='active']::after {
-     width: 60%; /* Adjust width as needed */
-  }
-   .tab-button[data-state='active'] {
-       text-shadow: 0 0 8px hsla(var(--primary) / 0.7); /* Neon glow */
-   }
-
-  /* Input Animation */
-  .animated-input {
-      @apply transition-all duration-300;
-  }
-  .animated-input:focus {
-      @apply transform scale-[1.02] ring-2 ring-primary ring-offset-2 ring-offset-background border-primary;
-  }
-  .animated-input::placeholder {
-      @apply transition-opacity duration-300;
-  }
-  .animated-input:focus::placeholder {
-      @apply opacity-50;
-  }
-
-   /* Button Loading Shimmer */
-  .button-loading::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 200%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    animation: shimmer 1.5s infinite linear;
-  }
-
-   @keyframes shimmer {
-    0% { left: -100%; }
-    100% { left: 100%; }
-  }
-
-   /* Page Fade-in */
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  .fade-in {
-    animation: fadeIn 0.5s ease-in-out forwards;
-  }
-
-
+.subtitle {
+  font-size: 1rem;
+  text-align: center;
+  color: #ccc;
+  margin-bottom: 30px;
 }
 
-/* Add custom scrollbar styles for webkit browsers */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: hsl(var(--muted) / 0.5); /* Semi-transparent track */
+.disclaimer {
+  background: #ff4444;
+  color: #fff;
+  padding: 15px;
   border-radius: 10px;
+  font-size: 0.9rem;
+  margin-bottom: 30px;
 }
 
-::-webkit-scrollbar-thumb {
-  background: hsl(var(--secondary));
-  border-radius: 10px;
+.form-section {
+  background: #1c1c45;
+  padding: 20px;
+  border-radius: 12px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--primary));
+.tab-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
-/* Minimal styles for the floating particles background concept - requires JS implementation */
-/* #particle-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
+.tab-buttons button {
+  flex: 1;
+  background: #27275a;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.tab-buttons button.active, .tab-buttons button:hover {
+  background: #00d4ff;
+  color: #0b0b1f;
+}
+
+textarea {
   width: 100%;
-  height: 100%;
-  z-index: -1; /* Place behind content */
-/* } */
+  height: 150px;
+  border-radius: 8px;
+  border: none;
+  padding: 15px;
+  font-size: 1rem;
+  resize: none;
+  background: #2e2e6a;
+  color: #f5f5f5;
+  box-sizing: border-box; /* Added for consistent sizing */
+}
+
+.submit-btn {
+  margin-top: 20px;
+  background: #00d4ff;
+  border: none;
+  padding: 15px;
+  width: 100%;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0b0b1f;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.submit-btn:hover {
+  background: #00aacc;
+}
+
+/* Ensure basic elements have Poppins font */
+p, div, span, li, button, input, textarea, label {
+    font-family: 'Poppins', sans-serif;
+}

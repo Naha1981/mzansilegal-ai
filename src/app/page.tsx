@@ -1,60 +1,93 @@
-import { LegaleseAI } from '@/components/legalese-ai';
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Info } from "lucide-react"; // Import Info icon
-import { ClientOnly } from '@/components/client-only';
+'use client'; // Mark as client component to use useEffect
+
+import React, AwaitedReactNode, JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useEffect, useRef } from 'react';
 
 export default function Home() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Replicate the script logic inside useEffect
+  useEffect(() => {
+    const buttons = containerRef.current?.querySelectorAll('.tab-buttons button');
+    const textarea = containerRef.current?.querySelector('textarea');
+
+    if (buttons && textarea) {
+      const handleClick = (event: MouseEvent) => {
+        const targetButton = event.currentTarget as HTMLButtonElement;
+
+        // Remove active class from all buttons
+        buttons.forEach(btn => btn.classList.remove('active'));
+        // Add active class to the clicked button
+        targetButton.classList.add('active');
+
+        // Update textarea placeholder based on active button
+        const activeType = targetButton.textContent;
+        if (activeType === 'Contract Analysis') {
+          textarea.placeholder = "Paste the full contract text here...";
+        } else if (activeType === 'Case Study Analysis') {
+          textarea.placeholder = "Describe the case details...";
+        } else { // Legal Research
+          textarea.placeholder = "Enter your legal research question or topic...";
+        }
+      };
+
+      buttons.forEach(button => {
+        button.addEventListener('click', handleClick);
+      });
+
+      // Cleanup function to remove event listeners
+      return () => {
+        buttons.forEach(button => {
+          button.removeEventListener('click', handleClick);
+        });
+      };
+    }
+  }, []); // Empty dependency array ensures this runs once on mount
+
   return (
-    // Adjusted padding and ensures full height for gradient effect
-    <main className="container mx-auto px-4 py-12 md:px-8 md:py-16 lg:px-12 lg:py-20 min-h-screen flex flex-col items-center relative overflow-hidden">
-       {/* Optional: Placeholder for animated background - requires JS */}
-       {/* <canvas id="particle-canvas"></canvas> */}
+    // Apply container styles directly or via CSS class if defined globally
+    <div
+      ref={containerRef}
+      // Apply centering styles here
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '100vh',
+        padding: '40px',
+        boxSizing: 'border-box',
+      }}
+    >
+      <div style={{
+        background: '#141432',
+        padding: '40px',
+        borderRadius: '20px',
+        boxShadow: '0 8px 20px rgba(0, 0, 0, 0.7)',
+        maxWidth: '700px',
+        width: '100%',
+        boxSizing: 'border-box',
+      }}>
+        <h1>MzansiLegal AI</h1>
+        <div className="subtitle">Your AI-powered assistant for Contract Analysis, Case Study Insights, and Legal Research in South African Law.</div>
 
-       {/* Hero Section */}
-       <div className="text-center mb-12 z-10">
-           <h1 className="text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-500 animate-gradient-x"> {/* Gradient Text */}
-               MzansiLegal AI
-           </h1>
-           <p className="text-2xl font-semibold text-muted-foreground max-w-3xl"> {/* Updated typography */}
-               Your AI-powered assistant for Contract Analysis, Case Study Insights, and Legal Research in South African Law.
-           </p>
-       </div>
+        <div className="disclaimer">
+          ⚠️ Disclaimer: This AI provides information for legal research and analysis. It is a tool to support, not replace, independent legal judgment. This output does not constitute legal advice and should not be relied upon as such. Always verify findings with primary legal sources and exercise professional discretion. Do not submit client confidential information.
+        </div>
 
+        <div className="form-section">
+          <div className="tab-buttons">
+            {/* Default active state set here, JS will handle changes */}
+            <button className="active">Legal Research</button>
+            <button>Case Study Analysis</button>
+            <button>Contract Analysis</button>
+          </div>
 
-      {/* Disclaimer Section */}
-      <ClientOnly>
-         {/* Stylish semi-transparent card with soft red gradient */}
-         <Alert className="max-w-3xl mb-10 border-destructive/30 text-destructive [&>svg]:text-destructive bg-gradient-to-r from-destructive/10 to-destructive/5 backdrop-blur-sm p-5 rounded-xl shadow-lg">
-           <div className="flex items-start">
-               <Info className="h-5 w-5 mr-3 flex-shrink-0" /> {/* Info icon */}
-               <div>
-                  <AlertTitle className="font-semibold text-lg mb-1">Disclaimer</AlertTitle> {/* Slightly larger title */}
-                  {/* Smaller font for description, bold keywords */}
-                  <AlertDescription className="text-sm"> {/* Smaller font */}
-                      This AI provides information for legal research and analysis. It is a tool to support, not replace, independent legal judgment. This output does <strong className="font-bold">not constitute legal advice</strong> and should not be relied upon as such. Always verify findings with primary legal sources and exercise professional discretion. <strong className="font-bold">Do not submit client confidential information</strong>.
-                  </AlertDescription>
-              </div>
-           </div>
-        </Alert>
-      </ClientOnly>
+          {/* Initial placeholder, JS updates it */}
+          <textarea placeholder="Enter your legal research question or topic..."></textarea>
 
-      {/* Analysis Section Component */}
-      <LegaleseAI />
-    </main>
+          {/* Note: The submit button currently doesn't trigger any action */}
+          <button className="submit-btn">Analyze</button>
+        </div>
+      </div>
+    </div>
   );
 }
-
-// Add gradient animation utility if not already present in tailwind config
-// You might need to add this keyframe/animation to globals.css or tailwind.config.js
-/*
-@keyframes gradient-x {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-.animate-gradient-x {
-  background-size: 200% 200%;
-  animation: gradient-x 5s ease infinite;
-}
-*/
-```

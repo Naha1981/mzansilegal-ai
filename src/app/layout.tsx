@@ -1,11 +1,13 @@
 import type {Metadata} from 'next';
-import { Inter } from 'next/font/google'; // Import Inter
-// Removed: import { GeistSans } from 'geist/font/sans';
 import './globals.css';
-import { Toaster } from "@/components/ui/toaster"
+// Removed Toaster import as it's not used in the new static design
 
-// Initialize Inter font with subsets
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' }); // Define variable
+// Initialize Poppins font - assuming it's added via CSS link now
+// const poppins = Poppins({
+//   weight: ['400', '600', '700'],
+//   subsets: ['latin'],
+//   variable: '--font-poppins' // If needed for Tailwind integration later
+// });
 
 export const metadata: Metadata = {
   title: 'MzansiLegal AI',
@@ -18,12 +20,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // Apply dark theme globally and Inter font variable
-    <html lang="en" className={`dark ${inter.variable}`} suppressHydrationWarning>
-      {/* Apply Inter font via its variable */}
-      <body className={`${inter.variable} font-sans antialiased fade-in`}> {/* Use Inter variable */}
+    // Removed dark theme class and font variables
+    <html lang="en" suppressHydrationWarning>
+      {/* Add Google Font link directly */}
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+      </head>
+      {/* Body uses font defined in globals.css */}
+      <body>
         {children}
-        <Toaster />
+        {/* Removed Toaster component */}
       </body>
     </html>
   );
