@@ -29,13 +29,13 @@ interface AnalysisResult {
 const AnalysisResultIcon = ({ type }: { type: AnalysisType }) => {
   switch (type) {
     case 'Legal Research':
-      return <Search className="h-5 w-5 sm:h-6 sm:w-6" />;
+       return <Search className="h-5 w-5 sm:h-6 sm:w-6" />;
     case 'Case Study Analysis':
-      return <BookOpenCheck className="h-5 w-5 sm:h-6 sm:w-6" />;
+       return <BookOpenCheck className="h-5 w-5 sm:h-6 sm:w-6" />;
     case 'Contract Analysis':
-      return <FileText className="h-5 w-5 sm:h-6 sm:w-6" />;
+       return <FileText className="h-5 w-5 sm:h-6 sm:w-6" />;
     case 'Daily Legal News':
-      return <Newspaper className="h-5 w-5 sm:h-6 sm:w-6" />; // Updated size
+       return <Newspaper className="h-5 w-5 sm:h-6 sm:w-6" />;
     default:
       return null;
   }
@@ -151,16 +151,16 @@ export default function Home() {
 
   return (
       <main className="flex flex-col items-center justify-start min-h-screen p-4 sm:p-6 md:p-10 bg-gradient-to-br from-[#0D0D2B] to-[#161636] text-[#f5f5f5]">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#4ADE80] mb-2 text-center animate-fade-in drop-shadow-[0_2px_4px_rgba(74,222,128,0.4)]">
-          MzansiLegal AI
-        </h1>
-        <p className="text-base sm:text-lg md:text-xl text-[#A0AEC0] mb-6 md:mb-8 text-center animate-fade-in animation-delay-200">
-          Your AI-powered assistant for South African Law
-        </p>
+       <ClientOnly> {/* Wrap the entire main content */}
+         <> {/* Use Fragment */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#4ADE80] mb-2 text-center animate-fade-in drop-shadow-[0_2px_4px_rgba(74,222,128,0.4)]">
+              MzansiLegal AI
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl text-[#A0AEC0] mb-6 md:mb-8 text-center animate-fade-in animation-delay-200">
+              Your AI-powered assistant for South African Law
+            </p>
 
-         {/* Disclaimer Button */}
-          <ClientOnly> {/* Wrap Disclaimer button and content */}
-            <>
+            {/* Disclaimer Button */}
              <button
                 onClick={() => setShowDisclaimer((prev) => !prev)}
                 className="mb-10 bg-red-600 animate-pulse hover:bg-red-700 text-white font-bold py-2 px-5 rounded-full text-base transition-all duration-300 flex items-center gap-2"
@@ -184,11 +184,8 @@ export default function Home() {
                  </motion.div>
                )}
              </AnimatePresence>
-            </>
-          </ClientOnly>
 
 
-         <ClientOnly> {/* Wrap main Card component to prevent hydration issues */}
             <Card className="w-full max-w-3xl bg-[rgba(255,255,255,0.05)] border border-white/10 rounded-[28px] shadow-xl backdrop-blur-lg transition-all duration-300 hover:shadow-2xl hover:shadow-[#4ADE80]/10 animate-fade-in animation-delay-400">
                <CardHeader className="text-center pt-4 pb-2 sm:pt-6 sm:pb-2">
                    <CardTitle className="text-lg sm:text-xl md:text-2xl font-semibold text-foreground text-center"> {/* Added text-center */}
@@ -274,21 +271,17 @@ export default function Home() {
                 </Button>
               </CardContent>
             </Card>
-         </ClientOnly>
 
 
-        {isLoading && !analysisResult && ( // Show loading indicator below card only when loading and no result yet
-           <ClientOnly> {/* Wrap loading indicator */}
+            {isLoading && !analysisResult && ( // Show loading indicator below card only when loading and no result yet
                <div className="mt-8 text-center text-gray-400 flex items-center justify-center">
                     <Loader2 className="mr-2 h-5 w-5 animate-spin text-[#4ADE80]" />
                     Fetching analysis...
                 </div>
-           </ClientOnly>
-         )}
+             )}
 
 
-        {analysisResult && (
-          <ClientOnly> {/* Wrap analysis result section */}
+            {analysisResult && (
               <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -299,7 +292,13 @@ export default function Home() {
                   <CardHeader className="pt-4 pb-2 sm:pt-6 sm:pb-3">
                       <CardTitle className="text-lg sm:text-xl md:text-2xl font-semibold text-[#4ADE80] flex items-center gap-2 justify-center">
                            {/* Dynamic Icon based on result type */}
-                            <AnalysisResultIcon type={analysisResult.type} />
+                           {(() => {
+                             if (analysisResult.type === 'Legal Research') return <Search className="h-5 w-5 sm:h-6 sm:w-6" />;
+                             if (analysisResult.type === 'Case Study Analysis') return <BookOpenCheck className="h-5 w-5 sm:h-6 sm:w-6" />;
+                             if (analysisResult.type === 'Contract Analysis') return <FileText className="h-5 w-5 sm:h-6 sm:w-6" />;
+                             if (analysisResult.type === 'Daily Legal News') return <Newspaper className="h-5 w-5 sm:h-6 sm:w-6" />;
+                             return null;
+                          })()}
                         Results ({analysisResult.type})
                       </CardTitle>
                   </CardHeader>
@@ -311,8 +310,10 @@ export default function Home() {
                   </CardContent>
                 </Card>
               </motion.div>
-          </ClientOnly>
-        )}
+            )}
+         </>
+        </ClientOnly>
       </main>
   );
 }
+
