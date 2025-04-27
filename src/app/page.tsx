@@ -120,27 +120,10 @@ export default function Home() {
           Your AI-powered assistant for South African Law
         </p>
 
-        <button
-            onClick={() => setShowDisclaimer((prev) => !prev)}
-            className="mb-8 md:mb-10 bg-red-600 animate-pulse hover:bg-red-700 hover:scale-105 text-white font-bold py-2 px-4 sm:px-5 rounded-full text-sm sm:text-base transition-all duration-300 flex items-center gap-2"
-        >
-            <Info size={16} sm:size={18} /> {showDisclaimer ? 'Hide Disclaimer' : 'Show Disclaimer'}
-        </button>
+        
 
         <AnimatePresence>
-          {showDisclaimer && (
-            <motion.div
-              initial={{ opacity: 0, height: 0, marginTop: 0 }}
-              animate={{ opacity: 1, height: 'auto', marginTop: '1rem', marginBottom: '1rem' }} // Adjusted margins
-              exit={{ opacity: 0, height: 0, marginTop: 0, marginBottom: 0 }}
-              transition={{ duration: 0.4, ease: "easeInOut" }}
-              className="overflow-hidden w-full max-w-2xl" // Removed mb-10 here, handled by animate
-            >
-              <div className="bg-[rgba(254,226,226,0.1)] border border-red-400/30 text-red-200 p-4 sm:p-5 rounded-lg text-xs sm:text-sm shadow-md backdrop-blur-sm">
-                <strong className="font-semibold text-red-100">Disclaimer:</strong> This AI provides information for legal research and analysis. It is a tool to support, not replace, independent legal judgment. This output does not constitute legal advice and should not be relied upon as such. Always verify findings with primary legal sources and exercise professional discretion. <strong className="text-red-100">Do not submit client confidential information.</strong>
-              </div>
-            </motion.div>
-          )}
+        
         </AnimatePresence>
 
         <Card className="w-full max-w-3xl bg-[rgba(255,255,255,0.05)] border border-white/10 rounded-[28px] shadow-xl backdrop-blur-lg transition-all duration-300 hover:shadow-2xl hover:shadow-[#4ADE80]/10 animate-fade-in animation-delay-400">
@@ -239,7 +222,6 @@ export default function Home() {
             <Card className="bg-[rgba(255,255,255,0.05)] border border-white/10 rounded-[28px] shadow-xl backdrop-blur-lg">
               <CardHeader className="pt-4 pb-2 sm:pt-6 sm:pb-3"> {/* Adjusted padding */}
                   <CardTitle className="text-lg sm:text-xl md:text-2xl font-semibold text-[#4ADE80] flex items-center gap-2 justify-center">
-                       {/* Use appropriate icon for result type */}
                        {analysisResult.type === 'Legal Research' && <Search size={20} sm:size={24} />}
                        {analysisResult.type === 'Case Study Analysis' && <BookOpenCheck size={20} sm:size={24} />}
                        {analysisResult.type === 'Contract Analysis' && <FileText size={20} sm:size={24} />}
@@ -260,4 +242,3 @@ export default function Home() {
     </ClientOnly>
   );
 }
-
