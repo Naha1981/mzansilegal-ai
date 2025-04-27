@@ -1,3 +1,4 @@
+
 'use server';
 
 /**
@@ -89,5 +90,3 @@ const dailyLegalNewsFlow = ai.defineFlow<
     }
   }
 );
-
-    

@@ -1,3 +1,4 @@
+
 import type {Metadata} from 'next';
 import './globals.css';
 // Removed Toaster import as it's not used in the new static design
