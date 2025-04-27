@@ -29,15 +29,13 @@ interface AnalysisResult {
 const AnalysisResultIcon = ({ type }: { type: AnalysisType }) => {
   switch (type) {
     case 'Legal Research':
-      // Use responsive size prop if necessary or keep consistent
-      return <Search size={20} />;
+      return <Search className="h-5 w-5 sm:h-6 sm:w-6" />;
     case 'Case Study Analysis':
-      return <BookOpenCheck size={20} />;
+      return <BookOpenCheck className="h-5 w-5 sm:h-6 sm:w-6" />;
     case 'Contract Analysis':
-      return <FileText size={20} />;
+      return <FileText className="h-5 w-5 sm:h-6 sm:w-6" />;
     case 'Daily Legal News':
-      // Ensure size prop compatibility if needed, using standard size for consistency
-      return <Newspaper size={20} />;
+      return <Newspaper className="h-5 w-5 sm:h-6 sm:w-6" />; // Updated size
     default:
       return null;
   }
@@ -161,34 +159,34 @@ export default function Home() {
         </p>
 
          {/* Disclaimer Button */}
-          <ClientOnly> {/* Wrap Disclaimer button */}
+          <ClientOnly> {/* Wrap Disclaimer button and content */}
+            <>
              <button
                 onClick={() => setShowDisclaimer((prev) => !prev)}
                 className="mb-10 bg-red-600 animate-pulse hover:bg-red-700 text-white font-bold py-2 px-5 rounded-full text-base transition-all duration-300 flex items-center gap-2"
             >
                <Info size={18} /> {showDisclaimer ? 'Hide Disclaimer' : 'Show Disclaimer'}
             </button>
-          </ClientOnly>
 
-
-         {/* Animated Disclaimer Text */}
-         <AnimatePresence>
-           {showDisclaimer && (
-             <motion.div
-               initial={{ opacity: 0, height: 0 }}
-               animate={{ opacity: 1, height: 'auto' }}
-               exit={{ opacity: 0, height: 0 }}
-               transition={{ duration: 0.4, ease: "easeInOut" }}
-               className="overflow-hidden w-full max-w-3xl mb-8" // Adjusted margin
-             >
-                <ClientOnly> {/* Wrap disclaimer content */}
+             {/* Animated Disclaimer Text */}
+             <AnimatePresence>
+               {showDisclaimer && (
+                 <motion.div
+                   initial={{ opacity: 0, height: 0 }}
+                   animate={{ opacity: 1, height: 'auto' }}
+                   exit={{ opacity: 0, height: 0 }}
+                   transition={{ duration: 0.4, ease: "easeInOut" }}
+                   className="overflow-hidden w-full max-w-3xl mb-8" // Adjusted margin
+                 >
                    <div className="bg-red-100/10 border border-red-400/30 text-red-200 p-4 rounded-lg text-sm shadow-md backdrop-blur-sm alert-destructive">
                      <strong>Disclaimer:</strong> This AI provides information for legal research and analysis. It is a tool to support, not replace, independent legal judgment. This output does not constitute legal advice and should not be relied upon as such. Always verify findings with primary legal sources and exercise professional discretion. Do not submit client confidential information.
                    </div>
-                </ClientOnly>
-             </motion.div>
-           )}
-         </AnimatePresence>
+                 </motion.div>
+               )}
+             </AnimatePresence>
+            </>
+          </ClientOnly>
+
 
          <ClientOnly> {/* Wrap main Card component to prevent hydration issues */}
             <Card className="w-full max-w-3xl bg-[rgba(255,255,255,0.05)] border border-white/10 rounded-[28px] shadow-xl backdrop-blur-lg transition-all duration-300 hover:shadow-2xl hover:shadow-[#4ADE80]/10 animate-fade-in animation-delay-400">
