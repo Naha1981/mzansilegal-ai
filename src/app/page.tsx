@@ -16,16 +16,14 @@ export default function Home() {
       {/* Wrap the Alert in ClientOnly to prevent hydration issues */}
       <ClientOnly>
         <Alert className="max-w-3xl mb-8 border-destructive/50 text-destructive [&>svg]:text-destructive">
-          {/* Ensure the icon itself is not causing hydration issues by also wrapping or simplifying */}
-          {/* For simplicity, we'll keep it, but be aware complex SVG rendering could also be a source */}
-          <Terminal className="h-4 w-4" />
+          {/* Use ClientOnly for the icon too */}
+          <ClientOnly><Terminal className="h-4 w-4" /></ClientOnly>
           <AlertTitle>Disclaimer</AlertTitle>
           <AlertDescription>
-            This AI provides informational analysis based on the data provided and its training. It does not constitute legal advice. Always consult with a qualified legal professional for advice tailored to your specific circumstances. Do not share sensitive or confidential information.
+            This AI provides information for legal research and analysis. It is a tool to support, not replace, independent legal judgment. This output does not constitute legal advice and should not be relied upon as such. Always verify findings with primary legal sources and exercise professional discretion. Do not submit client confidential information.
           </AlertDescription>
         </Alert>
       </ClientOnly>
-
 
       <LegaleseAI />
     </main>
