@@ -30,14 +30,14 @@ const AnalysisResultIcon = ({ type }: { type: AnalysisType }) => {
   switch (type) {
     case 'Legal Research':
       // Use responsive size prop if necessary or keep consistent
-      return <Search size={20} className="inline-block" />;
+      return <Search size={20} />;
     case 'Case Study Analysis':
-      return <BookOpenCheck size={20} className="inline-block" />;
+      return <BookOpenCheck size={20} />;
     case 'Contract Analysis':
-      return <FileText size={20} className="inline-block" />;
+      return <FileText size={20} />;
     case 'Daily Legal News':
-       // Ensure size prop compatibility if needed, using standard size for consistency
-       return <Newspaper size={20} className="inline-block" />;
+      // Ensure size prop compatibility if needed, using standard size for consistency
+      return <Newspaper size={20} />;
     default:
       return null;
   }
@@ -181,14 +181,16 @@ export default function Home() {
                transition={{ duration: 0.4, ease: "easeInOut" }}
                className="overflow-hidden w-full max-w-3xl mb-8" // Adjusted margin
              >
-               <div className="bg-red-100/10 border border-red-400/30 text-red-200 p-4 rounded-lg text-sm shadow-md backdrop-blur-sm alert-destructive">
-                 <strong>Disclaimer:</strong> This AI provides information for legal research and analysis. It is a tool to support, not replace, independent legal judgment. This output does not constitute legal advice and should not be relied upon as such. Always verify findings with primary legal sources and exercise professional discretion. Do not submit client confidential information.
-               </div>
+                <ClientOnly> {/* Wrap disclaimer content */}
+                   <div className="bg-red-100/10 border border-red-400/30 text-red-200 p-4 rounded-lg text-sm shadow-md backdrop-blur-sm alert-destructive">
+                     <strong>Disclaimer:</strong> This AI provides information for legal research and analysis. It is a tool to support, not replace, independent legal judgment. This output does not constitute legal advice and should not be relied upon as such. Always verify findings with primary legal sources and exercise professional discretion. Do not submit client confidential information.
+                   </div>
+                </ClientOnly>
              </motion.div>
            )}
          </AnimatePresence>
 
-         <ClientOnly> {/* Wrap main Card component */}
+         <ClientOnly> {/* Wrap main Card component to prevent hydration issues */}
             <Card className="w-full max-w-3xl bg-[rgba(255,255,255,0.05)] border border-white/10 rounded-[28px] shadow-xl backdrop-blur-lg transition-all duration-300 hover:shadow-2xl hover:shadow-[#4ADE80]/10 animate-fade-in animation-delay-400">
                <CardHeader className="text-center pt-4 pb-2 sm:pt-6 sm:pb-2">
                    <CardTitle className="text-lg sm:text-xl md:text-2xl font-semibold text-foreground text-center"> {/* Added text-center */}
@@ -299,11 +301,7 @@ export default function Home() {
                   <CardHeader className="pt-4 pb-2 sm:pt-6 sm:pb-3">
                       <CardTitle className="text-lg sm:text-xl md:text-2xl font-semibold text-[#4ADE80] flex items-center gap-2 justify-center">
                            {/* Dynamic Icon based on result type */}
-                           {(() => {
-                              if (!analysisResult) return null;
-                              // Render the correct icon based on the analysis type
-                              return <AnalysisResultIcon type={analysisResult.type} />;
-                           })()}
+                            <AnalysisResultIcon type={analysisResult.type} />
                         Results ({analysisResult.type})
                       </CardTitle>
                   </CardHeader>
