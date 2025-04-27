@@ -18,7 +18,7 @@ const LegalDocumentAnalysisInputSchema = z.object({
 export type LegalDocumentAnalysisInput = z.infer<typeof LegalDocumentAnalysisInputSchema>;
 
 const LegalDocumentAnalysisOutputSchema = z.object({
-  analysisReport: z.string().describe('A comprehensive analysis report of the legal document, including key clauses, risk assessment, compliance check, recommendations, and citations, formatted in Markdown.'),
+  analysisReport: z.string().describe('A comprehensive analysis report of the legal document, including key clauses, risk assessment, compliance check, recommendations, and citations, formatted in Markdown with clear headings, subheadings, and lists.'),
 });
 export type LegalDocumentAnalysisOutput = z.infer<typeof LegalDocumentAnalysisOutputSchema>;
 
@@ -62,7 +62,7 @@ const prompt = ai.definePrompt({
     *   Check for compliance with South African law. Identify potentially illegal/unenforceable clauses.
 *   **Tailor Analysis:** Address the user's specific questions and client concerns extracted from the input.
 *   **Present Findings:**
-    *   Generate a clear, concise, well-organized report using Markdown.
+    *   Generate a clear, concise, well-organized report.
     *   Use headings, subheadings, bullet points.
     *   Summarize key findings and recommendations.
     *   Provide clause-by-clause analysis highlighting issues/concerns.
@@ -75,7 +75,14 @@ const prompt = ai.definePrompt({
 *   Use web search to verify legal principles, find recent case law, or check legislation updates related to the contract type or specific clauses mentioned. Prioritize official SA sources.
 
 **Output Formatting:**
-*   Use Markdown. Structure logically.
+*   **Use Markdown formatting.** Structure the report logically for maximum readability.
+*   **Headings and Subheadings:** Use `##` for main sections (e.g., ## Executive Summary, ## Key Clause Analysis, ## Risk Assessment, ## Recommendations) and `###` for subsections (e.g., ### Indemnity Clause, ### Termination Clause).
+*   **Lists:** Use bullet points (`- `) or numbered lists (`1. `) for summarizing findings, risks, recommendations, or clause details. Ensure consistent indentation.
+*   **Paragraphs:** Break down complex analysis into shorter, focused paragraphs.
+*   **Clarity:** Use clear and concise legal language appropriate for professionals.
+*   **Emphasis:** Use **bold** (`**text**`) or _italics_ (`_text_`) sparingly for emphasis where appropriate. **Do not** use asterisks (`*`) for emphasis.
+*   **Citations:** Format citations clearly as instructed.
+*   **Disclaimer:** Ensure the mandatory disclaimer is included at the very end, separated by `---`.
 
 **Security and Ethical Considerations:**
 *   **No Legal Advice.**
@@ -133,3 +140,4 @@ const legalDocumentAnalysisFlow = ai.defineFlow<
     }
   }
 );
+

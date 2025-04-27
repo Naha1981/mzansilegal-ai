@@ -1,109 +1,251 @@
-/* Removed Tailwind base, components, utilities directives and theme variables */
-/* Added styles from the provided HTML */
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #0b0b1f, #1f2a5d);
-  color: #f5f5f5;
-  min-height: 100vh;
-  /* Centering happens in page component now */
-  /* display: flex; */
-  /* align-items: center; */
-  /* justify-content: center; */
-  /* padding: 40px; */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Shadcn Theme Variables - Copied from the previous globals.css */
+@layer base {
+  :root {
+    --background: 230 20% 7%; /* Deep blue-black */
+    --foreground: 210 40% 98%; /* Near white */
+
+    --card: 230 20% 10%; /* Slightly lighter than background */
+    --card-foreground: 210 40% 98%;
+
+    --popover: 230 20% 7%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 158 64% 52%; /* Soft green #4ADE80 */
+    --primary-foreground: 230 20% 7%; /* Dark for contrast on green */
+
+    --secondary: 220 15% 15%; /* Dark gray-blue */
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 220 15% 25%; /* Lighter gray-blue */
+    --muted-foreground: 210 40% 70%; /* Muted white */
+
+    --accent: 158 64% 42%; /* Darker green for hover/focus */
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 70% 60%; /* Brighter red for destructive actions/alerts */
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 15% 20%; /* Subtle border */
+    --input: 220 15% 20%; /* Input border */
+    --ring: 158 64% 52%; /* Focus ring using primary color */
+
+    --radius: 1.75rem; /* 28px rounded corners */
+  }
+
+  .dark {
+    --background: 230 20% 7%;
+    --foreground: 210 40% 98%;
+
+    --card: 230 20% 10%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 230 20% 7%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 158 64% 52%;
+    --primary-foreground: 230 20% 7%;
+
+    --secondary: 220 15% 15%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 220 15% 25%;
+    --muted-foreground: 210 40% 70%;
+
+    --accent: 158 64% 42%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 70% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 15% 20%;
+    --input: 220 15% 20%;
+    --ring: 158 64% 52%;
+
+    --radius: 1.75rem;
+  }
 }
 
-/* Container styles applied directly in page.tsx now */
-/* .container { ... } */
-
-/* Other styles assumed to be applied via classes in page.tsx */
-
-h1 {
-  font-size: 2.8rem;
-  margin-bottom: 10px;
-  color: #00d4ff;
-  text-align: center;
-  font-weight: 700; /* Added font-weight */
+/* Base Body Styles */
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+     font-family: 'Poppins', sans-serif; /* Ensure Poppins is applied */
+     min-height: 100vh;
+  }
+   h1 {
+     @apply text-4xl md:text-5xl font-extrabold; /* Matches page h1 */
+   }
+    p {
+      @apply text-lg md:text-xl; /* Matches page subtitle */
+    }
+    button {
+      @apply font-bold uppercase tracking-wider; /* Matches button styles */
+    }
+    textarea, input {
+       @apply text-base md:text-sm; /* Matches input styles */
+    }
 }
 
-.subtitle {
-  font-size: 1rem;
-  text-align: center;
-  color: #ccc;
-  margin-bottom: 30px;
+/* Animation Keyframes */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.disclaimer {
-  background: #ff4444;
-  color: #fff;
-  padding: 15px;
-  border-radius: 10px;
-  font-size: 0.9rem;
-  margin-bottom: 30px;
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
-.form-section {
-  background: #1c1c45;
-  padding: 20px;
-  border-radius: 12px;
+@keyframes pulse {
+  50% {
+    opacity: .7;
+  }
 }
 
-.tab-buttons {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+
+/* Apply Animations */
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out forwards;
+}
+.animate-shimmer {
+  animation: shimmer 1.5s infinite linear;
 }
 
-.tab-buttons button {
-  flex: 1;
-  background: #27275a;
-  border: none;
-  padding: 12px;
-  border-radius: 8px;
-  color: #fff;
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Animation Delays (optional, for staggered effect) */
+.animation-delay-200 { animation-delay: 0.2s; opacity: 0; /* Start hidden */ }
+.animation-delay-400 { animation-delay: 0.4s; opacity: 0; /* Start hidden */ }
+
+
+/* Custom Input Focus Animation */
+.animated-input:focus-visible {
+  @apply ring-2 ring-[hsl(var(--ring))] ring-offset-2 shadow-lg shadow-[hsla(var(--ring)/0.2)];
+  border-color: hsl(var(--ring));
+  transform: scale(1.01); /* Slight expansion */
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, border-color 0.2s ease-out;
+}
+
+.animated-input::placeholder {
+  transition: opacity 0.3s ease-out;
+}
+
+.animated-input:focus-visible::placeholder {
+  opacity: 0.5; /* Fade placeholder on focus */
+}
+
+/* Alert Destructive Variant Override (for disclaimer button area) */
+.alert-destructive {
+   @apply bg-[rgba(254,226,226,0.1)] border border-red-400/30 text-red-200 backdrop-blur-sm shadow-md;
+   /* Use a semi-transparent red background with blur */
+ }
+
+.alert-destructive strong {
+  @apply text-red-100 font-semibold;
+}
+
+/* Add basic prose styles for Markdown */
+.prose {
+  color: hsl(var(--foreground) / 0.9); /* Slightly muted text */
+}
+.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+  color: hsl(var(--foreground));
+  margin-top: 1.2em;
+  margin-bottom: 0.6em;
   font-weight: 600;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background 0.3s ease;
+}
+.prose h2 {
+  font-size: 1.5em; /* Example size */
+  border-bottom: 1px solid hsl(var(--border));
+  padding-bottom: 0.3em;
+}
+.prose h3 {
+  font-size: 1.25em; /* Example size */
+}
+.prose p {
+  margin-bottom: 1em;
+  line-height: 1.6;
+   @apply text-sm sm:text-base; /* Resetting paragraph size for prose */
+}
+.prose strong {
+   color: hsl(var(--foreground));
+   font-weight: 600;
+}
+.prose ul, .prose ol {
+  margin-left: 1.5em;
+  margin-bottom: 1em;
+}
+.prose li {
+  margin-bottom: 0.4em;
+}
+.prose code {
+  background-color: hsl(var(--muted));
+  padding: 0.2em 0.4em;
+  border-radius: 0.3em;
+  font-size: 0.9em;
+}
+.prose pre {
+  background-color: hsl(var(--muted));
+  padding: 1em;
+  border-radius: 0.5em;
+  overflow-x: auto;
+}
+.prose a {
+  color: hsl(var(--primary));
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+.prose a:hover {
+  color: hsl(var(--accent));
+}
+.prose hr {
+  border-color: hsl(var(--border));
+  margin-top: 2em;
+  margin-bottom: 2em;
 }
 
-.tab-buttons button.active, .tab-buttons button:hover {
-  background: #00d4ff;
-  color: #0b0b1f;
-}
-
-textarea {
-  width: 100%;
-  height: 150px;
-  border-radius: 8px;
-  border: none;
-  padding: 15px;
-  font-size: 1rem;
-  resize: none;
-  background: #2e2e6a;
-  color: #f5f5f5;
-  box-sizing: border-box; /* Added for consistent sizing */
-}
-
-.submit-btn {
-  margin-top: 20px;
-  background: #00d4ff;
-  border: none;
-  padding: 15px;
-  width: 100%;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 700;
-  color: #0b0b1f;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.submit-btn:hover {
-  background: #00aacc;
-}
-
-/* Ensure basic elements have Poppins font */
-p, div, span, li, button, input, textarea, label {
-    font-family: 'Poppins', sans-serif;
+/* Ensure prose styles work in dark mode */
+.prose-invert {
+   --tw-prose-body: hsl(var(--foreground) / 0.9);
+   --tw-prose-headings: hsl(var(--foreground));
+   --tw-prose-lead: hsl(var(--muted-foreground));
+   --tw-prose-links: hsl(var(--primary));
+   --tw-prose-bold: hsl(var(--foreground));
+   --tw-prose-counters: hsl(var(--muted-foreground));
+   --tw-prose-bullets: hsl(var(--border));
+   --tw-prose-hr: hsl(var(--border));
+   --tw-prose-quotes: hsl(var(--foreground));
+   --tw-prose-quote-borders: hsl(var(--border));
+   --tw-prose-captions: hsl(var(--muted-foreground));
+   --tw-prose-code: hsl(var(--foreground));
+   --tw-prose-pre-code: hsl(var(--foreground) / 0.9);
+   --tw-prose-pre-bg: hsl(var(--muted));
+   --tw-prose-th-borders: hsl(var(--border));
+   --tw-prose-td-borders: hsl(var(--border));
+   --tw-prose-invert-body: hsl(var(--foreground) / 0.9);
+   --tw-prose-invert-headings: hsl(var(--foreground));
+   --tw-prose-invert-lead: hsl(var(--muted-foreground));
+   --tw-prose-invert-links: hsl(var(--primary));
+   --tw-prose-invert-bold: hsl(var(--foreground));
+   --tw-prose-invert-counters: hsl(var(--muted-foreground));
+   --tw-prose-invert-bullets: hsl(var(--border));
+   --tw-prose-invert-hr: hsl(var(--border));
+   --tw-prose-invert-quotes: hsl(var(--foreground));
+   --tw-prose-invert-quote-borders: hsl(var(--border));
+   --tw-prose-invert-captions: hsl(var(--muted-foreground));
+   --tw-prose-invert-code: hsl(var(--foreground));
+   --tw-prose-invert-pre-code: hsl(var(--foreground) / 0.9);
+   --tw-prose-invert-pre-bg: hsl(var(--muted));
+   --tw-prose-invert-th-borders: hsl(var(--border));
+   --tw-prose-invert-td-borders: hsl(var(--border));
 }

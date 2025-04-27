@@ -19,7 +19,7 @@ const LegalResearchAssistantInputSchema = z.object({
 export type LegalResearchAssistantInput = z.infer<typeof LegalResearchAssistantInputSchema>;
 
 const LegalResearchAssistantOutputSchema = z.object({
-  analysis: z.string().describe('AI-generated legal research findings, including relevant legislation, case law, and analysis, formatted in Markdown.'),
+  analysis: z.string().describe('AI-generated legal research findings, including relevant legislation, case law, and analysis, formatted in Markdown with clear headings, subheadings, and lists.'),
 });
 export type LegalResearchAssistantOutput = z.infer<typeof LegalResearchAssistantOutputSchema>;
 
@@ -54,7 +54,7 @@ const prompt = ai.definePrompt({
 *   Identify the precise legal issue(s), relevant facts (if provided in the query), applicable legal principles, and desired outcome (if stated).
 *   Determine the scope: South African law focus unless specified otherwise.
 *   Conduct comprehensive research using web search capabilities, prioritizing the sources listed below.
-*   Synthesize findings into a clear, concise, and well-organized response using Markdown formatting (headings, subheadings, bullet points).
+*   Synthesize findings into a clear, concise, and well-organized response.
 *   Provide summaries of key legal principles, relevant legislation, and landmark cases.
 *   Provide accurate and complete citations (South African conventions primarily, appropriate styles for others) including links where possible.
 *   Include the mandatory disclaimer at the end of your response.
@@ -78,9 +78,14 @@ const prompt = ai.definePrompt({
 *   **Attribution:** Briefly indicate key sources used, providing URLs.
 
 **Output Formatting:**
-*   Use Markdown.
-*   Structure with headings, subheadings, lists.
-*   Provide full citations.
+*   **Use Markdown formatting.** Structure the response logically for maximum readability.
+*   **Headings and Subheadings:** Use `##` for main sections and `###` for subsections to clearly delineate topics.
+*   **Lists:** Use bullet points (`- `) or numbered lists (`1. `) for enumerating points, findings, or steps. Ensure consistent indentation for nested lists.
+*   **Paragraphs:** Break down complex information into shorter, focused paragraphs.
+*   **Clarity:** Use clear and concise language. Avoid jargon where possible or explain it if necessary.
+*   **Emphasis:** Use **bold** (`**text**`) or _italics_ (`_text_`) sparingly for emphasis where appropriate. **Do not** use asterisks (`*`) for emphasis.
+*   **Citations:** Clearly format citations as instructed under Core Principles.
+*   **Disclaimer:** Ensure the mandatory disclaimer is included at the very end, separated by `---`.
 
 **Security and Ethical Considerations:**
 *   **No Legal Advice:** Explicitly forbidden.
@@ -116,11 +121,6 @@ const legalResearchAssistantFlow = ai.defineFlow<
         return { analysis: "Please provide a more detailed legal research question." };
     }
 
-    // If the query doesn't seem like a legal research request based on keywords (optional enhancement)
-    // Example: if (!input.researchQuery.toLowerCase().includes('law') && !input.researchQuery.toLowerCase().includes('legal') ...) {
-    //     return { analysis: "Please ensure your query is related to legal research." };
-    // }
-
     try {
         const { output } = await prompt(input);
         // Ensure the output is not null or undefined before returning
@@ -141,3 +141,4 @@ const legalResearchAssistantFlow = ai.defineFlow<
     }
   }
 );
+
