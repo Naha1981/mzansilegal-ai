@@ -28,13 +28,13 @@ interface AnalysisResult {
 const AnalysisResultIcon = ({ type }: { type: AnalysisType }) => {
   switch (type) {
     case 'Legal Research':
-      return <Search size={20} sm:size={24} />;
+      return <Search size={20} />;
     case 'Case Study Analysis':
-      return <BookOpenCheck size={20} sm:size={24} />;
+      return <BookOpenCheck size={20} />;
     case 'Contract Analysis':
-      return <FileText size={20} sm:size={24} />;
+      return <FileText size={20} />;
     case 'Daily Legal News':
-      return <Newspaper size={20} sm:size={24} />;
+      return <Newspaper size={20} />;
     default:
       return null;
   }
