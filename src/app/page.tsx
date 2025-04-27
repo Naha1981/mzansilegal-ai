@@ -1,4 +1,5 @@
 
+
 'use client'; // Landing pages often benefit from client-side interactivity
 
 import React from 'react';
@@ -256,7 +257,7 @@ export default function LandingPage() {
                   <td className="py-3 px-2 sm:px-4 text-center">Standard</td>
                   <td className="py-3 px-2 sm:px-4 text-center">Customizable</td>
                 </tr>
-                 <tr className="hover:bg-white/5 transition-colors"> {/* Removed last border */}
+                 <tr className="hover:bg-white/5 transition-colors">{/* Removed last border */}
                   <td className="py-3 px-2 sm:px-4 font-medium">UI Access</td>
                   <td className="py-3 px-2 sm:px-4 text-center">Full</td>
                   <td className="py-3 px-2 sm:px-4 text-center">Full</td>
@@ -285,4 +286,5 @@ export default function LandingPage() {
     </div>
   );
 }
+
 
