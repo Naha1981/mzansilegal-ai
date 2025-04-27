@@ -37,6 +37,7 @@
   }
 
   .dark {
+    /* Ensure dark mode variables are identical */
     --background: 230 20% 7%;
     --foreground: 210 40% 98%;
 
@@ -65,7 +66,7 @@
     --input: 220 15% 20%;
     --ring: 158 64% 52%;
 
-    --radius: 1.75rem;
+    --radius: 1.75rem; /* 28px rounded corners */
   }
 }
 
@@ -74,10 +75,15 @@
   * {
     @apply border-border;
   }
+  html {
+     scroll-behavior: smooth; /* Smooth scrolling */
+   }
   body {
     @apply bg-background text-foreground;
      font-family: 'Poppins', sans-serif; /* Ensure Poppins is applied */
      min-height: 100vh;
+     /* Apply the gradient background */
+     @apply bg-gradient-to-br from-[#0D0D2B] to-[#161636];
   }
    h1 {
      @apply text-4xl md:text-5xl font-extrabold; /* Matches page h1 */
@@ -87,7 +93,10 @@
     }
     button {
       @apply font-bold uppercase tracking-wider; /* Matches button styles */
+       /* Default button hover transition */
+       @apply transition-all duration-300 ease-in-out;
     }
+    /* Specific hover styles moved to page component for better control */
     textarea, input {
        @apply text-base md:text-sm; /* Matches input styles */
     }
@@ -105,11 +114,9 @@
 }
 
 @keyframes pulse {
-  50% {
-    opacity: .7;
-  }
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.03); } /* Subtle pulse scale */
 }
-
 
 /* Apply Animations */
 .animate-fade-in {
@@ -249,3 +256,5 @@
    --tw-prose-invert-th-borders: hsl(var(--border));
    --tw-prose-invert-td-borders: hsl(var(--border));
 }
+
+    
