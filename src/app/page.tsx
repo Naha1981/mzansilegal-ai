@@ -6,7 +6,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-// import { ClientOnly } from '@/components/client-only'; // Removed import
 import { Sparkles, Search, BookOpenCheck, FileText, Info, Loader2 } from 'lucide-react';
 
 // Import Genkit flow functions and types
@@ -50,7 +49,8 @@ export default function Home() {
       let result: LegalResearchAssistantOutput | CaseStudyInsightsOutput | LegalDocumentAnalysisOutput;
       let outputText: string | undefined;
 
-      // Automatically prepend the analysis type to the input text
+      // Automatically prepend the analysis type to the input text for the LLM
+      // The UI only shows the user's input text
       const fullInputText = `${selectedType}: ${inputText}`;
 
       switch (selectedType) {
@@ -70,13 +70,7 @@ export default function Home() {
           outputText = result.analysisReport;
           break;
         default:
-          // Fallback or default behavior if needed, maybe generic prompt?
-          // For now, let's assume a type is always selected.
-          // If not, might need a general-purpose flow or error handling.
-          // Using Legal Research as a fallback for now, or throw error:
-           // result = await legalResearchAssistant({ researchQuery: inputText }); // Example fallback
-           // outputText = result.analysis;
-          throw new Error('Invalid analysis type selected');
+           throw new Error('Invalid analysis type selected');
 
       }
 
@@ -91,6 +85,7 @@ export default function Home() {
          }
          setAnalysisResult(null); // Ensure no result is displayed on error
        } else {
+         // Pass the original user input (without prefix) to the result state
          setAnalysisResult({ type: selectedType, input: inputText, output: outputText });
        }
 
@@ -108,7 +103,6 @@ export default function Home() {
   const currentPlaceholder = analysisTypes.find(t => t.type === selectedType)?.placeholder || 'Enter details...';
 
   return (
-    // <ClientOnly> Removed ClientOnly wrapper
         <main className="flex flex-col items-center justify-start min-h-screen p-6 sm:p-10 bg-gradient-to-br from-[#0D0D2B] to-[#161636] text-[#f5f5f5]">
 
           {/* App Name */}
@@ -148,11 +142,12 @@ export default function Home() {
 
           {/* Analysis Card */}
           <Card className="w-full max-w-3xl bg-[rgba(255,255,255,0.05)] border border-white/10 rounded-[28px] shadow-xl backdrop-blur-lg transition-all duration-300 hover:shadow-2xl hover:shadow-[#4ADE80]/10 animate-fade-in animation-delay-400">
-            <CardHeader className="text-center">
-                <CardTitle className="text-xl md:text-2xl font-semibold text-foreground text-center"> {/* Added text-center */}
-                    Select Analysis Type & Enter Details
-                </CardTitle>
-            </CardHeader>
+             <CardHeader className="text-center">
+                 <CardTitle className="text-xl md:text-2xl font-semibold text-foreground text-center">
+                     Select Analysis Type & Enter Details
+                 </CardTitle>
+             </CardHeader>
+
 
             <CardContent className="space-y-6 p-6">
               <div className="flex flex-col sm:flex-row gap-3 justify-center relative">
@@ -248,7 +243,6 @@ export default function Home() {
             </motion.div>
           )}
         </main>
-    // </ClientOnly> // Removed ClientOnly wrapper
   );
 }
 
