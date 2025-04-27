@@ -119,7 +119,7 @@ export default function Home() {
              {/* Disclaimer Button */}
               <button
                   onClick={() => setShowDisclaimer((prev) => !prev)}
-                  className="mb-10 bg-red-600 animate-pulse hover:bg-red-700 text-white font-bold py-2 px-5 rounded-full text-base transition-all duration-300 flex items-center gap-2"
+                  className="mb-10 bg-red-600 animate-pulse hover:bg-red-700 hover:scale-105 text-white font-bold py-2 px-5 rounded-full text-base transition-all duration-300 flex items-center gap-2"
               >
                  <Info size={18} /> {showDisclaimer ? 'Hide Disclaimer' : 'Show Disclaimer'}
               </button>
@@ -146,7 +146,8 @@ export default function Home() {
           {/* Analysis Card */}
           <Card className="w-full max-w-3xl bg-[rgba(255,255,255,0.05)] border border-white/10 rounded-[28px] shadow-xl backdrop-blur-lg transition-all duration-300 hover:shadow-2xl hover:shadow-[#4ADE80]/10 animate-fade-in animation-delay-400">
              <CardHeader className="text-center">
-                 <CardTitle className="text-xl md:text-2xl font-semibold text-foreground text-center">
+                 {/* CardTitle is centered via className in card.tsx */}
+                 <CardTitle className="text-xl md:text-2xl font-semibold text-foreground">
                      Select Analysis Type & Enter Details
                  </CardTitle>
              </CardHeader>
@@ -162,13 +163,13 @@ export default function Home() {
                     disabled={isLoading}
                     className={`flex-grow justify-center transition-all duration-300 rounded-lg text-base font-semibold uppercase tracking-wider relative overflow-hidden px-4 py-3 ${
                       selectedType === type
-                        ? 'bg-[#4ADE80] text-[#0D0D2B] shadow-lg shadow-[#4ADE80]/30'
-                        : 'bg-white/10 text-white/80 hover:bg-white/20'
+                        ? 'bg-[#4ADE80] text-[#0D0D2B] shadow-lg shadow-[#4ADE80]/30' // Active style
+                        : 'bg-white/10 text-white/80 hover:bg-white/20 hover:scale-105' // Inactive style with hover effect
                     }`}
                   >
                     <Icon className="mr-2 h-5 w-5" />
                     {type}
-                     {/* Animated underline */}
+                     {/* Animated underline for active tab */}
                      {selectedType === type && (
                         <motion.div
                             className="absolute bottom-0 left-0 right-0 h-1 bg-[#4ADE80]"
@@ -195,7 +196,7 @@ export default function Home() {
               <Button
                 onClick={handleAnalysis}
                 disabled={isLoading || !inputText.trim()}
-                className="w-full bg-gradient-to-r from-[#4ADE80] to-[#3B82F6] text-white font-bold text-lg py-3 rounded-lg uppercase tracking-wider transition-all duration-300 hover:shadow-xl hover:shadow-[#4ADE80]/40 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden group"
+                className="w-full bg-gradient-to-r from-[#4ADE80] to-[#3B82F6] text-white font-bold text-lg py-3 rounded-lg uppercase tracking-wider transition-all duration-300 hover:shadow-xl hover:shadow-[#4ADE80]/40 hover:brightness-110 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden group"
               >
                 {isLoading ? (
                   <>
