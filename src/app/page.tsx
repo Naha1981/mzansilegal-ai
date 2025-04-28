@@ -28,7 +28,7 @@ const MzansiLegalLogo = ({ className }: { className?: string }) => (
       d="M10 35 V5 H20 L30 25 L40 5 H50 V35 H40 V15 L30 35 L20 15 V35 H10 Z"
       fill="url(#logoGradient)"
     />
-    {/* Text part - changed to "zansilegal" and removed the "AI" text element */}
+    {/* Text part - changed to "zansilegal" */}
     <text
       x="60" // Kept original x, adjust if needed visually
       y="28"
@@ -39,7 +39,6 @@ const MzansiLegalLogo = ({ className }: { className?: string }) => (
     >
       zansilegal
     </text>
-    {/* Removed the separate "AI" text element */}
   </svg>
 );
 
@@ -154,11 +153,11 @@ export default function LandingPage() {
               <p className="text-lg mb-2 text-[#ccc]">For solo attorneys, small practices, and legal consultants.</p>
               <p className="text-4xl font-bold text-[#00d4ff] my-5">R500<span className="text-lg font-normal text-[#ccc]"> / month</span></p>
               <ul className="list-none p-0 mb-6 text-base text-[#ccc] space-y-2 text-left pl-4">
-                 <li>✅ AI Legal Assistant (advanced)</li>
-                 <li>✅ Legal Research (SA + Intl)</li>
-                 <li>✅ Case Study Analysis (5/month)</li>
-                 <li>✅ Contract Analysis (5/month)</li>
-                 <li>✅ Daily Legal News (10+/day)</li>
+                 <li>✅ AI Legal Assistant (advanced prompts, faster processing)</li>
+                 <li>✅ Legal Research (South Africa + selected international jurisdictions)</li>
+                 <li>✅ Case Study Analysis (basic: 5 cases/month)</li>
+                 <li>✅ Contract Analysis (5 contracts/month)</li>
+                 <li>✅ Daily Legal News (10+ articles/day)</li>
                  <li>✅ Disclaimer</li>
                  <li>✅ Full UI Access</li>
               </ul>
@@ -176,15 +175,15 @@ export default function LandingPage() {
               <p className="text-lg mb-2 text-[#ccc]">For law firms, corporate legal teams, and serious users.</p>
               <p className="text-4xl font-bold text-[#00d4ff] my-5">R1000<span className="text-lg font-normal text-[#ccc]"> / month</span></p>
               <ul className="list-none p-0 mb-6 text-base text-[#ccc] space-y-2 text-left pl-4">
-                 <li>✅ AI Legal Assistant (unlimited, priority)</li>
-                 <li>✅ Legal Research (Full Access)</li>
-                 <li>✅ Case Study Analysis (Unlimited)</li>
-                 <li>✅ Contract Analysis (Unlimited)</li>
-                 <li>✅ Daily Legal News (Custom Alerts)</li>
+                 <li>✅ AI Legal Assistant (unlimited use, priority speed)</li>
+                 <li>✅ Legal Research (full access to South African + international law databases)</li>
+                 <li>✅ Case Study Analysis (unlimited cases, outcome prediction scoring)</li>
+                 <li>✅ Contract Analysis (unlimited uploads, advanced clause suggestions)</li>
+                 <li>✅ Daily Legal News (priority feed, customizable alerts)</li>
                  <li>✅ Customizable Disclaimer</li>
-                 <li>✅ Premium UI Themes</li>
-                 <li>✅ Dedicated Support</li>
-                 <li>✅ API Access (on request)</li>
+                 <li>✅ Premium UI themes (dark mode + custom branding options)</li>
+                 <li>✅ Dedicated onboarding + premium support</li>
+                 <li>✅ API access (on request)</li>
               </ul>
               <Link href="/app" className="inline-block bg-[#00d4ff] text-[#0b0b1f] py-3 px-6 rounded-lg font-bold text-sm transition-all duration-300 hover:bg-[#00aacd] hover:scale-105 shadow-md shadow-[#00d4ff]/20">
                 Choose Enterprise
@@ -277,3 +276,5 @@ export default function LandingPage() {
     </div>
   );
 }
+
+    
