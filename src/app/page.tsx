@@ -211,7 +211,7 @@ export default function LandingPage() {
                className="w-full max-w-4xl mx-auto text-left text-sm sm:text-base bg-gradient-to-br from-[#27275a]/50 to-[#1c1c45]/50 rounded-lg border border-white/10 shadow-lg"
              >
               <caption className="text-xl font-semibold mb-4 text-white/80 p-4">Feature Comparison</caption>
-              <thead >
+              <thead>
                 <tr className="text-[#00d4ff] border-b border-white/20">
                   <th className="py-3 px-2 sm:px-4 font-semibold">Feature</th>
                   <th className="py-3 px-2 sm:px-4 text-center font-semibold">Starter (R500)</th> {/* Updated Price */}
@@ -256,7 +256,7 @@ export default function LandingPage() {
                   <td className="py-3 px-2 sm:px-4 text-center">Standard</td>
                   <td className="py-3 px-2 sm:px-4 text-center">Customizable</td>
                 </tr>
-                 <tr className="hover:bg-white/5 transition-colors">
+                 <tr className="hover:bg-white/5 transition-colors"> {/* Removed last border */}
                   <td className="py-3 px-2 sm:px-4 font-medium">UI Access</td>
                   <td className="py-3 px-2 sm:px-4 text-center">Full</td>
                   <td className="py-3 px-2 sm:px-4 text-center">Full</td>
