@@ -28,7 +28,7 @@ const MzansiLegalLogo = ({ className }: { className?: string }) => (
       d="M10 35 V5 H20 L30 25 L40 5 H50 V35 H40 V15 L30 35 L20 15 V35 H10 Z"
       fill="url(#logoGradient)"
     />
-    {/* Text part - changed to "zansilegal" */}
+    {/* Text part - corrected to "zansilegal" */}
     <text
       x="60" // Kept original x, adjust if needed visually
       y="28"
@@ -100,7 +100,7 @@ export default function LandingPage() {
           >
             <h1 className="text-3xl sm:text-5xl font-bold mb-5 text-[#00d4ff] drop-shadow-[0_2px_10px_rgba(0,212,255,0.3)]">Empowering South African Legal Professionals with AI</h1>
             <p className="text-lg sm:text-xl max-w-3xl mx-auto mb-10 text-[#ccc]">
-              Your trusted AI partner for Legal Research, Case Studies, and Contract Analysis. Fast, accurate, and built for the South African legal system.
+              Your trusted AI partner for Legal Research, Case Studies, and Contract Analysis. Fast, accurate, and built for the South African legal system. Try any plan free for 3 days!
             </p>
             {/* Link to the actual app page */}
             <Link href="/app" className="inline-block bg-[#00d4ff] text-[#0b0b1f] py-3 px-8 rounded-lg font-bold text-base sm:text-lg transition-all duration-300 hover:bg-[#00aacd] hover:scale-105 shadow-lg shadow-[#00d4ff]/30">
@@ -126,20 +126,23 @@ export default function LandingPage() {
             {/* Pricing Card 1: Starter */}
             <motion.div
                whileHover={{ y: -10, scale: 1.05 }} // Hover animation
-               className="bg-[#27275a]/80 backdrop-blur-sm rounded-2xl p-8 w-full sm:w-auto max-w-sm sm:max-w-xs shadow-xl transition-transform duration-300 border border-white/10" // Responsive width, added border
+               className="bg-[#27275a]/80 backdrop-blur-sm rounded-2xl p-8 w-full sm:w-auto max-w-sm sm:max-w-xs shadow-xl transition-transform duration-300 border border-white/10 flex flex-col justify-between" // Added flex flex-col justify-between
              >
-              <h3 className="text-2xl font-semibold mb-3 text-[#f5f5f5]">Starter</h3>
-              <p className="text-lg mb-2 text-[#ccc]">For law students, legal interns, and individual researchers.</p>
-              <p className="text-4xl font-bold text-[#00d4ff] my-5">R0<span className="text-lg font-normal text-[#ccc]"> / month</span></p>
-              <ul className="list-none p-0 mb-6 text-base text-[#ccc] space-y-2 text-left pl-4"> {/* Align text left */}
-                 <li>✅ AI Legal Assistant (basic)</li>
-                 <li>✅ Legal Research (SA only, 20 queries/month)</li>
-                 <li>✅ Daily Legal News (5 articles/day)</li>
-                 <li>✅ Disclaimer notice</li>
-                 <li>✅ Full UI Access</li>
-              </ul>
+              <div>
+                <h3 className="text-2xl font-semibold mb-3 text-[#f5f5f5]">Starter</h3>
+                <p className="text-lg mb-2 text-[#ccc]">For law students, legal interns, and individual researchers.</p>
+                <p className="text-4xl font-bold text-[#00d4ff] my-5">R500<span className="text-lg font-normal text-[#ccc]"> / month</span></p>
+                 <p className="text-xs text-gray-400 mb-4">3-day free trial available</p>
+                <ul className="list-none p-0 mb-6 text-base text-[#ccc] space-y-2 text-left pl-4"> {/* Align text left */}
+                   <li>✅ AI Legal Assistant (basic)</li>
+                   <li>✅ Legal Research (South Africa only, 20 queries/month)</li>
+                   <li>✅ Daily Legal News (5 articles/day)</li>
+                   <li>✅ Disclaimer notice</li>
+                   <li>✅ Full UI Access</li>
+                </ul>
+              </div>
               {/* Link to the actual app page */}
-              <Link href="/app" className="inline-block bg-[#00d4ff] text-[#0b0b1f] py-3 px-6 rounded-lg font-bold text-sm transition-all duration-300 hover:bg-[#00aacd] hover:scale-105 shadow-md shadow-[#00d4ff]/20">
+              <Link href="/app" className="inline-block mt-auto bg-[#00d4ff] text-[#0b0b1f] py-3 px-6 rounded-lg font-bold text-sm transition-all duration-300 hover:bg-[#00aacd] hover:scale-105 shadow-md shadow-[#00d4ff]/20">
                 Choose Starter
               </Link>
             </motion.div>
@@ -147,21 +150,24 @@ export default function LandingPage() {
             {/* Pricing Card 2: Professional */}
              <motion.div
                whileHover={{ y: -10, scale: 1.05 }}
-               className="bg-[#27275a]/80 backdrop-blur-sm rounded-2xl p-8 w-full sm:w-auto max-w-sm sm:max-w-xs shadow-xl transition-transform duration-300 border-2 border-[#00d4ff]" // Highlighted card
+               className="bg-[#27275a]/80 backdrop-blur-sm rounded-2xl p-8 w-full sm:w-auto max-w-sm sm:max-w-xs shadow-xl transition-transform duration-300 border-2 border-[#00d4ff] flex flex-col justify-between" // Highlighted card, Added flex flex-col justify-between
              >
-              <h3 className="text-2xl font-semibold mb-3 text-[#f5f5f5]">Professional</h3>
-              <p className="text-lg mb-2 text-[#ccc]">For solo attorneys, small practices, and legal consultants.</p>
-              <p className="text-4xl font-bold text-[#00d4ff] my-5">R500<span className="text-lg font-normal text-[#ccc]"> / month</span></p>
-              <ul className="list-none p-0 mb-6 text-base text-[#ccc] space-y-2 text-left pl-4">
-                 <li>✅ AI Legal Assistant (advanced prompts, faster processing)</li>
-                 <li>✅ Legal Research (South Africa + selected international jurisdictions)</li>
-                 <li>✅ Case Study Analysis (basic: 5 cases/month)</li>
-                 <li>✅ Contract Analysis (5 contracts/month)</li>
-                 <li>✅ Daily Legal News (10+ articles/day)</li>
-                 <li>✅ Disclaimer</li>
-                 <li>✅ Full UI Access</li>
-              </ul>
-              <Link href="/app" className="inline-block bg-[#00d4ff] text-[#0b0b1f] py-3 px-6 rounded-lg font-bold text-sm transition-all duration-300 hover:bg-[#00aacd] hover:scale-105 shadow-md shadow-[#00d4ff]/20">
+              <div>
+                <h3 className="text-2xl font-semibold mb-3 text-[#f5f5f5]">Professional</h3>
+                <p className="text-lg mb-2 text-[#ccc]">For solo attorneys, small practices, and legal consultants.</p>
+                <p className="text-4xl font-bold text-[#00d4ff] my-5">R1000<span className="text-lg font-normal text-[#ccc]"> / month</span></p>
+                <p className="text-xs text-gray-400 mb-4">3-day free trial available</p>
+                <ul className="list-none p-0 mb-6 text-base text-[#ccc] space-y-2 text-left pl-4">
+                   <li>✅ AI Legal Assistant (advanced prompts, faster processing)</li>
+                   <li>✅ Legal Research (South Africa + selected international jurisdictions)</li>
+                   <li>✅ Case Study Analysis (basic: 5 cases/month)</li>
+                   <li>✅ Contract Analysis (5 contracts/month)</li>
+                   <li>✅ Daily Legal News (10+ articles/day)</li>
+                   <li>✅ Disclaimer</li>
+                   <li>✅ Full UI Access</li>
+                </ul>
+              </div>
+              <Link href="/app" className="inline-block mt-auto bg-[#00d4ff] text-[#0b0b1f] py-3 px-6 rounded-lg font-bold text-sm transition-all duration-300 hover:bg-[#00aacd] hover:scale-105 shadow-md shadow-[#00d4ff]/20">
                 Choose Professional
               </Link>
             </motion.div>
@@ -169,23 +175,26 @@ export default function LandingPage() {
             {/* Pricing Card 3: Enterprise */}
              <motion.div
                whileHover={{ y: -10, scale: 1.05 }}
-               className="bg-[#27275a]/80 backdrop-blur-sm rounded-2xl p-8 w-full sm:w-auto max-w-sm sm:max-w-xs shadow-xl transition-transform duration-300 border border-white/10"
+               className="bg-[#27275a]/80 backdrop-blur-sm rounded-2xl p-8 w-full sm:w-auto max-w-sm sm:max-w-xs shadow-xl transition-transform duration-300 border border-white/10 flex flex-col justify-between" // Added flex flex-col justify-between
              >
-              <h3 className="text-2xl font-semibold mb-3 text-[#f5f5f5]">Enterprise</h3>
-              <p className="text-lg mb-2 text-[#ccc]">For law firms, corporate legal teams, and serious users.</p>
-              <p className="text-4xl font-bold text-[#00d4ff] my-5">R1000<span className="text-lg font-normal text-[#ccc]"> / month</span></p>
-              <ul className="list-none p-0 mb-6 text-base text-[#ccc] space-y-2 text-left pl-4">
-                 <li>✅ AI Legal Assistant (unlimited use, priority speed)</li>
-                 <li>✅ Legal Research (full access to South African + international law databases)</li>
-                 <li>✅ Case Study Analysis (unlimited cases, outcome prediction scoring)</li>
-                 <li>✅ Contract Analysis (unlimited uploads, advanced clause suggestions)</li>
-                 <li>✅ Daily Legal News (priority feed, customizable alerts)</li>
-                 <li>✅ Customizable Disclaimer</li>
-                 <li>✅ Premium UI themes (dark mode + custom branding options)</li>
-                 <li>✅ Dedicated onboarding + premium support</li>
-                 <li>✅ API access (on request)</li>
-              </ul>
-              <Link href="/app" className="inline-block bg-[#00d4ff] text-[#0b0b1f] py-3 px-6 rounded-lg font-bold text-sm transition-all duration-300 hover:bg-[#00aacd] hover:scale-105 shadow-md shadow-[#00d4ff]/20">
+              <div>
+                <h3 className="text-2xl font-semibold mb-3 text-[#f5f5f5]">Enterprise</h3>
+                <p className="text-lg mb-2 text-[#ccc]">For law firms, corporate legal teams, and serious users.</p>
+                <p className="text-4xl font-bold text-[#00d4ff] my-5">R1500<span className="text-lg font-normal text-[#ccc]"> / month</span></p>
+                <p className="text-xs text-gray-400 mb-4">3-day free trial available</p>
+                <ul className="list-none p-0 mb-6 text-base text-[#ccc] space-y-2 text-left pl-4">
+                   <li>✅ AI Legal Assistant (unlimited use, priority speed)</li>
+                   <li>✅ Legal Research (full access to South African + international law databases)</li>
+                   <li>✅ Case Study Analysis (unlimited cases, outcome prediction scoring)</li>
+                   <li>✅ Contract Analysis (unlimited uploads, advanced clause suggestions)</li>
+                   <li>✅ Daily Legal News (priority feed, customizable alerts)</li>
+                   <li>✅ Customizable Disclaimer</li>
+                   <li>✅ Premium UI themes (dark mode + custom branding options)</li>
+                   <li>✅ Dedicated onboarding + premium support</li>
+                   <li>✅ API access (on request)</li>
+                </ul>
+              </div>
+              <Link href="/app" className="inline-block mt-auto bg-[#00d4ff] text-[#0b0b1f] py-3 px-6 rounded-lg font-bold text-sm transition-all duration-300 hover:bg-[#00aacd] hover:scale-105 shadow-md shadow-[#00d4ff]/20">
                 Choose Enterprise
               </Link>
             </motion.div>
@@ -205,9 +214,9 @@ export default function LandingPage() {
               <thead >
                 <tr className="text-[#00d4ff] border-b border-white/20">
                   <th className="py-3 px-2 sm:px-4 font-semibold">Feature</th>
-                  <th className="py-3 px-2 sm:px-4 text-center font-semibold">Starter (R0)</th>
-                  <th className="py-3 px-2 sm:px-4 text-center font-semibold">Professional (R500)</th>
-                  <th className="py-3 px-2 sm:px-4 text-center font-semibold">Enterprise (R1000)</th>
+                  <th className="py-3 px-2 sm:px-4 text-center font-semibold">Starter (R500)</th> {/* Updated Price */}
+                  <th className="py-3 px-2 sm:px-4 text-center font-semibold">Professional (R1000)</th> {/* Updated Price */}
+                  <th className="py-3 px-2 sm:px-4 text-center font-semibold">Enterprise (R1500)</th> {/* Updated Price */}
                 </tr>
               </thead>
               <tbody className="text-white/90">
