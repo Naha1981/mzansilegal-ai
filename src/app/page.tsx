@@ -5,7 +5,10 @@ import React from 'react';
 import Link from 'next/link'; // Use Next.js Link for navigation
 import { motion } from 'framer-motion'; // Import motion for animations
 import { ClientOnly } from '@/components/client-only'; // Import ClientOnly
-import { cn } from "@/lib/utils"; // Import cn utility
+import { cn } from '@/lib/utils'; // Import cn utility
+import { useTheme } from 'next-themes';
+import { Moon, Sun } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 // Logo Component (Inline SVG for simplicity and performance)
 const MzansiLegalLogo = ({ className }: { className?: string }) => (
@@ -54,7 +57,6 @@ const fadeUp = {
   visible: { opacity: 1, y: 0, transition: { duration: 1, ease: "easeOut" } },
 };
 
-
 export default function LandingPage() {
   return (
     // Apply global styles equivalent to body styling
@@ -73,13 +75,29 @@ export default function LandingPage() {
              {/* Ensure the className is applied correctly */}
             <MzansiLegalLogo className="cursor-pointer transition-transform duration-300 hover:scale-105" />
            </Link>
-          <nav className="hidden sm:flex space-x-8 items-center"> {/* Hide nav on small screens, adjust spacing, center items */}
-            <a href="#pricing" className="font-medium text-[#ccc] hover:text-[#00d4ff] transition-colors duration-300">Pricing</a>
+          <div className="hidden sm:flex space-x-8 items-center">
+            {/* Hide nav on small screens, adjust spacing, center items */}
+            <a
+              href="#pricing"
+              className="font-medium text-[#ccc] hover:text-[#00d4ff] transition-colors duration-300"
+            >
+              Pricing
+            </a>
             {/* Link to the actual app page */}
-            <Link href="/app" className="font-medium text-[#00d4ff] hover:text-white transition-colors duration-300 border border-[#00d4ff] px-4 py-2 rounded-lg text-sm hover:bg-[#00d4ff]/10">
+            <Link
+              href="/app"
+              className="font-medium text-[#00d4ff] hover:text-white transition-colors duration-300 border border-[#00d4ff] px-4 py-2 rounded-lg text-sm hover:bg-[#00d4ff]/10"
+            >
               Go to App
             </Link>
-          </nav>
+
+            {/* Theme toggle button */}
+            <ThemeToggle />
+          </div>
+
+
+
+
            {/* Simple Link for Mobile */}
            <nav className="sm:hidden">
              <Link href="/app" className="font-medium text-[#00d4ff] hover:text-white transition-colors duration-300 border border-[#00d4ff] px-3 py-1.5 rounded-md text-xs hover:bg-[#00d4ff]/10">
@@ -284,6 +302,28 @@ export default function LandingPage() {
 
     </div>
   );
-}
+};
+
+function ThemeToggle() {
+  const { setTheme, resolvedTheme } = useTheme();
+
+  return (
+    <Button
+      variant="outline"
+      size="icon"
+      onClick={() =>
+        setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')
+      }
+    >
+      {resolvedTheme === 'dark' ? (
+        <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:rotate-180 dark:scale-0" />
+      ) : (
+        <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-180 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+      )}
+      <span className="sr-only">Toggle theme</span>
+    </Button>
+  );
+};
+
 
     
