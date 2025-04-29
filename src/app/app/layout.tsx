@@ -11,14 +11,6 @@ import type { Metadata } from 'next';
  }: {
    children: React.ReactNode;
  }) {
-   return (
-     <html lang="en" suppressHydrationWarning>
-       <head>
-          {/* Keep head for potential future meta tags, links, etc. */}
-       </head>
-       <body>
-         {children}
-       </body>
-     </html>
-   );
+   // AppLayout should only return the content to be nested within the RootLayout's body
+   return <>{children}</>;
  }
