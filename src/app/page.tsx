@@ -31,7 +31,7 @@ const MzansiLegalLogo = ({ className }: { className?: string }) => (
       <circle cx="6" cy="14" r="2" />
       <circle cx="18" cy="14" r="2" />
     </svg>
-    <span className="text-xl font-semibold text-gray-100">MzansiLegal AI</span>
+    <span className="text-xl font-semibold text-gray-100">MzansiLegal</span>
   </div>
 );
 
@@ -119,12 +119,12 @@ export default function LandingPage() {
               </div>
               <div className="flex justify-center items-center mt-8 md:mt-0">
                 <Image
-                  src="https://placehold.co/400x400/EACC93/333333.png?text=Legal+AI" // Placeholder with colors matching button
+                  src="https://placehold.co/400x400.png"
                   alt="AI Legal Assistance Illustration"
-                  width={400} // Adjusted size slightly
+                  width={400}
                   height={400}
-                  className="rounded-full object-cover shadow-2xl border-4 border-amber-500/30" // Added subtle border
-                  data-ai-hint="stressed lawyer cartoon legal documents"
+                  className="rounded-full object-cover shadow-2xl border-4 border-amber-500/30"
+                  data-ai-hint="legal tech"
                 />
               </div>
             </div>
