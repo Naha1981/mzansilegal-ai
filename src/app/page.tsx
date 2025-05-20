@@ -31,7 +31,7 @@ const MzansiLegalLogo = ({ className }: { className?: string }) => (
       <circle cx="6" cy="14" r="2" />
       <circle cx="18" cy="14" r="2" />
     </svg>
-    <span className="text-xl font-semibold text-gray-100">MzansiLegal</span>
+    <span className="text-xl font-semibold text-gray-100">MzansiLegal AI</span>
   </div>
 );
 
