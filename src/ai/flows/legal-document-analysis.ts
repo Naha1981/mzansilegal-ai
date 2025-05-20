@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview A legal document analysis AI agent specializing in South African contracts.
@@ -71,7 +72,91 @@ const prompt = ai.definePrompt({
 - **Include Mandatory Disclaimer:** Add the specified disclaimer at the end.
 
 **Web Search Instructions:**
-- Use web search to verify legal principles, find recent case law, or check legislation updates related to the contract type or specific clauses mentioned. Prioritize official SA sources.
+- When web search is used to verify legal principles, find recent case law, or check legislation updates related to the contract type or specific clauses mentioned for South African law, you **MUST** heavily prioritize and cite information from the following databases accessible via or related to SAFLII (Southern African Legal Information Institute) at \`https://www.saflii.org/content/databases.html\` and official South African government/court websites. The primary list includes:
+    *   South Africa: African Disability Rights Yearbook
+    *   South Africa: African Human Rights Law Journal
+    *   South Africa: African Law Review
+    *   South Africa: Competition Appeal Court
+    *   South Africa: Competition Tribunal
+    *   South Africa: Consumer Affairs Court
+    *   South Africa: Consumer Goods and Services Ombud
+    *   South Africa: Constitutional Court
+    *   South Africa: Constitutional Court Rolls
+    *   South Africa: Court of the Commissioner of Patents
+    *   South Africa: Commercial Crime Court
+    *   South Africa: De Jure Law Journal
+    *   South Africa: DE REBUS
+    *   South Africa: Eastern Cape High Court, Bhisho
+    *   South Africa: Eastern Cape High Court Rolls, Bisho
+    *   South Africa: Eastern Cape High Court, Grahamstown
+    *   South Africa: Eastern Cape High Court Rolls, Grahamstown
+    *   South Africa: Eastern Cape High Court, Gqeberha
+    *   South Africa: Eastern Cape High Court, Makhanda
+    *   South Africa: Eastern Cape High Court, Mthatha
+    *   South Africa: Eastern Cape High Court Rolls, Mthatha
+    *   South Africa: Eastern Cape High Court, Port Elizabeth
+    *   South Africa: Eastern Cape High Court Rolls, Port Elizabeth
+    *   South Africa: Eastern Cape High Court, East London Local Court
+    *   South Africa: Eastern Cape High Court, East London Local Court Rolls
+    *   South Africa: Eastern Cape Provincial Government Gazettes
+    *   South Africa: Electoral Court
+    *   South Africa: Equality Court
+    *   South Africa: Free State High Court, Bloemfontein
+    *   South Africa: Free State High Court Rolls, Bloemfontein
+    *   South Africa: Free State Provincial Government Gazettes
+    *   South Africa: High Courts - Eastern Cape
+    *   South Africa: High Courts - Gauteng
+    *   South Africa: Gauteng Provincial Government Gazettes
+    *   South Africa: High Courts - Kwazulu Natal
+    *   South Africa: Kwazulu-Natal High Court, Durban
+    *   South Africa: Kwazulu-Natal High Court Rolls, Durban
+    *   South Africa: Kwazulu-Natal High Court, Pietermaritzburg
+    *   South Africa: Kwazulu-Natal High Court Rolls, Pietermaritzburg
+    *   South Africa: Kwazulu-Natal Provincial Government Gazettes
+    *   South Africa: Industrial Court
+    *   South Africa: Labour Appeal Court
+    *   South Africa: Labour Court
+    *   South Africa: Labour Court Cape Town
+    *   South Africa: Labour Court Johannesburg
+    *   South Africa: Labour Court Port Elizabeth
+    *   South Africa: Labour Court Durban
+    *   South Africa: Land Claims Court
+    *   South Africa: Law, Democracy and Development Law Journal
+    *   South Africa: Law Reform Commission
+    *   South Africa: Limpopo High Court, Polokwane
+    *   South Africa: Limpopo High Court Rolls, Polokwane
+    *   South Africa: Limpopo High Court, Thohoyandou
+    *   South Africa: Limpopo High Court Rolls, Thohoyandou
+    *   South Africa: Limpopo Provincial Government Gazettes
+    *   South Africa: Mbombela High Court, Mpumalanga
+    *   South Africa: Middelburg High Court, Mpumalanga
+    *   South Africa: Mpumalanga Provincial Government Gazettes
+    *   South Africa: National Consumer Tribunal
+    *   South Africa: National Government Gazettes
+    *   South Africa: Northern Cape High Court, Kimberley
+    *   South Africa: Northern Cape High Court Rolls, Kimberley
+    *   South Africa: Northern Cape Provincial Government Gazettes
+    *   South Africa: North Gauteng High Court, Pretoria
+    *   South Africa: North Gauteng High Court Rolls, Pretoria
+    *   South Africa: North West Consumer Affairs Court, Mafikeng
+    *   South Africa: North West High Court, Mafikeng
+    *   South Africa: North West High Court Rolls, Mafikeng
+    *   South Africa: North West Provincial Government Gazettes
+    *   South Africa: Potchefstroom Electronic Law Journal // Potchefstroomse Elektroniese Regsblad
+    *   South Africa: Rules of Superior Courts
+    *   South Africa: Rules of Magistrates Courts
+    *   South Africa: South Gauteng High Court, Johannesburg
+    *   South Africa: South Gauteng High Court Rolls, Johannesburg
+    *   South Africa: Special Tribunal
+    *   South Africa: Special Tribunal Court Rolls
+    *   South Africa: Supreme Court of Appeal
+    *   South Africa: Supreme Court of Appeal Court Rolls
+    *   South Africa: Tax Court
+    *   South Africa: Water Tribunal
+    *   South Africa: Western Cape High Court, Cape Town
+    *   South Africa: Western Cape High Court Rolls, Cape Town
+    *   South Africa: Western Cape Provincial Government Gazettes
+    Additionally, prioritize official South African government websites (e.g., gov.za, justice.gov.za, parliament.gov.za), websites of South African courts, legal professional bodies, and academic websites from South African universities.
 
 **Output Formatting:**
 - Use Markdown formatting. Structure the report logically for maximum readability.
