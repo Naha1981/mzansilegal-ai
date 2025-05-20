@@ -1,46 +1,15 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Shadcn Theme Variables - Copied from the previous globals.css */
+/* Shadcn Theme Variables - These primarily affect the /app/* routes (main application UI) */
 @layer base {
   :root {
-    --background: 230 20% 7%; /* Deep blue-black */
-    --foreground: 210 40% 98%; /* Near white */
-
-    --card: 230 20% 10%; /* Slightly lighter than background */
-    --card-foreground: 210 40% 98%;
-
-    --popover: 230 20% 7%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 158 64% 52%; /* Soft green #4ADE80 */
-    --primary-foreground: 230 20% 7%; /* Dark for contrast on green */
-
-    --secondary: 220 15% 15%; /* Dark gray-blue */
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 220 15% 25%; /* Lighter gray-blue */
-    --muted-foreground: 210 40% 70%; /* Muted white */
-
-    --accent: 158 64% 42%; /* Darker green for hover/focus */
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 70% 60%; /* Brighter red for destructive actions/alerts */
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 220 15% 20%; /* Subtle border */
-    --input: 220 15% 20%; /* Input border */
-    --ring: 158 64% 52%; /* Focus ring using primary color */
-
-    --radius: 1.75rem; /* 28px rounded corners */
-  }
-
-  .dark {
-    /* Ensure dark mode variables are identical */
-    --background: 230 20% 7%;
-    --foreground: 210 40% 98%;
+    --background: 230 20% 7%; /* Deep blue-black for APP UI */
+    --foreground: 210 40% 98%; /* Near white for APP UI */
 
     --card: 230 20% 10%;
     --card-foreground: 210 40% 98%;
@@ -48,7 +17,7 @@
     --popover: 230 20% 7%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 158 64% 52%;
+    --primary: 158 64% 52%; /* Soft green #4ADE80 for APP UI */
     --primary-foreground: 230 20% 7%;
 
     --secondary: 220 15% 15%;
@@ -57,7 +26,7 @@
     --muted: 220 15% 25%;
     --muted-foreground: 210 40% 70%;
 
-    --accent: 158 64% 42%;
+    --accent: 158 64% 42%; /* Darker green for APP UI hover/focus */
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 70% 60%;
@@ -65,207 +34,191 @@
 
     --border: 220 15% 20%;
     --input: 220 15% 20%;
-    --ring: 158 64% 52%;
+    --ring: 158 64% 52%; /* Focus ring for APP UI */
 
-    --radius: 1.75rem; /* 28px rounded corners */
+    --radius: 1.75rem; /* 28px rounded corners for APP UI */
+  }
+
+  .dark {
+    /* Dark mode variables for APP UI (can be same as :root if :root is already dark) */
+    --background: 230 20% 7%;
+    --foreground: 210 40% 98%;
+    --card: 230 20% 10%;
+    --card-foreground: 210 40% 98%;
+    --popover: 230 20% 7%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 158 64% 52%;
+    --primary-foreground: 230 20% 7%;
+    --secondary: 220 15% 15%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 220 15% 25%;
+    --muted-foreground: 210 40% 70%;
+    --accent: 158 64% 42%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 70% 60%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 220 15% 20%;
+    --input: 220 15% 20%;
+    --ring: 158 64% 52%;
+    --radius: 1.75rem;
   }
 }
 
-/* Base Body Styles */
+/* Base Body Styles - Applied Globally (Landing Page & App) */
 @layer base {
   * {
-    @apply border-border;
+    /* border-border is based on HSL variables, landing page uses direct tailwind colors for borders */
+    /* Consider if this global border is desired for landing page elements or if they should explicitly define borders */
+     @apply border-border;
   }
   html {
-     scroll-behavior: smooth; /* Smooth scrolling */
+     scroll-behavior: smooth;
+     @apply selection:bg-amber-500 selection:text-stone-900; /* Selection color matching landing page buttons */
    }
   body {
+    /* Default background and text for APP UI, Landing page overrides this with its own bg-slate-900 */
     @apply bg-background text-foreground;
-     font-family: 'Poppins', sans-serif; /* Ensure Poppins is applied */
-     min-height: 100vh;
-     /* Apply the gradient background */
-     @apply bg-gradient-to-br from-[#0D0D2B] to-[#161636];
+    font-family: 'Poppins', sans-serif; /* Global font */
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased; /* Smoother fonts */
+    -moz-osx-font-smoothing: grayscale;
   }
-   h1 {
-     /* Adjusted base h1 size, specific overrides in component */
-     @apply text-3xl sm:text-4xl md:text-5xl font-extrabold;
-   }
-    p {
-      /* Adjusted base p size, specific overrides in component */
-      @apply text-base sm:text-lg md:text-xl;
-    }
-    button {
-      @apply font-bold uppercase tracking-wider; /* Matches button styles */
-       /* Default button hover transition */
-       @apply transition-all duration-300 ease-in-out;
-    }
-    /* Specific hover styles moved to page component for better control */
-    textarea, input {
-       /* Adjusted base input size */
-       @apply text-sm sm:text-base;
-    }
+   /* Typography for APP UI - Landing page defines its own sizes via Tailwind classes */
+   /* These are general fallbacks if specific classes aren't applied */
+   h1 { @apply text-3xl font-bold sm:text-4xl md:text-5xl; }
+   h2 { @apply text-2xl font-semibold sm:text-3xl md:text-4xl; }
+   h3 { @apply text-xl font-semibold sm:text-2xl md:text-3xl; }
+   p { @apply text-base sm:text-lg; } /* Adjusted base paragraph size */
+   button { @apply font-semibold tracking-wide transition-all duration-300 ease-in-out; } /* Removed uppercase globally */
+   textarea, input { @apply text-sm sm:text-base; }
 }
 
-/* Animation Keyframes */
+/* Animation Keyframes - Global */
 @keyframes fade-in {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
-
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); } /* Ensure 'from' is defined */
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 @keyframes shimmer {
   0% { transform: translateX(-100%); }
   100% { transform: translateX(100%); }
 }
-
 @keyframes pulse {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.8; transform: scale(1.03); } /* Subtle pulse scale */
+  50% { opacity: 0.8; transform: scale(1.03); }
+}
+@keyframes accordion-down {
+   from { height: 0px; /* Explicitly use px for keyframes */ }
+   to { height: var(--radix-accordion-content-height); }
+}
+@keyframes accordion-up {
+   from { height: var(--radix-accordion-content-height); }
+   to { height: 0px; /* Explicitly use px for keyframes */ }
 }
 
-/* Apply Animations */
-.animate-fade-in {
-  animation: fade-in 0.6s ease-out forwards;
-}
-.animate-shimmer {
-  animation: shimmer 1.5s infinite linear;
-}
+/* Apply Animations - Global */
+.animate-fade-in { animation: fade-in 0.6s ease-out forwards; }
+.animate-shimmer { animation: shimmer 1.5s infinite linear; }
+.animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
 
-.animate-pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-/* Animation Delays (optional, for staggered effect) */
-.animation-delay-200 { animation-delay: 0.2s; opacity: 0; /* Start hidden */ }
-.animation-delay-400 { animation-delay: 0.4s; opacity: 0; /* Start hidden */ }
+/* Staggered animation delays */
+.animation-delay-200 { animation-delay: 0.2s; opacity: 0; animation-fill-mode: forwards; }
+.animation-delay-400 { animation-delay: 0.4s; opacity: 0; animation-fill-mode: forwards; }
+.animate-accordion-down { animation: accordion-down 0.2s ease-out; }
+.animate-accordion-up { animation: accordion-up 0.2s ease-out; }
 
 
-/* Custom Input Focus Animation */
+/* Custom Input Focus Animation for APP UI */
 .animated-input:focus-visible {
   @apply ring-2 ring-[hsl(var(--ring))] ring-offset-2 shadow-lg shadow-[hsla(var(--ring)/0.2)];
   border-color: hsl(var(--ring));
-  transform: scale(1.01); /* Slight expansion */
+  transform: scale(1.01);
   transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, border-color 0.2s ease-out;
 }
+.animated-input::placeholder { transition: opacity 0.3s ease-out; }
+.animated-input:focus-visible::placeholder { opacity: 0.5; }
 
-.animated-input::placeholder {
-  transition: opacity 0.3s ease-out;
-}
-
-.animated-input:focus-visible::placeholder {
-  opacity: 0.5; /* Fade placeholder on focus */
-}
-
-/* Alert Destructive Variant Override (for disclaimer button area) */
+/* Alert Destructive Variant Override for APP UI (Disclaimer button styling is in page.tsx) */
 .alert-destructive {
    @apply bg-[rgba(254,226,226,0.1)] border border-red-400/30 text-red-200 backdrop-blur-sm shadow-md;
-   /* Use a semi-transparent red background with blur */
- }
-
-.alert-destructive strong {
-  @apply text-red-100 font-semibold;
 }
+.alert-destructive strong { @apply text-red-100 font-semibold; }
 
-/* Add basic prose styles for Markdown */
-.prose {
-  color: hsl(var(--foreground) / 0.9); /* Slightly muted text */
-}
+/* Prose styles for Markdown rendering in APP UI */
+.prose { color: hsl(var(--foreground) / 0.9); }
 .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
   color: hsl(var(--foreground));
   margin-top: 1.2em;
   margin-bottom: 0.6em;
   font-weight: 600;
-  /* Responsive heading sizes */
   @apply text-lg sm:text-xl md:text-2xl;
 }
-.prose h2 {
-  font-size: 1.25em; /* Example size, adjust relative to base */
-  border-bottom: 1px solid hsl(var(--border));
-  padding-bottom: 0.3em;
-  @apply sm:text-lg md:text-xl; /* Responsive */
-}
-.prose h3 {
-  font-size: 1.1em; /* Example size, adjust relative to base */
-  @apply sm:text-base md:text-lg; /* Responsive */
-}
-.prose p {
-  margin-bottom: 1em;
-  line-height: 1.6;
-   /* Responsive paragraph size for prose content */
-   @apply text-xs sm:text-sm md:text-base;
-}
-.prose strong {
-   color: hsl(var(--foreground));
-   font-weight: 600;
-}
-.prose ul, .prose ol {
-  margin-left: 1.5em;
-  margin-bottom: 1em;
-}
-.prose li {
-  margin-bottom: 0.4em;
-  /* Responsive list item size */
-   @apply text-xs sm:text-sm md:text-base;
-}
-.prose code {
-  background-color: hsl(var(--muted));
-  padding: 0.2em 0.4em;
-  border-radius: 0.3em;
-  font-size: 0.85em; /* Slightly smaller */
-  @apply text-xs sm:text-sm; /* Responsive */
-}
-.prose pre {
-  background-color: hsl(var(--muted));
-  padding: 0.8em 1em; /* Adjust padding */
-  border-radius: 0.5em;
-  overflow-x: auto;
-  @apply text-xs sm:text-sm; /* Responsive */
-}
-.prose a {
-  color: hsl(var(--primary));
-  text-decoration: underline;
-  transition: color 0.2s ease;
-}
-.prose a:hover {
-  color: hsl(var(--accent));
-}
-.prose hr {
-  border-color: hsl(var(--border));
-  margin-top: 2em;
-  margin-bottom: 2em;
-}
+.prose h2 { font-size: 1.25em; border-bottom: 1px solid hsl(var(--border)); padding-bottom: 0.3em; @apply sm:text-lg md:text-xl; }
+.prose h3 { font-size: 1.1em; @apply sm:text-base md:text-lg; }
+.prose p { margin-bottom: 1em; line-height: 1.6; @apply text-xs sm:text-sm md:text-base; }
+.prose strong { color: hsl(var(--foreground)); font-weight: 600; }
+.prose ul, .prose ol { margin-left: 1.5em; margin-bottom: 1em; }
+.prose li { margin-bottom: 0.4em; @apply text-xs sm:text-sm md:text-base; }
+.prose code { background-color: hsl(var(--muted)); padding: 0.2em 0.4em; border-radius: 0.3em; font-size: 0.85em; @apply text-xs sm:text-sm; }
+.prose pre { background-color: hsl(var(--muted)); padding: 0.8em 1em; border-radius: 0.5em; overflow-x: auto; @apply text-xs sm:text-sm; }
+.prose a { color: hsl(var(--primary)); text-decoration: underline; transition: color 0.2s ease; }
+.prose a:hover { color: hsl(var(--accent)); }
+.prose hr { border-color: hsl(var(--border)); margin-top: 2em; margin-bottom: 2em; }
 
-/* Ensure prose styles work in dark mode */
 .prose-invert {
    --tw-prose-body: hsl(var(--foreground) / 0.9);
    --tw-prose-headings: hsl(var(--foreground));
-   --tw-prose-lead: hsl(var(--muted-foreground));
    --tw-prose-links: hsl(var(--primary));
    --tw-prose-bold: hsl(var(--foreground));
-   --tw-prose-counters: hsl(var(--muted-foreground));
    --tw-prose-bullets: hsl(var(--border));
    --tw-prose-hr: hsl(var(--border));
-   --tw-prose-quotes: hsl(var(--foreground));
-   --tw-prose-quote-borders: hsl(var(--border));
-   --tw-prose-captions: hsl(var(--muted-foreground));
    --tw-prose-code: hsl(var(--foreground));
    --tw-prose-pre-code: hsl(var(--foreground) / 0.9);
    --tw-prose-pre-bg: hsl(var(--muted));
-   --tw-prose-th-borders: hsl(var(--border));
-   --tw-prose-td-borders: hsl(var(--border));
-   --tw-prose-invert-body: hsl(var(--foreground) / 0.9);
-   --tw-prose-invert-headings: hsl(var(--foreground));
-   --tw-prose-invert-lead: hsl(var(--muted-foreground));
-   --tw-prose-invert-links: hsl(var(--primary));
-   --tw-prose-invert-bold: hsl(var(--foreground));
-   --tw-prose-invert-counters: hsl(var(--muted-foreground));
-   --tw-prose-invert-bullets: hsl(var(--border));
-   --tw-prose-invert-hr: hsl(var(--border));
-   --tw-prose-invert-quotes: hsl(var(--foreground));
-   --tw-prose-invert-quote-borders: hsl(var(--border));
-   --tw-prose-invert-captions: hsl(var(--muted-foreground));
-   --tw-prose-invert-code: hsl(var(--foreground));
-   --tw-prose-invert-pre-code: hsl(var(--foreground) / 0.9);
-   --tw-prose-invert-pre-bg: hsl(var(--muted));
-   --tw-prose-invert-th-borders: hsl(var(--border));
-   --tw-prose-invert-td-borders: hsl(var(--border));
+   /* Add other prose-invert variables as needed if you use them for main app markdown */
+}
+
+
+@media (min-width: 640px) {
+
+  .sm\:prose-base {
+    font-size: 1rem; /* equivalent to text-base */
+    line-height: 1.75; /* equivalent to leading-relaxed */
+  }
+  .sm\:prose-base h1 { font-size: 2.25rem; /* 36px */ }
+  .sm\:prose-base h2 { font-size: 1.875rem; /* 30px */ }
+  .sm\:prose-base h3 { font-size: 1.5rem; /* 24px */ }
+  .sm\:prose-base p, .sm\:prose-base li { font-size: 1rem; }
+  .sm\:prose-base code, .sm\:prose-base pre { font-size: 0.9rem; }
+}
+
+@media (min-width: 768px) {
+  .md\:prose-lg {
+    font-size: 1.125rem; /* equivalent to text-lg */
+    line-height: 1.75;
+  }
+  .md\:prose-lg h1 { font-size: 2.5rem; /* 40px */ }
+  .md\:prose-lg h2 { font-size: 2rem; /* 32px */ }
+  .md\:prose-lg h3 { font-size: 1.75rem; /* 28px */ }
+  .md\:prose-lg p, .md\:prose-lg li { font-size: 1.125rem; }
+  .md\:prose-lg code, .md\:prose-lg pre { font-size: 1rem; }
+}
+
+@media (min-width: 1024px) {
+  .lg\:prose-xl {
+    font-size: 1.25rem; /* equivalent to text-xl */
+    line-height: 1.75;
+  }
+  .lg\:prose-xl h1 { font-size: 3rem; /* 48px */ }
+  .lg\:prose-xl h2 { font-size: 2.25rem; /* 36px */ }
+  .lg\:prose-xl h3 { font-size: 1.875rem; /* 30px */ }
+  .lg\:prose-xl p, .lg\:prose-xl li { font-size: 1.25rem; }
+  .lg\:prose-xl code, .lg\:prose-xl pre { font-size: 1.125rem; }
 }

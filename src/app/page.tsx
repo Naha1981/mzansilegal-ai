@@ -3,333 +3,241 @@
 
 import React from 'react';
 import Link from 'next/link'; // Use Next.js Link for navigation
-import { motion } from 'framer-motion'; // Import motion for animations
-import { ClientOnly } from '@/components/client-only'; // Import ClientOnly
-import { cn } from '@/lib/utils'; // Import cn utility
+import { motion } from 'framer-motion';
+import { ClientOnly } from '@/components/client-only';
+import { cn } from '@/lib/utils';
 import { useTheme } from 'next-themes';
-import { Moon, Sun, FilePlus2 } from 'lucide-react'; // Added FilePlus2 for Doc Generation
+import { Moon, Sun, FileText, BookOpenCheck, Search, Newspaper, FilePlus2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 
-// Logo Component (Inline SVG for simplicity and performance)
+// Updated Logo Component based on screenshot
 const MzansiLegalLogo = ({ className }: { className?: string }) => (
-  <svg
-    className={cn("h-8 w-auto sm:h-10", className)} // Adjust size as needed
-    viewBox="0 0 180 40" // Adjusted viewBox slightly for potentially longer text if needed
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    aria-label="MzansiLegal Logo" // Updated aria-label
-  >
-    {/* Using primary color from theme */}
-    <defs>
-      <linearGradient id="logoGradient" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stopColor="hsl(var(--primary))" />
-        <stop offset="100%" stopColor="hsl(var(--accent))" />
-      </linearGradient>
-    </defs>
-    {/* Abstract 'M' shape incorporating scales */}
-    <path
-      d="M10 35 V5 H20 L30 25 L40 5 H50 V35 H40 V15 L30 35 L20 15 V35 H10 Z"
-      fill="url(#logoGradient)"
-    />
-    {/* Text part - corrected to "zansilegal" */}
-    <text
-      x="60" // Kept original x, adjust if needed visually
-      y="28"
-      fontFamily="Poppins, sans-serif"
-      fontSize="24"
-      fontWeight="bold"
-      fill="hsl(var(--foreground))"
+  <div className={cn("flex items-center space-x-2", className)}>
+    {/* Simple Scales Icon */}
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="28" // Increased size slightly
+      height="28"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5" // Slightly thinner stroke
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="text-amber-400 flex-shrink-0" // Gold color for scales icon
     >
-      zansilegal
-    </text>
-  </svg>
+      <path d="M12 3v18M4 7h16M5 7a5 5 0 0 0 7 0V7h-2.5M19 7a5 5 0 0 1-7 0V7h2.5" /> {/* Adjusted scales */}
+      <circle cx="6" cy="14" r="2" />
+      <circle cx="18" cy="14" r="2" />
+    </svg>
+    <span className="text-xl font-semibold text-gray-100">MzansiLegal AI</span>
+  </div>
 );
 
 
 // Animation variants
 const fadeDown = {
   hidden: { opacity: 0, y: -20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 1, ease: "easeOut" } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
 };
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 1, ease: "easeOut" } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
 };
 
 export default function LandingPage() {
   return (
-    // Apply global styles equivalent to body styling
-    <div className="font-poppins bg-gradient-to-br from-[#0b0b1f] to-[#1f2a5d] text-[#f5f5f5] min-h-screen overflow-x-hidden">
+    <div className="font-poppins text-[#f5f5f5] min-h-screen overflow-x-hidden bg-slate-900">
 
-      {/* Header */}
-      <ClientOnly> {/* Wrap header for client-side animation */}
+      {/* Header - Styled like screenshot */}
+      <ClientOnly>
         <motion.header
           initial="hidden"
           animate="visible"
           variants={fadeDown}
-          className="bg-[#141432]/80 backdrop-blur-sm sticky top-0 z-50 py-4 px-4 sm:px-12 flex justify-between items-center border-b border-white/10" // Adjusted padding, added backdrop blur, sticky
+          className="bg-stone-800 sticky top-0 z-50 py-3 sm:py-4 px-4 sm:px-12 flex justify-between items-center shadow-md"
         >
-          {/* Clickable Logo */}
-           <Link href="/app" aria-label="Go to MzansiLegal App">
-             {/* Ensure the className is applied correctly */}
+          <Link href="/" aria-label="Go to MzansiLegal AI Home">
             <MzansiLegalLogo className="cursor-pointer transition-transform duration-300 hover:scale-105" />
-           </Link>
-          <div className="hidden sm:flex space-x-8 items-center">
-            {/* Hide nav on small screens, adjust spacing, center items */}
-            <a
-              href="#pricing"
-              className="font-medium text-[#ccc] hover:text-[#00d4ff] transition-colors duration-300"
-            >
-              Pricing
-            </a>
-             <a
-              href="#features" // Add link to features section if needed
-              className="font-medium text-[#ccc] hover:text-[#00d4ff] transition-colors duration-300"
-            >
-              Features
-            </a>
-            {/* Link to the actual app page */}
-            <Link
-              href="/app"
-              className="font-medium text-[#00d4ff] hover:text-white transition-colors duration-300 border border-[#00d4ff] px-4 py-2 rounded-lg text-sm hover:bg-[#00d4ff]/10"
-            >
-              Go to App
+          </Link>
+          <div className="flex items-center space-x-3 sm:space-x-6">
+            <nav className="hidden sm:flex space-x-5 items-center">
+              <Link href="/#features" className="font-medium text-gray-300 hover:text-amber-400 transition-colors duration-300 text-sm">
+                Features
+              </Link>
+              <Link href="/#pricing" className="font-medium text-gray-300 hover:text-amber-400 transition-colors duration-300 text-sm">
+                Pricing
+              </Link>
+            </nav>
+            <Link href="/app" passHref>
+              <Button
+                variant="default"
+                className="bg-amber-500 hover:bg-amber-600 text-stone-900 font-semibold text-xs sm:text-sm px-3 py-1.5 sm:px-5 sm:py-2 rounded-md"
+              >
+                Get Started
+              </Button>
             </Link>
-
-            {/* Theme toggle button */}
-            <ThemeToggle />
+            <div className="hidden sm:block"> {/* Hide theme toggle on very small screens if needed, or keep it */}
+              <ThemeToggle />
+            </div>
           </div>
-
-
-
-
-           {/* Simple Link for Mobile */}
-           <nav className="sm:hidden">
-             <Link href="/app" className="font-medium text-[#00d4ff] hover:text-white transition-colors duration-300 border border-[#00d4ff] px-3 py-1.5 rounded-md text-xs hover:bg-[#00d4ff]/10">
-               Launch App
-             </Link>
-           </nav>
+           {/* Mobile Menu Trigger (simplified, as nav links are few) */}
+           <div className="sm:hidden flex items-center gap-2">
+             <ThemeToggle />
+             {/* If more links are needed on mobile, a dropdown/sheet could be implemented here */}
+           </div>
         </motion.header>
       </ClientOnly>
 
-      {/* Hero Section */}
-       <ClientOnly> {/* Wrap hero section for client-side animation */}
+      {/* Hero Section - Styled like screenshot */}
+       <ClientOnly>
           <motion.section
             initial="hidden"
             animate="visible"
             variants={fadeUp}
-            custom={0.4} // Delay animation
-            className="text-center py-20 px-4 sm:py-32 sm:px-5" // Adjusted padding
+            className="py-16 sm:py-24 px-4 sm:px-8 bg-slate-900"
           >
-            <h1 className="text-3xl sm:text-5xl font-bold mb-5 text-[#00d4ff] drop-shadow-[0_2px_10px_rgba(0,212,255,0.3)]">Empowering South African Legal Professionals with AI</h1>
-            <p className="text-lg sm:text-xl max-w-3xl mx-auto mb-10 text-[#ccc]">
-              Your trusted AI partner for Legal Research, Case Studies, Contract Analysis, and Document Generation. Fast, accurate, and built for the South African legal system. Try any plan free for 3 days!
-            </p>
-            {/* Link to the actual app page */}
-            <Link href="/app" className="inline-block bg-[#00d4ff] text-[#0b0b1f] py-3 px-8 rounded-lg font-bold text-base sm:text-lg transition-all duration-300 hover:bg-[#00aacd] hover:scale-105 shadow-lg shadow-[#00d4ff]/30">
-              Go to App {/* Changed text to Go to App */}
-            </Link>
+            <div className="container mx-auto grid md:grid-cols-2 gap-10 sm:gap-16 items-center">
+              <div className="text-center md:text-left">
+                <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-bold mb-6 text-gray-100 !leading-tight"> {/* Increased leading */}
+                  AI-Powered<br />Legal<br />Assistance
+                </h1>
+                <p className="text-base sm:text-lg max-w-md mx-auto md:mx-0 mb-8 text-gray-400">
+                  Transforming South African law practice with advanced AI tool for legal research and contract analysis.
+                </p>
+                <Link href="/#features" passHref>
+                  <Button
+                    variant="default"
+                    size="lg"
+                    className="bg-amber-500 hover:bg-amber-600 text-stone-900 font-semibold px-6 py-2.5 sm:px-8 sm:py-3 rounded-md text-sm sm:text-base"
+                  >
+                    Explore Features
+                  </Button>
+                </Link>
+              </div>
+              <div className="flex justify-center items-center mt-8 md:mt-0">
+                <Image
+                  src="https://placehold.co/400x400/EACC93/333333.png?text=Legal+AI" // Placeholder with colors matching button
+                  alt="AI Legal Assistance Illustration"
+                  width={400} // Adjusted size slightly
+                  height={400}
+                  className="rounded-full object-cover shadow-2xl border-4 border-amber-500/30" // Added subtle border
+                  data-ai-hint="stressed lawyer cartoon legal documents"
+                />
+              </div>
+            </div>
           </motion.section>
        </ClientOnly>
 
-       {/* Features Section (Added based on request) */}
+       {/* Features Section */}
        <ClientOnly>
          <motion.section
-           id="features" // ID for navigation
+           id="features"
            initial="hidden"
            whileInView="visible"
-           viewport={{ once: true, amount: 0.3 }}
+           viewport={{ once: true, amount: 0.2 }} // Trigger sooner
            variants={fadeUp}
-           custom={0.6} // Animation delay
-           className="py-20 px-4 sm:px-5 text-center"
+           className="py-16 sm:py-20 px-4 sm:px-5 text-center bg-slate-800/70 backdrop-blur-md"
          >
-           <h2 className="text-3xl sm:text-4xl font-bold mb-12 text-[#00d4ff]">Core Features</h2>
-           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-             {/* Feature Card 1 */}
-             <motion.div whileHover={{ y: -5 }} className="bg-[#27275a]/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-white/10">
-               <h3 className="text-xl font-semibold mb-3 text-[#f5f5f5]">Legal Research</h3>
-               <p className="text-base text-[#ccc]">Comprehensive SA & International research.</p>
-             </motion.div>
-             {/* Feature Card 2 */}
-             <motion.div whileHover={{ y: -5 }} className="bg-[#27275a]/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-white/10">
-               <h3 className="text-xl font-semibold mb-3 text-[#f5f5f5]">Case Study Analysis</h3>
-               <p className="text-base text-[#ccc]">Insights from historical cases & precedents.</p>
-             </motion.div>
-             {/* Feature Card 3 */}
-             <motion.div whileHover={{ y: -5 }} className="bg-[#27275a]/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-white/10">
-               <h3 className="text-xl font-semibold mb-3 text-[#f5f5f5]">Contract Analysis</h3>
-               <p className="text-base text-[#ccc]">Identify key clauses, assess risks.</p>
-             </motion.div>
-             {/* Feature Card 4 (New) */}
-             <motion.div whileHover={{ y: -5 }} className="bg-[#27275a]/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-white/10">
-                <h3 className="text-xl font-semibold mb-3 text-[#f5f5f5] flex items-center justify-center gap-2">
-                  <FilePlus2 size={20}/>Doc Generation
-                </h3>
-               <p className="text-base text-[#ccc]">Automate templates, correspondence & statements.</p>
-             </motion.div>
-              {/* Feature Card 5 (Daily News) */}
-              <motion.div whileHover={{ y: -5 }} className="bg-[#27275a]/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-white/10">
-               <h3 className="text-xl font-semibold mb-3 text-[#f5f5f5]">Daily Legal News</h3>
-               <p className="text-base text-[#ccc]">Stay updated with curated legal news feeds.</p>
-             </motion.div>
+           <h2 className="text-3xl sm:text-4xl font-bold mb-12 text-amber-400">Core Features</h2>
+           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 sm:gap-8 max-w-7xl mx-auto">
+             <FeatureCard icon={<Search size={24} />} title="Legal Research" description="Comprehensive SA & International research." />
+             <FeatureCard icon={<BookOpenCheck size={24} />} title="Case Study Analysis" description="Insights from historical cases & precedents." />
+             <FeatureCard icon={<FileText size={24} />} title="Contract Analysis" description="Identify key clauses, assess risks." />
+             <FeatureCard icon={<FilePlus2 size={24} />} title="Doc Generation" description="Automate templates, correspondence & statements." />
+             <FeatureCard icon={<Newspaper size={24} />} title="Daily Legal News" description="Stay updated with curated legal news feeds." />
            </div>
          </motion.section>
        </ClientOnly>
 
-
       {/* Pricing Section */}
-      <ClientOnly> {/* Wrap pricing section for client-side animation */}
+      <ClientOnly>
         <motion.section
           id="pricing"
           initial="hidden"
-          whileInView="visible" // Animate when in view
-          viewport={{ once: true, amount: 0.3 }} // Trigger animation once when 30% visible
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
           variants={fadeUp}
-          custom={0.8} // Animation delay
-          className="bg-[#1c1c45]/70 backdrop-blur-md py-20 px-4 sm:px-5 text-center" // Adjusted padding, added backdrop blur
+          className="bg-slate-900 py-16 sm:py-20 px-4 sm:px-5 text-center"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold mb-12 text-[#00d4ff]">Simple, Transparent Pricing</h2>
-          <div className="flex flex-wrap justify-center gap-8"> {/* Use flex-wrap and gap */}
-
-            {/* Pricing Card 1: Starter */}
-            <motion.div
-               whileHover={{ y: -10, scale: 1.05 }} // Hover animation
-               className="bg-[#27275a]/80 backdrop-blur-sm rounded-2xl p-8 w-full sm:w-auto max-w-sm sm:max-w-xs shadow-xl transition-transform duration-300 border border-white/10 flex flex-col justify-between" // Added flex flex-col justify-between
-             >
-              <div>
-                <h3 className="text-2xl font-semibold mb-3 text-[#f5f5f5]">Starter</h3>
-                <p className="text-lg mb-2 text-[#ccc]">For law students, legal interns, and individual researchers.</p>
-                <p className="text-4xl font-bold text-[#00d4ff] my-5">R500<span className="text-lg font-normal text-[#ccc]"> / month</span></p>
-                <p className="text-xs text-gray-400 mb-4">3-day free trial available</p>
-                <ul className="list-none p-0 mb-6 text-base text-[#ccc] space-y-2 text-left pl-4"> {/* Align text left */}
-                   <li>✅ AI Legal Assistant (basic)</li>
-                   <li>✅ Legal Research (South Africa only, 20 queries/month)</li>
-                   <li>✅ Daily Legal News (5 articles/day)</li>
-                   <li>✅ Disclaimer notice</li>
-                   <li>✅ Full UI Access</li>
-                </ul>
-              </div>
-              {/* Link to the actual app page */}
-              <Link href="/app" className="inline-block mt-auto bg-[#00d4ff] text-[#0b0b1f] py-3 px-6 rounded-lg font-bold text-sm transition-all duration-300 hover:bg-[#00aacd] hover:scale-105 shadow-md shadow-[#00d4ff]/20">
-                Choose Starter
-              </Link>
-            </motion.div>
-
-            {/* Pricing Card 2: Professional */}
-             <motion.div
-               whileHover={{ y: -10, scale: 1.05 }}
-               className="bg-[#27275a]/80 backdrop-blur-sm rounded-2xl p-8 w-full sm:w-auto max-w-sm sm:max-w-xs shadow-xl transition-transform duration-300 border-2 border-[#00d4ff] flex flex-col justify-between" // Highlighted card, Added flex flex-col justify-between
-             >
-              <div>
-                <h3 className="text-2xl font-semibold mb-3 text-[#f5f5f5]">Professional</h3>
-                <p className="text-lg mb-2 text-[#ccc]">For solo attorneys, small practices, and legal consultants.</p>
-                <p className="text-4xl font-bold text-[#00d4ff] my-5">R1000<span className="text-lg font-normal text-[#ccc]"> / month</span></p>
-                <p className="text-xs text-gray-400 mb-4">3-day free trial available</p>
-                <ul className="list-none p-0 mb-6 text-base text-[#ccc] space-y-2 text-left pl-4">
-                   <li>✅ AI Legal Assistant (advanced prompts, faster processing)</li>
-                   <li>✅ Legal Research (South Africa + selected international jurisdictions)</li>
-                   <li>✅ Case Study Analysis (basic: 5 cases/month)</li>
-                   <li>✅ Contract Analysis (5 contracts/month)</li>
-                   <li>✅ Daily Legal News (10+ articles/day)</li>
-                   <li>✅ Disclaimer</li>
-                   <li>✅ Full UI Access</li>
-                </ul>
-              </div>
-              <Link href="/app" className="inline-block mt-auto bg-[#00d4ff] text-[#0b0b1f] py-3 px-6 rounded-lg font-bold text-sm transition-all duration-300 hover:bg-[#00aacd] hover:scale-105 shadow-md shadow-[#00d4ff]/20">
-                Choose Professional
-              </Link>
-            </motion.div>
-
-            {/* Pricing Card 3: Enterprise */}
-             <motion.div
-               whileHover={{ y: -10, scale: 1.05 }}
-               className="bg-[#27275a]/80 backdrop-blur-sm rounded-2xl p-8 w-full sm:w-auto max-w-sm sm:max-w-xs shadow-xl transition-transform duration-300 border border-white/10 flex flex-col justify-between" // Added flex flex-col justify-between
-             >
-              <div>
-                <h3 className="text-2xl font-semibold mb-3 text-[#f5f5f5]">Enterprise</h3>
-                <p className="text-lg mb-2 text-[#ccc]">For law firms, corporate legal teams, and serious users.</p>
-                <p className="text-4xl font-bold text-[#00d4ff] my-5">R1500<span className="text-lg font-normal text-[#ccc]"> / month</span></p>
-                 <p className="text-xs text-gray-400 mb-4">3-day free trial available</p>
-                <ul className="list-none p-0 mb-6 text-base text-[#ccc] space-y-2 text-left pl-4">
-                   <li>✅ AI Legal Assistant (unlimited use, priority speed)</li>
-                   <li>✅ Legal Research (full access to South African + international law databases)</li>
-                   <li>✅ Case Study Analysis (unlimited cases, outcome prediction scoring)</li>
-                   <li>✅ Contract Analysis (unlimited uploads, advanced clause suggestions)</li>
-                   <li>✅ Daily Legal News (priority feed, customizable alerts)</li>
-                   <li>✅ Customizable Disclaimer</li>
-                   <li>✅ Premium UI themes (dark mode + custom branding options)</li>
-                   <li>✅ Dedicated onboarding + premium support</li>
-                   <li>✅ API access (on request)</li>
-                </ul>
-              </div>
-              <Link href="/app" className="inline-block mt-auto bg-[#00d4ff] text-[#0b0b1f] py-3 px-6 rounded-lg font-bold text-sm transition-all duration-300 hover:bg-[#00aacd] hover:scale-105 shadow-md shadow-[#00d4ff]/20">
-                Choose Enterprise
-              </Link>
-            </motion.div>
-
+          <h2 className="text-3xl sm:text-4xl font-bold mb-12 text-amber-400">Simple, Transparent Pricing</h2>
+          <div className="flex flex-wrap justify-center items-stretch gap-6 sm:gap-8"> {/* items-stretch for equal height cards */}
+            <PricingCard
+              title="Starter"
+              price="R500"
+              description="For law students, legal interns, and individual researchers."
+              features={[
+                "AI Legal Assistant (basic)",
+                "Legal Research (South Africa only, 20 queries/month)",
+                "Daily Legal News (5 articles/day)",
+                "Disclaimer notice",
+                "Full UI Access",
+              ]}
+              trialText="3-day free trial available"
+            />
+            <PricingCard
+              title="Professional"
+              price="R1000"
+              description="For solo attorneys, small practices, and legal consultants."
+              features={[
+                "AI Legal Assistant (advanced prompts, faster processing)",
+                "Legal Research (South Africa + selected international jurisdictions)",
+                "Case Study Analysis (basic: 5 cases/month)",
+                "Contract Analysis (5 contracts/month)",
+                "Daily Legal News (10+ articles/day)",
+                "Disclaimer",
+                "Full UI Access",
+              ]}
+              trialText="3-day free trial available"
+              highlighted
+            />
+            <PricingCard
+              title="Enterprise"
+              price="R1500"
+              description="For law firms, corporate legal teams, and serious users."
+              features={[
+                "AI Legal Assistant (unlimited use, priority speed)",
+                "Legal Research (full access to South African + international law databases)",
+                "Case Study Analysis (unlimited cases, outcome prediction scoring)",
+                "Contract Analysis (unlimited uploads, advanced clause suggestions)",
+                "Daily Legal News (priority feed, customizable alerts)",
+                "Customizable Disclaimer",
+                "Premium UI themes (dark mode + custom branding options)",
+                "Dedicated onboarding + premium support",
+                "API access (on request)",
+              ]}
+              trialText="3-day free trial available"
+            />
           </div>
           {/* Summary Table */}
-          <div className="overflow-x-auto mt-16"> {/* Increased margin-top */}
+          <div className="overflow-x-auto mt-12 sm:mt-16">
              <motion.table
                initial="hidden"
                whileInView="visible"
-               viewport={{ once: true, amount: 0.5 }}
+               viewport={{ once: true, amount: 0.3 }}
                variants={fadeUp}
-               custom={1.0} // Animation delay
-               className="w-full max-w-4xl mx-auto text-left text-sm sm:text-base bg-gradient-to-br from-[#27275a]/50 to-[#1c1c45]/50 rounded-lg border border-white/10 shadow-lg"
+               className="w-full max-w-4xl mx-auto text-left text-xs sm:text-sm bg-stone-800/50 backdrop-blur-sm rounded-lg border border-stone-700 shadow-lg"
              >
-              <caption className="text-xl font-semibold mb-4 text-white/80 p-4">Feature Comparison</caption>
-              <thead>
-                 {/* Removed whitespace within tr */}
-                 <tr className="text-[#00d4ff] border-b border-white/20"><th className="py-3 px-2 sm:px-4 font-semibold">Feature</th><th className="py-3 px-2 sm:px-4 text-center font-semibold">Starter (R500)</th><th className="py-3 px-2 sm:px-4 text-center font-semibold">Professional (R1000)</th><th className="py-3 px-2 sm:px-4 text-center font-semibold">Enterprise (R1500)</th></tr>
+              <caption className="text-lg sm:text-xl font-semibold mb-4 text-gray-300 p-3 sm:p-4">Feature Comparison</caption>
+              <thead className="border-b border-stone-700">
+                 <tr className="text-amber-400">
+                    <th className="py-2.5 px-2 sm:px-4 font-semibold">Feature</th>
+                    <th className="py-2.5 px-2 sm:px-4 text-center font-semibold">Starter (R500)</th>
+                    <th className="py-2.5 px-2 sm:px-4 text-center font-semibold">Professional (R1000)</th>
+                    <th className="py-2.5 px-2 sm:px-4 text-center font-semibold">Enterprise (R1500)</th>
+                 </tr>
               </thead>
-              <tbody className="text-white/90">
-                <tr className="border-b border-white/10 hover:bg-white/5 transition-colors">
-                  <td className="py-3 px-2 sm:px-4 font-medium">AI Legal Assistance</td>
-                  <td className="py-3 px-2 sm:px-4 text-center">Limited</td>
-                  <td className="py-3 px-2 sm:px-4 text-center">Full</td>
-                  <td className="py-3 px-2 sm:px-4 text-center">Unlimited</td>
-                </tr>
-                <tr className="border-b border-white/10 hover:bg-white/5 transition-colors">
-                  <td className="py-3 px-2 sm:px-4 font-medium">Legal Research</td>
-                  <td className="py-3 px-2 sm:px-4 text-center">SA Only</td>
-                  <td className="py-3 px-2 sm:px-4 text-center">SA + Intl</td>
-                  <td className="py-3 px-2 sm:px-4 text-center">Full Access</td>
-                </tr>
-                <tr className="border-b border-white/10 hover:bg-white/5 transition-colors">
-                  <td className="py-3 px-2 sm:px-4 font-medium">Case Study Analysis</td>
-                  <td className="py-3 px-2 sm:px-4 text-center">❌</td>
-                  <td className="py-3 px-2 sm:px-4 text-center">Basic (5/month)</td>
-                  <td className="py-3 px-2 sm:px-4 text-center">Unlimited</td>
-                </tr>
-                <tr className="border-b border-white/10 hover:bg-white/5 transition-colors">
-                  <td className="py-3 px-2 sm:px-4 font-medium">Contract Analysis</td>
-                  <td className="py-3 px-2 sm:px-4 text-center">❌</td>
-                  <td className="py-3 px-2 sm:px-4 text-center">5 docs/month</td>
-                  <td className="py-3 px-2 sm:px-4 text-center">Unlimited</td>
-                </tr>
-                 {/* Added Doc Generation Row */}
-                <tr className="border-b border-white/10 hover:bg-white/5 transition-colors">
-                  <td className="py-3 px-2 sm:px-4 font-medium">Doc Generation</td>
-                  <td className="py-3 px-2 sm:px-4 text-center">❌</td>
-                  <td className="py-3 px-2 sm:px-4 text-center">Basic</td>
-                  <td className="py-3 px-2 sm:px-4 text-center">Advanced (inc. Training)</td>
-                </tr>
-                <tr className="border-b border-white/10 hover:bg-white/5 transition-colors">
-                  <td className="py-3 px-2 sm:px-4 font-medium">Daily Legal News</td>
-                  <td className="py-3 px-2 sm:px-4 text-center">5 articles/day</td>
-                  <td className="py-3 px-2 sm:px-4 text-center">10+ articles/day</td>
-                  <td className="py-3 px-2 sm:px-4 text-center">Custom alerts</td>
-                </tr>
-                <tr className="border-b border-white/10 hover:bg-white/5 transition-colors">
-                  <td className="py-3 px-2 sm:px-4 font-medium">Disclaimer</td>
-                  <td className="py-3 px-2 sm:px-4 text-center">Standard</td>
-                  <td className="py-3 px-2 sm:px-4 text-center">Standard</td>
-                  <td className="py-3 px-2 sm:px-4 text-center">Customizable</td>
-                </tr>
-                 {/* Removed whitespace within tr */}
-                 <tr className="hover:bg-white/5 transition-colors"><td className="py-3 px-2 sm:px-4 font-medium">UI Access</td><td className="py-3 px-2 sm:px-4 text-center">Full</td><td className="py-3 px-2 sm:px-4 text-center">Full</td><td className="py-3 px-2 sm:px-4 text-center">Premium UI</td></tr>
+              <tbody className="text-gray-300">
+                <ComparisonRow feature="AI Legal Assistance" starter="Limited" professional="Full" enterprise="Unlimited" />
+                <ComparisonRow feature="Legal Research" starter="SA Only" professional="SA + Intl" enterprise="Full Access" />
+                <ComparisonRow feature="Case Study Analysis" starter="❌" professional="Basic (5/month)" enterprise="Unlimited" />
+                <ComparisonRow feature="Contract Analysis" starter="❌" professional="5 docs/month" enterprise="Unlimited" />
+                <ComparisonRow feature="Doc Generation" starter="❌" professional="Basic" enterprise="Advanced (inc. Training)" />
+                <ComparisonRow feature="Daily Legal News" starter="5 articles/day" professional="10+ articles/day" enterprise="Custom alerts" />
+                <ComparisonRow feature="Disclaimer" starter="Standard" professional="Standard" enterprise="Customizable" />
+                <ComparisonRow feature="UI Access" starter="Full" professional="Full" enterprise="Premium UI" isLast />
               </tbody>
             </motion.table>
           </div>
@@ -337,22 +245,84 @@ export default function LandingPage() {
       </ClientOnly>
 
       {/* Footer */}
-       <ClientOnly> {/* Wrap footer for client-side animation */}
+       <ClientOnly>
           <motion.footer
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeUp}
-            custom={1.2} // Animation delay
-            className="bg-[#141432]/80 backdrop-blur-sm py-5 px-4 text-center text-sm text-[#777] mt-10 border-t border-white/10" // Add margin top, backdrop blur, border
+            className="bg-stone-800 py-4 sm:py-5 px-4 text-center text-xs sm:text-sm text-gray-500 mt-10 border-t border-stone-700"
           >
             Built by: T.Naha
           </motion.footer>
        </ClientOnly>
-
     </div>
   );
-};
+}
+
+// Helper component for Feature Cards
+const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) => (
+  <motion.div
+    whileHover={{ y: -5, boxShadow: "0 10px 15px -3px rgba(234, 179, 8, 0.1), 0 4px 6px -2px rgba(234, 179, 8, 0.05)" }} // Amber glow
+    className="bg-slate-700/60 backdrop-blur-sm rounded-xl p-5 sm:p-6 shadow-lg border border-slate-600 min-h-[160px] sm:min-h-[180px] flex flex-col items-center justify-center transition-shadow"
+  >
+    <div className="text-amber-400 mb-2 sm:mb-3">{icon}</div>
+    <h3 className="text-base sm:text-lg font-semibold mb-1 sm:mb-2 text-gray-100">{title}</h3>
+    <p className="text-xs sm:text-sm text-gray-400">{description}</p>
+  </motion.div>
+);
+
+// Helper component for Pricing Cards
+const PricingCard = ({ title, price, description, features, trialText, highlighted }: { title: string, price: string, description: string, features: string[], trialText?: string, highlighted?: boolean }) => (
+  <motion.div
+    whileHover={{ y: -8, scale: 1.02, boxShadow: "0 10px 20px -5px rgba(234, 179, 8, 0.2), 0 6px 10px -5px rgba(234, 179, 8, 0.1)" }}
+    className={cn(
+      "bg-slate-700/60 backdrop-blur-sm rounded-2xl p-6 w-full sm:max-w-xs md:max-w-sm shadow-xl transition-all duration-300 border border-slate-600 flex flex-col",
+      highlighted && "border-2 border-amber-500 ring-2 ring-amber-500/50 relative sm:scale-105 z-10"
+    )}
+  >
+    {highlighted && (
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-500 text-stone-900 text-xs font-semibold px-3 py-1 rounded-full shadow-lg">
+            Most Popular
+        </div>
+    )}
+    <div className="flex-grow">
+      <h3 className="text-xl sm:text-2xl font-semibold mb-2 text-gray-100">{title}</h3>
+      <p className="text-xs sm:text-sm mb-3 text-gray-400 min-h-[2.5em] sm:min-h-[3em]">{description}</p>
+      <p className="text-3xl sm:text-4xl font-bold text-amber-400 my-4 sm:my-5">{price}<span className="text-base sm:text-lg font-normal text-gray-400"> / month</span></p>
+      {trialText && <p className="text-xs text-gray-500 mb-3 sm:mb-4">{trialText}</p>}
+      <ul className="list-none p-0 mb-5 sm:mb-6 text-xs sm:text-sm text-gray-300 space-y-1.5 sm:space-y-2 text-left pl-1 sm:pl-2">
+        {features.map((feature, index) => (
+          <li key={index} className="flex items-start">
+            <span className="text-amber-400 mr-1.5 sm:mr-2 shrink-0 text-base">✓</span> {/* Checkmark instead of ✅ emoji */}
+            <span>{feature}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <Link href="/app" passHref>
+      <Button
+        variant="default"
+        className={cn(
+            "mt-auto w-full font-semibold py-2.5 rounded-md text-sm",
+            highlighted ? "bg-amber-500 hover:bg-amber-600 text-stone-900" : "bg-stone-600 hover:bg-stone-500 text-gray-100"
+        )}
+      >
+        Choose {title}
+      </Button>
+    </Link>
+  </motion.div>
+);
+
+// Helper component for Table Rows
+const ComparisonRow = ({ feature, starter, professional, enterprise, isLast = false }: { feature: string, starter: string, professional: string, enterprise: string, isLast?: boolean }) => (
+  <tr className={cn("hover:bg-stone-700/70 transition-colors", !isLast && "border-b border-stone-700/50")}>
+    <td className="py-2.5 px-2 sm:px-4 font-medium">{feature}</td>
+    <td className="py-2.5 px-2 sm:px-4 text-center">{starter}</td>
+    <td className="py-2.5 px-2 sm:px-4 text-center">{professional}</td>
+    <td className="py-2.5 px-2 sm:px-4 text-center">{enterprise}</td>
+  </tr>
+);
 
 function ThemeToggle() {
   const { setTheme, resolvedTheme } = useTheme();
@@ -364,14 +334,14 @@ function ThemeToggle() {
       onClick={() =>
         setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')
       }
-      className="bg-transparent border-white/20 text-white hover:bg-white/10" // Style for dark theme
+      className="bg-transparent border-gray-500/50 text-gray-300 hover:bg-gray-700/40 hover:text-amber-400 hover:border-amber-500/50 rounded-md h-8 w-8 sm:h-9 sm:w-9"
     >
       {resolvedTheme === 'dark' ? (
-        <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:rotate-180 dark:scale-0" />
+        <Sun className="h-4 w-4 sm:h-5 sm:w-5" />
       ) : (
-        <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-180 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+        <Moon className="h-4 w-4 sm:h-5 sm:w-5" />
       )}
       <span className="sr-only">Toggle theme</span>
     </Button>
   );
-};
+}
