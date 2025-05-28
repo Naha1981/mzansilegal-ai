@@ -3,12 +3,13 @@
 
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Image from 'next/image'; // Added import for Image component
+import Image from 'next/image';
+import Link from 'next/link'; // Added import for Link
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ClientOnly } from '@/components/client-only';
-import { Sparkles, Search, BookOpenCheck, FileText, Info, Loader2, Newspaper, FilePlus2 } from 'lucide-react';
+import { Sparkles, Search, BookOpenCheck, FileText, Info, Loader2, Newspaper, FilePlus2, ChevronLeft } from 'lucide-react'; // Added ChevronLeft
 import ReactMarkdown from 'react-markdown';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
@@ -85,22 +86,24 @@ export default function Home() {
           break;
         case 'Doc Generation':
            const docGenInput: DocGenerationInput = {
-               docType: "User Defined",
+               docType: "User Defined", // Or infer this from inputText if needed
                context: inputText,
+               // historicalDocs: Optionally extract this from inputText or add another field
            };
            result = await docGeneration(docGenInput);
            outputText = result.generatedDocument;
            break;
         case 'Daily Legal News':
-          result = await dailyLegalNews();
+          result = await dailyLegalNews(); // No input needed for this one as per its definition
           outputText = result.newsReport;
-          analysisInput = undefined;
-          setInputText('');
+          analysisInput = undefined; // No direct user text input for news
+          setInputText(''); // Clear input text field for news
           break;
         default: throw new Error('Invalid analysis type selected');
       }
 
        if (!outputText) {
+         // Attempt to extract a more specific error message if the flow returned one
          const errorMsg = (result as any)?.analysis || (result as any)?.analysisReport || (result as any)?.newsReport || (result as any)?.generatedDocument;
          if (typeof errorMsg === 'string' && errorMsg.toLowerCase().includes('error')) {
              setError(errorMsg);
@@ -128,19 +131,30 @@ export default function Home() {
       <main className="flex flex-col items-center justify-start min-h-screen p-4 sm:p-6 md:p-10 bg-background text-foreground font-serif">
        <ClientOnly>
          <>
-            <div className="flex items-center justify-center space-x-3 mb-2 animate-fade-in">
-              <Image
-                src="https://ideogram.ai/assets/progressive-image/balanced/response/rC4tDYcAThW2P25_d3u9Gg"
-                alt="MzansiLegal AI Logo"
-                width={40}
-                height={40}
-                className="rounded"
-                data-ai-hint="logo branding"
-              />
-              <h1 className="text-4xl sm:text-5xl font-bold text-foreground">
-                MzansiLegal AI
-              </h1>
+            <div className="w-full max-w-3xl flex items-center justify-between mb-2 animate-fade-in relative">
+              <Link href="/" passHref>
+                <Button variant="ghost" size="icon" className="text-foreground hover:bg-accent absolute left-0 top-1/2 -translate-y-1/2 ml-[-10px] sm:ml-[-15px]">
+                  <ChevronLeft size={28} />
+                  <span className="sr-only">Back to Home</span>
+                </Button>
+              </Link>
+              <div className="flex-grow flex items-center justify-center space-x-3">
+                <Image
+                  src="https://ideogram.ai/assets/progressive-image/balanced/response/rC4tDYcAThW2P25_d3u9Gg"
+                  alt="MzansiLegal AI Logo"
+                  width={40}
+                  height={40}
+                  className="rounded"
+                  data-ai-hint="logo branding"
+                />
+                <h1 className="text-4xl sm:text-5xl font-bold text-foreground">
+                  MzansiLegal AI
+                </h1>
+              </div>
+              {/* This empty div helps balance the flex container when the back button is on the left */}
+              <div className="w-[40px] sm:w-[50px]"></div>
             </div>
+
             <p className="text-lg sm:text-xl text-muted-foreground mb-6 md:mb-8 text-center animate-fade-in animation-delay-200 font-sans">
               AI-powered legal assistance for South African professionals
             </p>
@@ -293,3 +307,4 @@ export default function Home() {
       </main>
   );
 }
+
