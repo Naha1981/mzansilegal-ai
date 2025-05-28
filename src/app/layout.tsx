@@ -15,10 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className="dark">
       <head>
-        {/* Font links are good here as they might be used by both landing and app */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+        {/* Font links are now consolidated in globals.css via @import */}
       </head>
       {/* Body uses font defined in globals.css - applied globally */}
       <body>
