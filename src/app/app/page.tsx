@@ -28,7 +28,7 @@ interface AnalysisResult {
 }
 
 const AnalysisResultIcon = ({ type }: { type: AnalysisType }) => {
-  const iconProps = { size: 20, className: "text-foreground" }; // Base size
+  const iconProps = { size: 20, className: "text-foreground" };
   switch (type) {
     case 'Legal Research': return <Search {...iconProps} />;
     case 'Case Study Analysis': return <BookOpenCheck {...iconProps} />;
@@ -86,17 +86,17 @@ export default function Home() {
           break;
         case 'Doc Generation':
            const docGenInput: DocGenerationInput = {
-               docType: "User Defined", 
+               docType: "User Defined",
                context: inputText,
            };
            result = await docGeneration(docGenInput);
            outputText = result.generatedDocument;
            break;
         case 'Daily Legal News':
-          result = await dailyLegalNews(); 
+          result = await dailyLegalNews();
           outputText = result.newsReport;
-          analysisInput = undefined; 
-          setInputText(''); 
+          analysisInput = undefined;
+          setInputText('');
           break;
         default: throw new Error('Invalid analysis type selected');
       }
@@ -141,9 +141,9 @@ export default function Home() {
                 <Image
                   src="https://ideogram.ai/assets/progressive-image/balanced/response/rC4tDYcAThW2P25_d3u9Gg"
                   alt="MzansiLegal AI Logo"
-                  width={32}
-                  height={32}
-                  className="rounded sm:w-10 sm:h-10"
+                  width={48}
+                  height={48}
+                  className="rounded w-10 h-10 sm:w-12 sm:h-12"
                   data-ai-hint="logo branding"
                 />
                 <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
@@ -234,7 +234,7 @@ export default function Home() {
                     value={inputText}
                     onChange={(e) => setInputText(e.target.value)}
                     disabled={isLoading}
-                    rows={5} /* Adjusted rows for mobile */
+                    rows={5}
                     className="bg-input border-border rounded-md p-2 sm:p-3 md:p-4 text-sm sm:text-base focus:ring-ring focus:border-ring focus:shadow-lg animated-input min-h-[100px] sm:min-h-[120px] md:min-h-[150px] text-foreground placeholder-muted-foreground"
                     aria-label="Input text for analysis or generation"
                   />
@@ -305,4 +305,3 @@ export default function Home() {
       </main>
   );
 }
-

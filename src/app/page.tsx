@@ -1,27 +1,27 @@
 
-'use client'; 
+'use client';
 
 import React from 'react';
-import Link from 'next/link'; 
+import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ClientOnly } from '@/components/client-only'; 
-import { cn } from '@/lib/utils'; 
+import { ClientOnly } from '@/components/client-only'; // Import ClientOnly
+import { cn } from '@/lib/utils'; // Import cn utility
 import { useTheme } from 'next-themes';
 import { Moon, Sun, FileText, BookOpenCheck, Search, Newspaper, FilePlus2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import Image from 'next/image'; 
+import Image from 'next/image';
 
 const MzansiLegalLogo = ({ className }: { className?: string }) => (
   <div className={cn("flex items-center space-x-1 sm:space-x-2", className)}>
     <Image
       src="https://ideogram.ai/assets/progressive-image/balanced/response/rC4tDYcAThW2P25_d3u9Gg"
       alt="MzansiLegal AI Logo"
-      width={32} 
-      height={32}
-      className="flex-shrink-0 rounded sm:w-9 sm:h-9" 
+      width={48}
+      height={48}
+      className="flex-shrink-0 rounded w-10 h-10 sm:w-12 sm:h-12"
       data-ai-hint="logo branding"
     />
-    <span className="text-lg sm:text-xl font-semibold text-gray-100">MzansiLegal AI</span>
+    <span className="text-lg sm:text-xl font-semibold text-gray-100">zansilegal AI</span>
   </div>
 );
 
@@ -66,7 +66,7 @@ export default function LandingPage() {
                 Get Started
               </Button>
             </Link>
-            <div className="hidden sm:block"> 
+            <div className="hidden sm:block">
               <ThemeToggle />
             </div>
           </div>
@@ -85,7 +85,7 @@ export default function LandingPage() {
           >
             <div className="container mx-auto grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
               <div className="text-center md:text-left">
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-gray-100 !leading-tight"> 
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-gray-100 !leading-tight">
                   AI-Powered<br />Legal<br />Assistance
                 </h1>
                 <p className="text-sm sm:text-base md:text-lg max-w-md mx-auto md:mx-0 mb-6 sm:mb-8 text-gray-400">
@@ -94,7 +94,7 @@ export default function LandingPage() {
                 <Link href="/#features" passHref>
                   <Button
                     variant="default"
-                    size="lg" 
+                    size="lg"
                     className="bg-amber-500 hover:bg-amber-600 text-stone-900 font-semibold px-5 py-2 sm:px-6 md:py-2.5 rounded-md text-xs sm:text-sm md:text-base"
                   >
                     Explore Features
@@ -106,7 +106,7 @@ export default function LandingPage() {
                     <Image
                       src="https://ideogram.ai/assets/progressive-image/balanced/response/JRiQSuWWS-urwlo5-L6Tqg"
                       alt="AI Legal Concept Illustration"
-                      width={450} 
+                      width={450}
                       height={350}
                       priority
                       className="rounded-lg object-cover shadow-2xl border-2 border-amber-500/30 w-full h-auto"
@@ -123,7 +123,7 @@ export default function LandingPage() {
            id="features"
            initial="hidden"
            whileInView="visible"
-           viewport={{ once: true, amount: 0.2 }} 
+           viewport={{ once: true, amount: 0.2 }}
            variants={fadeUp}
            className="py-12 sm:py-16 md:py-20 px-4 sm:px-5 text-center bg-slate-800/70 backdrop-blur-md"
          >
@@ -148,7 +148,7 @@ export default function LandingPage() {
           className="bg-slate-900 py-12 sm:py-16 md:py-20 px-4 sm:px-5 text-center"
         >
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-10 sm:mb-12 text-amber-400">Simple, Transparent Pricing</h2>
-          <div className="flex flex-wrap justify-center items-stretch gap-4 sm:gap-6 md:gap-8"> 
+          <div className="flex flex-wrap justify-center items-stretch gap-4 sm:gap-6 md:gap-8">
             <PricingCard
               title="Starter"
               price="R500"
@@ -245,7 +245,7 @@ export default function LandingPage() {
 
 const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) => (
   <motion.div
-    whileHover={{ y: -5, boxShadow: "0 10px 15px -3px rgba(234, 179, 8, 0.1), 0 4px 6px -2px rgba(234, 179, 8, 0.05)" }} 
+    whileHover={{ y: -5, boxShadow: "0 10px 15px -3px rgba(234, 179, 8, 0.1), 0 4px 6px -2px rgba(234, 179, 8, 0.05)" }}
     className="bg-slate-700/60 backdrop-blur-sm rounded-xl p-4 sm:p-5 shadow-lg border border-slate-600 min-h-[140px] sm:min-h-[160px] md:min-h-[180px] flex flex-col items-center justify-center transition-shadow"
   >
     <div className="text-amber-400 mb-2 sm:mb-3">{icon}</div>
@@ -275,7 +275,7 @@ const PricingCard = ({ title, price, description, features, trialText, highlight
       <ul className="list-none p-0 mb-4 sm:mb-5 md:mb-6 text-xs sm:text-sm text-gray-300 space-y-1 sm:space-y-1.5 text-left pl-1 sm:pl-2">
         {features.map((feature, index) => (
           <li key={index} className="flex items-start">
-            <span className="text-amber-400 mr-1.5 sm:mr-2 shrink-0 text-sm sm:text-base">✓</span> 
+            <span className="text-amber-400 mr-1.5 sm:mr-2 shrink-0 text-sm sm:text-base">✓</span>
             <span>{feature}</span>
           </li>
         ))}
@@ -325,4 +325,3 @@ function ThemeToggle() {
     </Button>
   );
 }
-
