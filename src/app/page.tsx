@@ -4,13 +4,32 @@
 import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ClientOnly } from '@/components/client-only'; // Import ClientOnly
-import { cn } from '@/lib/utils'; // Import cn utility
+import { ClientOnly } from '@/components/client-only';
+import { cn } from '@/lib/utils';
 import { useTheme } from 'next-themes';
-import { Moon, Sun, FileText, BookOpenCheck, Search, Newspaper, FilePlus2 } from 'lucide-react';
+import {
+  Moon,
+  Sun,
+  Search,
+  FileCheck2,
+  Database,
+  ShieldCheck,
+  Briefcase,
+  Users,
+  UserCheck,
+  Star,
+  Sparkles,
+  Check,
+  GraduationCap,
+  Lock,
+  Play,
+  FilePlus2, // For Doc Generation
+  Newspaper, // For Daily Legal News
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 
+// Re-defined MzansiLegalLogo to match the header style
 const MzansiLegalLogo = ({ className }: { className?: string }) => (
   <div className={cn("flex items-center space-x-1 sm:space-x-2", className)}>
     <Image
@@ -21,137 +40,200 @@ const MzansiLegalLogo = ({ className }: { className?: string }) => (
       className="flex-shrink-0 rounded w-10 h-10 sm:w-12 sm:h-12"
       data-ai-hint="logo branding"
     />
-    <span className="text-lg sm:text-xl font-semibold text-gray-100">zansilegal AI</span>
+    <span className="text-lg sm:text-xl font-bold text-[#155E63]">MzansiLegal AI</span>
   </div>
 );
 
-const fadeDown = {
-  hidden: { opacity: 0, y: -20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
-};
-
-const fadeUp = {
+const sectionVariants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
 };
 
 export default function LandingPage() {
   return (
-    <div className="font-poppins text-[#f5f5f5] min-h-screen overflow-x-hidden bg-slate-900">
+    <ClientOnly>
+      <div className="font-poppins text-[#1C1C1C] min-h-screen overflow-x-hidden bg-[#F8FAF9]">
 
-      <ClientOnly>
+        {/* Header */}
         <motion.header
           initial="hidden"
           animate="visible"
-          variants={fadeDown}
-          className="bg-stone-800 sticky top-0 z-50 py-2.5 sm:py-3 px-4 sm:px-8 md:px-12 flex justify-between items-center shadow-md"
+          variants={sectionVariants}
+          className="sticky top-0 z-50 py-3 sm:py-4 px-4 sm:px-8 md:px-12 flex justify-between items-center shadow-sm bg-gradient-to-r from-[#E6F1F1] to-white"
         >
           <Link href="/" aria-label="Go to MzansiLegal AI Home">
             <MzansiLegalLogo className="cursor-pointer transition-transform duration-300 hover:scale-105" />
           </Link>
           <div className="flex items-center space-x-2 sm:space-x-4">
-            <nav className="hidden sm:flex space-x-3 md:space-x-5 items-center">
-              <Link href="/#features" className="font-medium text-gray-300 hover:text-amber-400 transition-colors duration-300 text-xs sm:text-sm">
-                Features
-              </Link>
-              <Link href="/#pricing" className="font-medium text-gray-300 hover:text-amber-400 transition-colors duration-300 text-xs sm:text-sm">
-                Pricing
-              </Link>
+            <nav className="hidden sm:flex space-x-4 md:space-x-6 items-center">
+              {[
+                { label: 'Features', href: '#features' },
+                { label: 'Pricing', href: '#pricing' },
+                { label: 'About', href: '#about' },
+                { label: 'Contact', href: '#contact' }
+              ].map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className="font-medium text-[#223133] hover:text-[#155E63] transition-colors duration-300 text-sm"
+                >
+                  {item.label}
+                </Link>
+              ))}
             </nav>
             <Link href="/app" passHref>
               <Button
-                variant="default"
-                className="bg-amber-500 hover:bg-amber-600 text-stone-900 font-semibold text-xs px-3 py-1.5 sm:text-sm sm:px-4 sm:py-2 rounded-md"
+                className="bg-[#155E63] hover:bg-[#10484F] text-white font-semibold text-xs px-3 py-1.5 sm:text-sm sm:px-4 sm:py-2 rounded-md"
               >
                 Get Started
               </Button>
             </Link>
-            <div className="hidden sm:block">
-              <ThemeToggle />
-            </div>
+            <ThemeToggle />
           </div>
-           <div className="sm:hidden flex items-center gap-2">
-             <ThemeToggle />
-           </div>
+          <div className="sm:hidden">
+            <ThemeToggle />
+          </div>
         </motion.header>
-      </ClientOnly>
 
-       <ClientOnly>
-          <motion.section
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            className="py-12 sm:py-16 md:py-20 px-4 sm:px-8 bg-slate-900"
-          >
-            <div className="container mx-auto grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
-              <div className="text-center md:text-left">
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-gray-100 !leading-tight">
-                  AI-Powered<br />Legal<br />Assistance
-                </h1>
-                <p className="text-sm sm:text-base md:text-lg max-w-md mx-auto md:mx-0 mb-6 sm:mb-8 text-gray-400">
-                  Transforming South African law practice with advanced AI tool for legal research and contract analysis.
-                </p>
-                <Link href="/#features" passHref>
+        {/* Hero Section */}
+        <motion.section
+          initial="hidden"
+          animate="visible"
+          variants={sectionVariants}
+          className="py-16 sm:py-20 md:py-28 px-4 sm:px-8 bg-[#F8FAF9]"
+        >
+          <div className="container mx-auto grid md:grid-cols-2 gap-10 sm:gap-16 items-center">
+            <div className="text-center md:text-left">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-5 sm:mb-7 text-[#1C1C1C] !leading-tight">
+                Modern AI Legal Support <br className="hidden md:inline" />for South Africa
+              </h1>
+              <p className="text-base sm:text-lg md:text-xl max-w-md mx-auto md:mx-0 mb-8 sm:mb-10 text-[#475867]">
+                Empowering legal professionals with instant legal research, contract review, case analysis, document generation, and daily news powered by AI.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center md:justify-start">
+                <Link href="#features" passHref>
                   <Button
-                    variant="default"
+                    variant="outline"
                     size="lg"
-                    className="bg-amber-500 hover:bg-amber-600 text-stone-900 font-semibold px-5 py-2 sm:px-6 md:py-2.5 rounded-md text-xs sm:text-sm md:text-base"
+                    className="border-2 border-[#155E63] text-[#155E63] hover:bg-[#E6F1F1] hover:text-[#10484F] font-semibold px-6 py-2.5 sm:px-7 rounded-md text-sm sm:text-base"
                   >
-                    Explore Features
+                    <Search size={18} className="mr-2" /> Explore Features
+                  </Button>
+                </Link>
+                <Link href="/app" passHref>
+                  <Button
+                    size="lg"
+                    className="bg-[#155E63] hover:bg-[#10484F] text-white font-semibold px-6 py-2.5 sm:px-7 rounded-md text-sm sm:text-base"
+                  >
+                    <Sparkles size={18} className="mr-2" /> Get Started
                   </Button>
                 </Link>
               </div>
-              <div className="flex justify-center items-center mt-8 md:mt-0">
-                <div className="w-full max-w-[300px] sm:max-w-[380px] md:max-w-[420px] mx-auto">
-                    <Image
-                      src="https://ideogram.ai/assets/progressive-image/balanced/response/JRiQSuWWS-urwlo5-L6Tqg"
-                      alt="AI Legal Concept Illustration"
-                      width={450}
-                      height={350}
-                      priority
-                      className="rounded-lg object-cover shadow-2xl border-2 border-amber-500/30 w-full h-auto"
-                      data-ai-hint="AI law"
-                    />
-                </div>
-              </div>
             </div>
-          </motion.section>
-       </ClientOnly>
+            <div className="flex justify-center items-center mt-10 md:mt-0">
+              <Image
+                src="https://ideogram.ai/assets/progressive-image/balanced/response/JRiQSuWWS-urwlo5-L6Tqg"
+                alt="AI Legal Concept Illustration"
+                width={500}
+                height={500}
+                priority
+                className="rounded-lg object-contain shadow-xl w-full max-w-sm md:max-w-md"
+                data-ai-hint="AI law"
+              />
+            </div>
+          </div>
+        </motion.section>
 
-       <ClientOnly>
-         <motion.section
-           id="features"
-           initial="hidden"
-           whileInView="visible"
-           viewport={{ once: true, amount: 0.2 }}
-           variants={fadeUp}
-           className="py-12 sm:py-16 md:py-20 px-4 sm:px-5 text-center bg-slate-800/70 backdrop-blur-md"
-         >
-           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-10 sm:mb-12 text-amber-400">Core Features</h2>
-           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-6 max-w-7xl mx-auto">
-             <FeatureCard icon={<Search size={20} className="sm:size-24" />} title="Legal Research" description="Comprehensive SA & International research." />
-             <FeatureCard icon={<BookOpenCheck size={20} className="sm:size-24" />} title="Case Study Analysis" description="Insights from historical cases & precedents." />
-             <FeatureCard icon={<FileText size={20} className="sm:size-24" />} title="Contract Analysis" description="Identify key clauses, assess risks." />
-             <FeatureCard icon={<FilePlus2 size={20} className="sm:size-24" />} title="Doc Generation" description="Automate templates, correspondence & statements." />
-             <FeatureCard icon={<Newspaper size={20} className="sm:size-24" />} title="Daily Legal News" description="Stay updated with curated legal news feeds." />
-           </div>
-         </motion.section>
-       </ClientOnly>
+        {/* Key Features Section */}
+        <motion.section
+          id="features"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={sectionVariants}
+          className="py-16 sm:py-20 md:py-24 px-4 sm:px-8 text-center bg-white"
+        >
+          <h2 className="text-3xl sm:text-4xl font-bold mb-12 sm:mb-16 text-[#155E63]">Key Features</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 sm:gap-8 max-w-7xl mx-auto">
+            <FeatureCard icon={<Search size={32} className="text-[#155E63]" />} title="AI Legal Research" description="Instant access to relevant South African legal precedents and statutes." />
+            <FeatureCard icon={<FileCheck2 size={32} className="text-[#155E63]" />} title="Contract Review" description="Analyze contracts, identify key clauses, and assess risks quickly." />
+            <FeatureCard icon={<Database size={32} className="text-[#155E63]" />} title="SA Case Law" description="Navigate local case law with AI insights." />
+            <FeatureCard icon={<FilePlus2 size={32} className="text-[#155E63]" />} title="Doc Generation" description="Automate legal document and template creation." />
+            <FeatureCard icon={<Newspaper size={32} className="text-[#155E63]" />} title="Daily Legal News" description="Stay updated with the latest legal developments from SA." />
+          </div>
+        </motion.section>
 
-      <ClientOnly>
+        {/* Why MzansiLegal Section */}
+        <motion.section
+          id="about"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={sectionVariants}
+          className="py-16 sm:py-20 md:py-24 px-4 sm:px-8 bg-[#F8FAF9]"
+        >
+          <div className="container mx-auto grid md:grid-cols-2 gap-10 sm:gap-16 items-center">
+            <div className="flex justify-center items-center order-last md:order-first">
+              <Image
+                src="https://placehold.co/500x380.png"
+                alt="Lawyer using MzansiLegal AI"
+                width={500}
+                height={380}
+                className="rounded-lg object-cover shadow-xl"
+                data-ai-hint="lawyer computer"
+              />
+            </div>
+            <div className="text-center md:text-left">
+              <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-[#155E63]">Why MzansiLegal AI?</h2>
+              <ul className="space-y-3 text-[#475867] text-base sm:text-lg">
+                {[
+                  "Specifically built and trained for South African law.",
+                  "Save countless hours on manual legal research and document review.",
+                  "Reduce the risk of human error with AI-assisted analysis.",
+                  "Ensure your practice operates with secure and confidential data handling.",
+                  "User-friendly interface designed for legal professionals.",
+                  "Streamline document generation for correspondence and statements.",
+                  "Stay informed with curated daily legal news."
+                ].map((item, index) => (
+                  <li key={index} className="flex items-start">
+                    <Check size={20} className="text-[#155E63] mr-2 mt-1 flex-shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </motion.section>
+        
+        <motion.section
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={sectionVariants}
+            className="py-16 sm:py-20 md:py-24 px-4 sm:px-8 text-center bg-white"
+        >
+            <h2 className="text-3xl sm:text-4xl font-bold mb-12 sm:mb-16 text-[#155E63]">Empowering the Entire Legal Ecosystem</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 max-w-5xl mx-auto">
+                <UseCaseCard icon={<Briefcase size={36} className="text-[#155E63]" />} title="Legal Firms" description="Streamline workflows and enhance associate productivity." />
+                <UseCaseCard icon={<Users size={36} className="text-[#155E63]" />} title="Govt. Legal Depts" description="Improve efficiency in public sector legal analysis." />
+                <UseCaseCard icon={<UserCheck size={36} className="text-[#155E63]" />} title="Solo Practitioners" description="Access powerful AI tools on a budget." />
+                <UseCaseCard icon={<GraduationCap size={36} className="text-[#155E63]" />} title="Law Students" description="Accelerate learning and research for academic success." />
+            </div>
+        </motion.section>
+
         <motion.section
           id="pricing"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
-          variants={fadeUp}
-          className="bg-slate-900 py-12 sm:py-16 md:py-20 px-4 sm:px-5 text-center"
+          variants={sectionVariants}
+          className="bg-[#F8FAF9] py-16 sm:py-20 md:py-24 px-4 sm:px-8 text-center"
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-10 sm:mb-12 text-amber-400">Simple, Transparent Pricing</h2>
-          <div className="flex flex-wrap justify-center items-stretch gap-4 sm:gap-6 md:gap-8">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-12 sm:mb-16 text-[#155E63]">Flexible Plans for Every Need</h2>
+          <div className="flex flex-wrap justify-center items-stretch gap-6 sm:gap-8">
             <PricingCard
               title="Starter"
-              price="R500"
+              price="R0"
               description="For law students, legal interns, and individual researchers."
               features={[
                 "AI Legal Assistant (basic)",
@@ -160,11 +242,12 @@ export default function LandingPage() {
                 "Disclaimer notice",
                 "Full UI Access",
               ]}
-              trialText="3-day free trial available"
+              trialText="Free Tier"
+              buttonLink="/app"
             />
             <PricingCard
               title="Professional"
-              price="R1000"
+              price="R500"
               description="For solo attorneys, small practices, and legal consultants."
               features={[
                 "AI Legal Assistant (advanced prompts, faster processing)",
@@ -177,16 +260,18 @@ export default function LandingPage() {
               ]}
               trialText="3-day free trial available"
               highlighted
+              buttonLink="/app"
             />
             <PricingCard
               title="Enterprise"
-              price="R1500"
+              price="R1000"
               description="For law firms, corporate legal teams, and serious users."
               features={[
                 "AI Legal Assistant (unlimited use, priority speed)",
                 "Legal Research (full access to South African + international law databases)",
                 "Case Study Analysis (unlimited cases, outcome prediction scoring)",
                 "Contract Analysis (unlimited uploads, advanced clause suggestions)",
+                "Doc Generation (advanced template creation, historical doc training)",
                 "Daily Legal News (priority feed, customizable alerts)",
                 "Customizable Disclaimer",
                 "Premium UI themes (dark mode + custom branding options)",
@@ -194,134 +279,196 @@ export default function LandingPage() {
                 "API access (on request)",
               ]}
               trialText="3-day free trial available"
+              buttonLink="/app"
             />
           </div>
-          <div className="overflow-x-auto mt-10 sm:mt-12 md:mt-16">
-             <motion.table
-               initial="hidden"
-               whileInView="visible"
-               viewport={{ once: true, amount: 0.3 }}
-               variants={fadeUp}
-               className="w-full max-w-4xl mx-auto text-left text-xs sm:text-sm bg-stone-800/50 backdrop-blur-sm rounded-lg border border-stone-700 shadow-lg"
-             >
-              <caption className="text-base sm:text-lg md:text-xl font-semibold mb-3 sm:mb-4 text-gray-300 p-3 sm:p-4">Feature Comparison</caption>
-              <thead>
-                <tr className="text-amber-400 border-b border-stone-700">
-                    <th className="py-2 px-2 sm:px-3 md:px-4 font-semibold">Feature</th>
-                    <th className="py-2 px-2 sm:px-3 md:px-4 text-center font-semibold">Starter (R500)</th>
-                    <th className="py-2 px-2 sm:px-3 md:px-4 text-center font-semibold">Professional (R1000)</th>
-                    <th className="py-2 px-2 sm:px-3 md:px-4 text-center font-semibold">Enterprise (R1500)</th>
-                </tr>
-              </thead>
-              <tbody className="text-gray-300">
-                <ComparisonRow feature="AI Legal Assistance" starter="Limited" professional="Full" enterprise="Unlimited" />
-                <ComparisonRow feature="Legal Research" starter="SA Only" professional="SA + Intl" enterprise="Full Access" />
-                <ComparisonRow feature="Case Study Analysis" starter="❌" professional="Basic (5/month)" enterprise="Unlimited" />
-                <ComparisonRow feature="Contract Analysis" starter="❌" professional="5 docs/month" enterprise="Unlimited" />
-                <ComparisonRow feature="Doc Generation" starter="❌" professional="Basic" enterprise="Advanced (inc. Training)" />
-                <ComparisonRow feature="Daily Legal News" starter="5 articles/day" professional="10+ articles/day" enterprise="Custom alerts" />
-                <ComparisonRow feature="Disclaimer" starter="Standard" professional="Standard" enterprise="Customizable" />
-                <ComparisonRow feature="UI Access" starter="Full" professional="Full" enterprise="Premium UI" isLast />
-              </tbody>
-            </motion.table>
-          </div>
+          <ComparisonTable />
         </motion.section>
-      </ClientOnly>
 
-       <ClientOnly>
-          <motion.footer
+        <motion.section
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            className="bg-stone-800 py-3 sm:py-4 px-4 text-center text-xs text-gray-500 mt-10 border-t border-stone-700"
-          >
-            Built by: T.Naha
-          </motion.footer>
-       </ClientOnly>
-    </div>
+            viewport={{ once: true, amount: 0.2 }}
+            variants={sectionVariants}
+            className="py-16 sm:py-20 md:py-24 px-4 sm:px-8 bg-white"
+        >
+            <div className="container mx-auto text-center max-w-3xl">
+                <h2 className="text-3xl sm:text-4xl font-bold mb-8 text-[#155E63]">Trusted by Legal Professionals</h2>
+                <div className="bg-[#E6F1F1] p-8 rounded-lg shadow-md">
+                    <div className="flex justify-center mb-4">
+                        {[...Array(5)].map((_, i) => <Star key={i} className="h-6 w-6 text-yellow-400 fill-current" />)}
+                    </div>
+                    <p className="text-lg sm:text-xl text-[#475867] italic mb-6">
+                        "MzansiLegal AI has revolutionized how our firm handles initial research and document review. It's cut down our non-billable hours significantly!"
+                    </p>
+                    <p className="font-semibold text-[#1C1C1C]">Advocate Themba Mokoena</p>
+                    <p className="text-sm text-[#475867]">Lead Counsel, Mokoena Legal Chambers</p>
+                </div>
+            </div>
+        </motion.section>
+
+        <motion.section
+          id="contact"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={sectionVariants}
+          className="py-16 sm:py-20 md:py-24 px-4 sm:px-8 text-center bg-gradient-to-r from-[#E6F1F1] to-white"
+        >
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-[#1C1C1C]">Ready to Modernize Your Legal Practice?</h2>
+          <p className="text-base sm:text-lg md:text-xl text-[#475867] mb-8 sm:mb-10 max-w-xl mx-auto">
+            Get started with MzansiLegal AI today and experience the future of legal work.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/app" passHref>
+              <Button
+                size="lg"
+                className="bg-[#155E63] hover:bg-[#10484F] text-white font-semibold px-8 py-3 sm:px-10 rounded-md text-base sm:text-lg"
+              >
+                <Lock size={20} className="mr-2" /> Sign Up Free
+              </Button>
+            </Link>
+            <Link href="#features" passHref>
+              <Button
+                variant="outline"
+                size="lg"
+                className="border-2 border-[#155E63] text-[#155E63] hover:bg-[#E6F1F1] hover:text-[#10484F] font-semibold px-8 py-3 sm:px-10 rounded-md text-base sm:text-lg"
+              >
+                <Play size={20} className="mr-2" /> View Demo
+              </Button>
+            </Link>
+          </div>
+        </motion.section>
+
+        <footer className="bg-[#223133] py-6 px-4 text-center text-sm text-gray-400">
+          Built by: T.Naha | © {new Date().getFullYear()} MzansiLegal AI. All rights reserved.
+        </footer>
+      </div>
+    </ClientOnly>
   );
 }
 
 const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) => (
-  <motion.div
-    whileHover={{ y: -5, boxShadow: "0 10px 15px -3px rgba(234, 179, 8, 0.1), 0 4px 6px -2px rgba(234, 179, 8, 0.05)" }}
-    className="bg-slate-700/60 backdrop-blur-sm rounded-xl p-4 sm:p-5 shadow-lg border border-slate-600 min-h-[140px] sm:min-h-[160px] md:min-h-[180px] flex flex-col items-center justify-center transition-shadow"
-  >
-    <div className="text-amber-400 mb-2 sm:mb-3">{icon}</div>
-    <h3 className="text-sm sm:text-base md:text-lg font-semibold mb-1 sm:mb-2 text-gray-100">{title}</h3>
-    <p className="text-xs sm:text-sm text-gray-400">{description}</p>
-  </motion.div>
+  <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100 text-left min-h-[180px] sm:min-h-[200px] flex flex-col">
+    <div className="mb-3 sm:mb-4">
+      {React.cloneElement(icon as React.ReactElement, { className: "h-7 w-7 sm:h-8 sm:w-8 text-[#155E63]" })}
+    </div>
+    <h3 className="text-md sm:text-lg font-semibold mb-1 sm:mb-2 text-[#1C1C1C]">{title}</h3>
+    <p className="text-xs sm:text-sm text-[#475867] flex-grow">{description}</p>
+  </div>
 );
 
-const PricingCard = ({ title, price, description, features, trialText, highlighted }: { title: string, price: string, description: string, features: string[], trialText?: string, highlighted?: boolean }) => (
-  <motion.div
-    whileHover={{ y: -8, scale: 1.02, boxShadow: "0 10px 20px -5px rgba(234, 179, 8, 0.2), 0 6px 10px -5px rgba(234, 179, 8, 0.1)" }}
+const UseCaseCard = ({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) => (
+    <div className="bg-[#F8FAF9] p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 text-center border border-gray-200">
+        <div className="text-[#155E63] inline-block mb-4">
+             {React.cloneElement(icon as React.ReactElement, { className: "h-8 w-8 sm:h-9 sm:w-9" })}
+        </div>
+        <h3 className="text-lg font-semibold mb-2 text-[#1C1C1C]">{title}</h3>
+        <p className="text-xs text-[#475867]">{description}</p>
+    </div>
+);
+
+const PricingCard = ({ title, price, description, features, trialText, highlighted, buttonLink }: { title: string, price: string, description: string, features: string[], trialText?: string, highlighted?: boolean, buttonLink: string }) => (
+  <div
     className={cn(
-      "bg-slate-700/60 backdrop-blur-sm rounded-2xl p-4 sm:p-6 w-full sm:max-w-xs md:max-w-sm shadow-xl transition-all duration-300 border border-slate-600 flex flex-col",
-      highlighted && "border-2 border-amber-500 ring-2 ring-amber-500/50 relative sm:scale-105 z-10"
+      "bg-white rounded-xl p-4 sm:p-6 w-full max-w-xs sm:max-w-sm shadow-lg transition-all duration-300 border flex flex-col text-left", // Adjusted max-w for smaller cards
+      highlighted ? "border-2 border-[#155E63] ring-2 ring-[#155E63]/30 transform sm:scale-105" : "border-gray-200"
     )}
   >
     {highlighted && (
-        <div className="absolute -top-2.5 sm:-top-3 left-1/2 -translate-x-1/2 bg-amber-500 text-stone-900 text-xs font-semibold px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full shadow-lg">
+        <div className="self-center bg-[#155E63] text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md mb-4 -mt-7 sm:-mt-9">
             Most Popular
         </div>
     )}
-    <div className="flex-grow">
-      <h3 className="text-lg sm:text-xl md:text-2xl font-semibold mb-1.5 sm:mb-2 text-gray-100">{title}</h3>
-      <p className="text-xs sm:text-sm mb-2.5 sm:mb-3 text-gray-400 min-h-[2.5em] sm:min-h-[3em]">{description}</p>
-      <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-amber-400 my-3 sm:my-4 md:my-5">{price}<span className="text-sm sm:text-base font-normal text-gray-400"> / month</span></p>
-      {trialText && <p className="text-xs text-gray-500 mb-2.5 sm:mb-3 md:mb-4">{trialText}</p>}
-      <ul className="list-none p-0 mb-4 sm:mb-5 md:mb-6 text-xs sm:text-sm text-gray-300 space-y-1 sm:space-y-1.5 text-left pl-1 sm:pl-2">
+    <div className="flex-grow mb-4 sm:mb-6">
+      <h3 className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2 text-[#1C1C1C]">{title}</h3>
+      <p className="text-xs sm:text-sm mb-3 sm:mb-4 text-[#475867] min-h-[3em]">{description}</p>
+      <p className="text-3xl sm:text-4xl font-extrabold text-[#155E63] my-3 sm:my-4">{price}<span className="text-sm sm:text-base font-normal text-[#475867]"> / month</span></p>
+      {trialText && <p className="text-xs text-gray-500 mb-3 sm:mb-4 text-center">{trialText}</p>}
+      <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-[#475867]">
         {features.map((feature, index) => (
           <li key={index} className="flex items-start">
-            <span className="text-amber-400 mr-1.5 sm:mr-2 shrink-0 text-sm sm:text-base">✓</span>
+            <Check size={14} className="text-green-500 mr-1.5 sm:mr-2 mt-0.5 flex-shrink-0" />
             <span>{feature}</span>
           </li>
         ))}
       </ul>
     </div>
-    <Link href="/app" passHref>
+    <Link href={buttonLink} passHref>
       <Button
-        variant="default"
+        size="lg"
         className={cn(
             "mt-auto w-full font-semibold py-2 sm:py-2.5 rounded-md text-xs sm:text-sm",
-            highlighted ? "bg-amber-500 hover:bg-amber-600 text-stone-900" : "bg-stone-600 hover:bg-stone-500 text-gray-100"
+            highlighted ? "bg-[#155E63] hover:bg-[#10484F] text-white" : "bg-gray-200 hover:bg-gray-300 text-[#1C1C1C]"
         )}
       >
         Choose {title}
       </Button>
     </Link>
-  </motion.div>
+  </div>
+);
+
+const ComparisonTable = () => (
+  <div className="overflow-x-auto mt-12 sm:mt-16">
+    <motion.table
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+      variants={sectionVariants}
+      className="w-full max-w-4xl mx-auto text-left text-xs sm:text-sm bg-white/80 backdrop-blur-sm rounded-lg border border-gray-300 shadow-lg"
+    >
+      <caption className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-[#1C1C1C] p-3 sm:p-4">Feature Comparison</caption>
+      <thead>
+        <tr className="text-[#155E63] border-b border-gray-300">
+          <th className="py-2 px-1 sm:px-2 md:px-4 font-semibold">Feature</th>
+          <th className="py-2 px-1 sm:px-2 md:px-4 text-center font-semibold">Starter (R0)</th>
+          <th className="py-2 px-1 sm:px-2 md:px-4 text-center font-semibold">Professional (R500)</th>
+          <th className="py-2 px-1 sm:px-2 md:px-4 text-center font-semibold">Enterprise (R1000)</th>
+        </tr>
+      </thead>
+      <tbody className="text-[#475867]">
+        <ComparisonRow feature="AI Legal Assistance" starter="Limited" professional="Full" enterprise="Unlimited" />
+        <ComparisonRow feature="Legal Research" starter="SA Only (20/month)" professional="SA + Intl" enterprise="Full Access" />
+        <ComparisonRow feature="Case Study Analysis" starter="❌" professional="Basic (5/month)" enterprise="Unlimited" />
+        <ComparisonRow feature="Contract Analysis" starter="❌" professional="5 docs/month" enterprise="Unlimited" />
+        <ComparisonRow feature="Doc Generation" starter="❌" professional="Basic" enterprise="Advanced" />
+        <ComparisonRow feature="Daily Legal News" starter="5 articles/day" professional="10+ articles/day" enterprise="Custom alerts" />
+        <ComparisonRow feature="Disclaimer" starter="Standard" professional="Standard" enterprise="Customizable" />
+        <ComparisonRow feature="UI Access" starter="Full" professional="Full" enterprise="Premium UI" isLast />
+      </tbody>
+    </motion.table>
+  </div>
 );
 
 const ComparisonRow = ({ feature, starter, professional, enterprise, isLast = false }: { feature: string, starter: string, professional: string, enterprise: string, isLast?: boolean }) => (
-  <tr className={cn("hover:bg-stone-700/70 transition-colors", !isLast && "border-b border-stone-700/50")}>
-    <td className="py-2 px-2 sm:px-3 md:px-4 font-medium">{feature}</td>
-    <td className="py-2 px-2 sm:px-3 md:px-4 text-center">{starter}</td>
-    <td className="py-2 px-2 sm:px-3 md:px-4 text-center">{professional}</td>
-    <td className="py-2 px-2 sm:px-3 md:px-4 text-center">{enterprise}</td>
+  <tr className={cn("hover:bg-gray-100 transition-colors", !isLast && "border-b border-gray-200")}>
+    <td className="py-2 px-1 sm:px-2 md:px-4 font-medium text-[#1C1C1C]">{feature}</td>
+    <td className="py-2 px-1 sm:px-2 md:px-4 text-center">{starter}</td>
+    <td className="py-2 px-1 sm:px-2 md:px-4 text-center">{professional}</td>
+    <td className="py-2 px-1 sm:px-2 md:px-4 text-center">{enterprise}</td>
   </tr>
 );
 
 function ThemeToggle() {
   const { setTheme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => setMounted(true), []);
+
+  if (!mounted) return <div className="h-8 w-8 sm:h-9 sm:w-9" />;
 
   return (
     <Button
       variant="outline"
       size="icon"
-      onClick={() =>
-        setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')
-      }
-      className="bg-transparent border-gray-500/50 text-gray-300 hover:bg-gray-700/40 hover:text-amber-400 hover:border-amber-500/50 rounded-md h-7 w-7 sm:h-8 sm:w-8 md:h-9 md:w-9"
+      onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+      className="bg-transparent border-gray-400/50 text-[#223133] hover:bg-gray-200/50 hover:text-[#155E63] hover:border-[#155E63]/50 rounded-md h-8 w-8 sm:h-9 sm:w-9"
+      aria-label="Toggle theme"
     >
       {resolvedTheme === 'dark' ? (
-        <Sun className="h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5" />
+        <Sun className="h-4 w-4 sm:h-5 sm:w-5" />
       ) : (
-        <Moon className="h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5" />
+        <Moon className="h-4 w-4 sm:h-5 sm:w-5" />
       )}
-      <span className="sr-only">Toggle theme</span>
     </Button>
   );
 }

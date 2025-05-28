@@ -8,40 +8,39 @@
 /* Shadcn Theme Variables - These primarily affect the /app/* routes (main application UI) */
 @layer base {
   :root {
-    --background: 220 25% 8%; /* Very dark blue e.g., #0D1018 */
-    --foreground: 210 40% 96%; /* White/off-white e.g., #F2F5FA */
+    --background: 210 10% 98%; /* A light grey */
+    --foreground: 220 20% 10%; /* Default text for light mode */
+    --card: 210 10% 98%; /* Light card for light mode */
+    --card-foreground: 220 20% 10%; /* Text on light cards */
 
-    --card: 30 8% 18%; /* Dark brown-charcoal e.g., #312E2C */
-    --card-foreground: 210 40% 96%;
+    --popover: 210 10% 98%;
+    --popover-foreground: 220 20% 10%;
 
-    --popover: 220 25% 8%;
-    --popover-foreground: 210 40% 96%;
-
-    --primary: 158 64% 52%; /* Keep existing primary for main CTA, or adjust if screenshot implies otherwise */
+    --primary: 158 64% 52%;
     --primary-foreground: 230 20% 7%;
 
-    --secondary: 30 6% 25%; /* For non-active buttons e.g., #423F3D */
-    --secondary-foreground: 210 40% 96%;
+    --secondary: 210 10% 90%; /* Lighter secondary for light mode */
+    --secondary-foreground: 220 20% 25%;
 
-    --muted: 30 5% 12%;  /* Darker muted tones e.g., #221F1E */
-    --muted-foreground: 210 20% 60%; /* Lighter muted text e.g., #8C96A3 */
+    --muted: 210 10% 85%;  /* Lighter muted for light mode */
+    --muted-foreground: 210 15% 45%;
 
-    --accent: 30 8% 22%; /* For hover/active states on buttons e.g., #3D3A38 */
-    --accent-foreground: 210 40% 98%;
+    --accent: 210 10% 88%; /* Lighter accent for light mode */
+    --accent-foreground: 220 20% 15%;
 
     --destructive: 0 70% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 30 5% 30%; /* Borders for buttons e.g., #504D4A */
-    --input: 30 6% 25%; /* Similar to secondary button background #423F3D */
-    --ring: 158 64% 52%; /* Focus ring for APP UI - can be a muted blue/gray if green is too bright */
+    --border: 210 10% 80%; /* Lighter border for light mode */
+    --input: 210 10% 95%; /* Lighter input for light mode */
+    --ring: 158 64% 52%;
 
     --radius: 0.75rem; /* Adjusted global radius for app pages */
   }
 
   .dark {
-    /* Dark mode variables for APP UI (can be same as :root if :root is already dark) */
-    --background: 220 25% 8%;
+    /* Dark mode variables for APP UI */
+    --background: 220 25% 8%; /* UPDATED: Very dark blue, to match logo background */
     --foreground: 210 40% 96%;
     --card: 30 8% 18%;
     --card-foreground: 210 40% 96%;
