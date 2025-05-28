@@ -4,8 +4,8 @@
 import React from 'react';
 import Link from 'next/link'; // Use Next.js Link for navigation
 import { motion } from 'framer-motion';
-import { ClientOnly } from '@/components/client-only';
-import { cn } from '@/lib/utils';
+import { ClientOnly } from '@/components/client-only'; // Import ClientOnly
+import { cn } from '@/lib/utils'; // Import cn utility
 import { useTheme } from 'next-themes';
 import { Moon, Sun, FileText, BookOpenCheck, Search, Newspaper, FilePlus2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -110,12 +110,12 @@ export default function LandingPage() {
               </div>
               <div className="flex justify-center items-center mt-8 md:mt-0">
                 <Image
-                  src="https://placehold.co/400x400.png"
-                  alt="AI Legal Assistance Illustration"
-                  width={400}
-                  height={400}
-                  className="rounded-full object-cover shadow-2xl border-4 border-amber-500/30"
-                  data-ai-hint="legal tech"
+                  src="https://placehold.co/450x350.png"
+                  alt="Lawyer's desk with stacks of files"
+                  width={450}
+                  height={350}
+                  className="rounded-lg object-cover shadow-2xl border-2 border-amber-500/30"
+                  data-ai-hint="lawyer desk files"
                 />
               </div>
             </div>
@@ -336,3 +336,4 @@ function ThemeToggle() {
     </Button>
   );
 }
+
