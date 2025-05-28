@@ -110,12 +110,12 @@ export default function LandingPage() {
               </div>
               <div className="flex justify-center items-center mt-8 md:mt-0">
                 <Image
-                  src="https://placehold.co/450x350.png"
-                  alt="Lawyer's desk with stacks of files"
+                  src="https://ideogram.ai/assets/progressive-image/balanced/response/JRiQSuWWS-urwlo5-L6Tqg"
+                  alt="AI Legal Concept Illustration"
                   width={450}
                   height={350}
                   className="rounded-lg object-cover shadow-2xl border-2 border-amber-500/30"
-                  data-ai-hint="lawyer desk files"
+                  data-ai-hint="AI law"
                 />
               </div>
             </div>
@@ -212,13 +212,13 @@ export default function LandingPage() {
                className="w-full max-w-4xl mx-auto text-left text-xs sm:text-sm bg-stone-800/50 backdrop-blur-sm rounded-lg border border-stone-700 shadow-lg"
              >
               <caption className="text-lg sm:text-xl font-semibold mb-4 text-gray-300 p-3 sm:p-4">Feature Comparison</caption>
-              <thead className="border-b border-stone-700">
-                 <tr className="text-amber-400">
+              <thead>
+                <tr className="text-amber-400 border-b border-stone-700">
                     <th className="py-2.5 px-2 sm:px-4 font-semibold">Feature</th>
                     <th className="py-2.5 px-2 sm:px-4 text-center font-semibold">Starter (R500)</th>
                     <th className="py-2.5 px-2 sm:px-4 text-center font-semibold">Professional (R1000)</th>
                     <th className="py-2.5 px-2 sm:px-4 text-center font-semibold">Enterprise (R1500)</th>
-                 </tr>
+                </tr>
               </thead>
               <tbody className="text-gray-300">
                 <ComparisonRow feature="AI Legal Assistance" starter="Limited" professional="Full" enterprise="Unlimited" />
