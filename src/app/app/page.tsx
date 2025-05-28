@@ -3,6 +3,7 @@
 
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image'; // Added import for Image component
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -26,7 +27,7 @@ interface AnalysisResult {
 }
 
 const AnalysisResultIcon = ({ type }: { type: AnalysisType }) => {
-  const iconProps = { size: 20, className: "text-foreground" }; // Ensure icon color matches text
+  const iconProps = { size: 20, className: "text-foreground" };
   switch (type) {
     case 'Legal Research': return <Search {...iconProps} />;
     case 'Case Study Analysis': return <BookOpenCheck {...iconProps} />;
@@ -84,7 +85,7 @@ export default function Home() {
           break;
         case 'Doc Generation':
            const docGenInput: DocGenerationInput = {
-               docType: "User Defined", 
+               docType: "User Defined",
                context: inputText,
            };
            result = await docGeneration(docGenInput);
@@ -127,9 +128,19 @@ export default function Home() {
       <main className="flex flex-col items-center justify-start min-h-screen p-4 sm:p-6 md:p-10 bg-background text-foreground font-serif">
        <ClientOnly>
          <>
-            <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-2 text-center animate-fade-in">
-              MzansiLegal AI
-            </h1>
+            <div className="flex items-center justify-center space-x-3 mb-2 animate-fade-in">
+              <Image
+                src="https://ideogram.ai/assets/progressive-image/balanced/response/rC4tDYcAThW2P25_d3u9Gg"
+                alt="MzansiLegal AI Logo"
+                width={40}
+                height={40}
+                className="rounded"
+                data-ai-hint="logo branding"
+              />
+              <h1 className="text-4xl sm:text-5xl font-bold text-foreground">
+                MzansiLegal AI
+              </h1>
+            </div>
             <p className="text-lg sm:text-xl text-muted-foreground mb-6 md:mb-8 text-center animate-fade-in animation-delay-200 font-sans">
               AI-powered legal assistance for South African professionals
             </p>
@@ -178,16 +189,16 @@ export default function Home() {
                         variant={selectedType === type ? 'default' : 'secondary'}
                         onClick={() => {
                            setSelectedType(type);
-                           setInputText(''); 
+                           setInputText('');
                            setAnalysisResult(null);
                            setError(null);
                            }}
                         disabled={isLoading}
-                        className={`flex items-center justify-start p-4 transition-all duration-300 rounded-md text-sm font-semibold h-auto min-h-[60px]
+                        className={`flex items-center justify-start p-4 transition-all duration-300 rounded-md text-sm font-semibold h-auto min-h-[60px] group
                           ${selectedType === type
-                            ? 'bg-accent text-accent-foreground border-primary ring-2 ring-primary' // More distinct active state
+                            ? 'bg-accent text-accent-foreground border-primary ring-2 ring-primary'
                             : 'bg-secondary text-secondary-foreground border-border hover:bg-accent hover:border-accent'
-                          } group`}
+                          }`}
                          title={type}
                       >
                         <Icon className="mr-3 h-6 w-6 flex-shrink-0 text-foreground" />
@@ -282,4 +293,3 @@ export default function Home() {
       </main>
   );
 }
-
