@@ -9,28 +9,19 @@ import { cn } from '@/lib/utils';
 import { useTheme } from 'next-themes';
 import { Moon, Sun, FileText, BookOpenCheck, Search, Newspaper, FilePlus2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import Image from 'next/image';
+import Image from 'next/image'; // Import Next.js Image component
 
-// Updated Logo Component based on screenshot
+// Updated Logo Component based on screenshot and new request
 const MzansiLegalLogo = ({ className }: { className?: string }) => (
   <div className={cn("flex items-center space-x-2", className)}>
-    {/* Simple Scales Icon */}
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="28" // Increased size slightly
-      height="28"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5" // Slightly thinner stroke
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="text-amber-400 flex-shrink-0" // Gold color for scales icon
-    >
-      <path d="M12 3v18M4 7h16M5 7a5 5 0 0 0 7 0V7h-2.5M19 7a5 5 0 0 1-7 0V7h2.5" /> {/* Adjusted scales */}
-      <circle cx="6" cy="14" r="2" />
-      <circle cx="18" cy="14" r="2" />
-    </svg>
+    <Image
+      src="https://ideogram.ai/assets/progressive-image/balanced/response/rC4tDYcAThW2P25_d3u9Gg"
+      alt="MzansiLegal AI Logo"
+      width={36} // Adjusted size for the new logo
+      height={36}
+      className="flex-shrink-0 rounded" // Added rounded class, adjust as needed
+      data-ai-hint="logo branding"
+    />
     <span className="text-xl font-semibold text-gray-100">MzansiLegal AI</span>
   </div>
 );
